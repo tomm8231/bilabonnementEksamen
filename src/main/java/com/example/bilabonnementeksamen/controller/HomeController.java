@@ -15,4 +15,9 @@ public class HomeController {
     return "index";
   }
 
+  @GetMapping("/registration")
+  public String showRegistrationPage() {
+    return "registration-start-page";
+  }
+
 }
