@@ -1,7 +1,5 @@
 package com.example.bilabonnementeksamen.model;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import java.util.Date;
 
 
@@ -9,15 +7,17 @@ public class Car {
 
   private String brand;
   private String model;
-  private Date startDato;
+  private Date startDate;
+  private Date endDate;
 
 
   public Car(){}
 
-  public Car(String brand, String model, Date startDato){
+  public Car(String brand, String model, Date startDate, Date endDate){
     this.brand = brand;
     this.model = model;
-    this.startDato = startDato;
+    this.startDate = startDate;
+    this.endDate = endDate;
   }
 
 
@@ -38,12 +38,15 @@ public class Car {
   }
 
 
-  public Date getStartDato() {
-    return startDato;
+  public Date getStartDate() {
+    return startDate;
   }
 
-  public void setStartDato(Date startDato) {
-    this.startDato = startDato;
+  public void setStartDate(Date startDate) {
+    this.startDate = startDate;
   }
 
+  public Date getEndDate() {
+    return endDate;
+  }
 }

@@ -14,9 +14,9 @@
         <div><strong>Vælg start/slut på lejeperiode og type udlejning</strong></div>
         <form  action="/lease-contract" method="post">
             <label for="start-date" class="form-label"> Start dato </label>
-            <input type="date" id="start-date" class="form-control">
+            <input type="date" id="start-date" name="start-date" class="form-control">
             <label for="end-date" class="form-label"> Slut dato </label>
-            <input type="date" id="end-date" class="form-control">
+            <input type="date" id="end-date" name="end-date" class="form-control">
             <label for="rental-type" class="form-label"> Lejetype</label>
             <select id="rental-type" class="form-select">
                 <option>Limited leasing</option>

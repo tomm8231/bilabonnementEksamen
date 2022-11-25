@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 
@@ -35,17 +36,20 @@ public class HomeController {
     return "lease-start-new-contract";
   }
 
-  /*@RequestMapping(value="/pickupDate", method= RequestMethod.POST)*/
   //Find biler ud fra dato og lejetype og send videre
   @PostMapping("/lease-contract")
-  public String findCarsByDate() {
+  public String findCarsByDate(@RequestParam("start-date") String startDate, @RequestParam("end-date") String endDate,
+                               RedirectAttributes redirectAttributes) {
+    redirectAttributes.addAttribute("rd-start-date", startDate);
+    redirectAttributes.addAttribute("rd-end-date", endDate);
 
     return "redirect:/lease-available-cars";
   }
 
   @GetMapping("/lease-available-cars")
-  public String showAvailableCars(Model model) {
-    model.addAttribute("cars", registrationRepo.fetchCarsByDate(Date.valueOf("2022-11-24")));
+  public String showAvailableCars(Model model, @RequestParam ("rd-start-date") String startDate,
+                                  @RequestParam("rd-end-date") String endDate) {
+    model.addAttribute("cars", registrationRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDate)));
     return "lease-available-cars";
   }
 /*
