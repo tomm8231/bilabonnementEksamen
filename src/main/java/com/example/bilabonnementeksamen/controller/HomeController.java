@@ -9,13 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-/*@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})*/
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 
 @Controller
 public class HomeController {
 
-  @Autowired
-  RegistrationRepo registrationRepo;
+
+  RegistrationRepo registrationRepo = new RegistrationRepo();
 
 
   @GetMapping("/")

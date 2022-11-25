@@ -11,10 +11,25 @@
 <div class="container d-flex">
     <nav th:replace="fragments/registration-sidebar-fragment :: registration-sidebar-fragment"></nav>
     <container>
-        <button type="button" class="btn btn-secondary btn-lg btn-block border w-50">Vælg bil</button>
-        <button type="button" class="btn btn-secondary btn-lg btn-block border w-50">Fortsæt</button>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Brand</th>
+                <th scope="col">Model</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each=" car : ${cars}">
+                <td th:text="${car.brand}">Car</td>
+                <td th:text="${car.model}">Car</td>
+
+            </tr>
+            </tbody>
+        </table>
     </container>
 </div>
+
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
