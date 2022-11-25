@@ -1,15 +1,22 @@
 package com.example.bilabonnementeksamen.controller;
 
+import com.example.bilabonnementeksamen.repository.RegistrationRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+/*@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})*/
 
 @Controller
 public class HomeController {
+
+  @Autowired
+  RegistrationRepo registrationRepo;
+
 
   @GetMapping("/")
   public String index() {
@@ -35,7 +42,8 @@ public class HomeController {
   }
 
   @GetMapping("/lease-available-cars")
-  public String showAvailableCars() {
+  public String showAvailableCars(Model model) {
+    model.addAttribute("cars", registrationRepo.fetchAllCars());
     return "lease-available-cars";
   }
 
