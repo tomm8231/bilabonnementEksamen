@@ -52,6 +52,7 @@ public class RegistrationRepo {
       // Logik: getStartDate er bilerne, mens startDate er datoen man selv har valg
       // car.getStartDate().after(date)
       if (car.getStartDate() == null && car.getEndDate() == null || (car.getStartDate().before(startDate) &&
+      if (/*car.getStartDate().after(date) &&  */ car.getStartDate() == null && car.getEndDate() == null || (car.getStartDate().before(startDate) &&
           car.getEndDate().before(startDate)) || (car.getStartDate().after(endDate))){
         availableCars.add(car);
       }
