@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +34,23 @@ public class RegistrationRepo {
      /*Instant endDateInstant = endDate.toInstant();
       Instant plus1day = endDateInstant.plus(1, ChronoUnit.DAYS);*/
 
-      LocalDateTime now = LocalDateTime.now();
+
+      // create a timezone
+      ZoneId zoneId = ZoneId.of("Europe/Paris");
+
+      // create an LocalDate object using now(zoneId)
+      LocalDate today = LocalDate.now(zoneId);
+
+      //default time zone
+      ZoneId defaultZoneId = ZoneId.systemDefault();
+
+      // convert from LocalDate to Date
+      Date date = (Date) Date.from(today.atStartOfDay(defaultZoneId).toInstant());
+
+      // Findes det en sperre i Bootstrap som gør at man ikke kan vælge dato før dagens dato?
 
       // Logik: getStartDate er bilerne, mens startDate er datoen man selv har valg
-      if (car.getStartDate() == null && car.getEndDate() == null || (car.getStartDate().before(startDate) &&
+      if (car.getStartDate().after(date) && car.getStartDate() == null && car.getEndDate() == null || (car.getStartDate().before(startDate) &&
           car.getEndDate().before(startDate)) || (car.getStartDate().after(endDate))){
         availableCars.add(car);
       }
