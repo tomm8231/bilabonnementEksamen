@@ -2,7 +2,6 @@ package com.example.bilabonnementeksamen.model;
 
 import java.util.Date;
 
-
 public class Car {
 
   private String brand;
