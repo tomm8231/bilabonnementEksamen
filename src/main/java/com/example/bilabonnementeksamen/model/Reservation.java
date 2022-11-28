@@ -1,9 +1,13 @@
 package com.example.bilabonnementeksamen.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
+@Entity
 public class Reservation {
 
+  @Id
   private int reservation_ID;
   private int car_number;
   private Date pickup_date;
