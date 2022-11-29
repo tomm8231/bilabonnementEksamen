@@ -1,12 +1,9 @@
 package com.example.bilabonnementeksamen.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@Entity
 public class Employee {
 
- @Id
+
  private int employee_id;
  private String employee_initials;
  private String employee_name;

@@ -1,38 +1,38 @@
 package com.example.bilabonnementeksamen.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@Entity
 public class CarModel {
 
-  @Id
+
   private int car_model_id;
-  private String car_model;
   private String car_brand;
-  private String car_fuel_type;
+  private String car_model;
+  private String car_hp;
+  private Fuel car_fuel_type;
   private String car_gearbox_type;
   private double car_co2_km;
   private String car_energy_label;
-  private double car_km_per_litre;
+  private int car_distance_amount;
   private String car_description;
+
 
 
   public CarModel() {
   }
 
-  public CarModel(int car_model_id, String car_model, String car_brand,
-                  String car_fuel_type, String car_gearbox_type,
+  public CarModel(int car_model_id, String car_brand, String car_model,
+                  String car_hp, Fuel car_fuel_type, String car_gearbox_type,
                   double car_co2_km, String car_energy_label,
-                  double car_km_per_litre, String car_description) {
+                  int car_distance_amount, String car_description) {
     this.car_model_id = car_model_id;
-    this.car_model = car_model;
     this.car_brand = car_brand;
+    this.car_model = car_model;
+    this.car_hp = car_hp;
     this.car_fuel_type = car_fuel_type;
     this.car_gearbox_type = car_gearbox_type;
     this.car_co2_km = car_co2_km;
     this.car_energy_label = car_energy_label;
-    this.car_km_per_litre = car_km_per_litre;
+    this.car_distance_amount = car_distance_amount;
     this.car_description = car_description;
   }
 
@@ -44,14 +44,6 @@ public class CarModel {
     this.car_model_id = car_model_id;
   }
 
-  public String getCar_model() {
-    return car_model;
-  }
-
-  public void setCar_model(String car_model) {
-    this.car_model = car_model;
-  }
-
   public String getCar_brand() {
     return car_brand;
   }
@@ -60,11 +52,27 @@ public class CarModel {
     this.car_brand = car_brand;
   }
 
-  public String getCar_fuel_type() {
+  public String getCar_model() {
+    return car_model;
+  }
+
+  public void setCar_model(String car_model) {
+    this.car_model = car_model;
+  }
+
+  public String getCar_hp() {
+    return car_hp;
+  }
+
+  public void setCar_hp(String car_hp) {
+    this.car_hp = car_hp;
+  }
+
+  public Fuel getCar_fuel_type() {
     return car_fuel_type;
   }
 
-  public void setCar_fuel_type(String car_fuel_type) {
+  public void setCar_fuel_type(Fuel car_fuel_type) {
     this.car_fuel_type = car_fuel_type;
   }
 
@@ -92,12 +100,12 @@ public class CarModel {
     this.car_energy_label = car_energy_label;
   }
 
-  public double getCar_km_per_litre() {
-    return car_km_per_litre;
+  public int getCar_distance_amount() {
+    return car_distance_amount;
   }
 
-  public void setCar_km_per_litre(double car_km_per_litre) {
-    this.car_km_per_litre = car_km_per_litre;
+  public void setCar_distance_amount(int car_distance_amount) {
+    this.car_distance_amount = car_distance_amount;
   }
 
   public String getCar_description() {

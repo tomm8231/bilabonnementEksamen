@@ -1,12 +1,8 @@
 package com.example.bilabonnementeksamen.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@Entity
 public class Subscription_type {
 
-  @Id
   private int subscription_type_id;
   private String subscription_type_name;
 
