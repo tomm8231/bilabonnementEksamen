@@ -59,4 +59,15 @@ public class HomeController {
     return "redirect:/lease-find-or-create-customer";
   }
 */
+
+  @GetMapping("/lease-find-or-create-customer")
+  public String showFindOrdCreateCustomer(){
+    return "lease-find-or-create-customer";
+  }
+
+  @PostMapping("/lease-find-or-create-customer")
+  public String leaseAddYouser(){
+
+    return "lease-find-or-create-customer";
+  }
 }
