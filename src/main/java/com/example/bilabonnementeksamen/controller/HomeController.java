@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 
-//@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+// @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 
 @Controller
 public class HomeController {

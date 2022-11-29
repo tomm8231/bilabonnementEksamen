@@ -1,9 +1,11 @@
 package com.example.bilabonnementeksamen.repository;
 
 import com.example.bilabonnementeksamen.model.Car;
+import com.example.bilabonnementeksamen.model.CarModel;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
+import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,56 +17,63 @@ import java.util.List;
 @Repository
 public class RegistrationRepo {
 
+  @Value("${spring.datasource.url}")
+  private String databaseURL;
+  @Value("${spring.datasource.username}")
+  private String user;
+  @Value("${spring.datasource.password}")
+  private String password;
+
+
   public List<Car> fetchCarsByDate(Date startDate, Date endDate) {
 
     ArrayList<Car> cars = new ArrayList<Car>();
 
-    /*
-    cars.add(new Car("Ford", "Focus", Date.valueOf("2022-11-24"), Date.valueOf("2022-11-30")));
-    cars.add(new Car("Opel", "Astra", Date.valueOf("2022-11-24"), Date.valueOf("2022-11-30")));
-    // Bug: 1.12 - 3.12 viser Tesla og Mazda
-    cars.add(new Car("Tesla", "X", Date.valueOf("2022-12-30"), Date.valueOf("2023-01-30")));
-    cars.add(new Car("Mazda", "5", Date.valueOf("2022-12-30"), Date.valueOf("2023-01-30")));
-    cars.add(new Car("TestBil", "null", null, null));
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = """
+          SELECT * FROM car c
+          LEFT JOIN car_model cm
+          ON c.car_model_id = cm.car_model_id
+          LEFT JOIN fuel f
+          ON cm.car_fuel_type = f.car_fuel_type
+          """;
+      PreparedStatement pst = conn.prepareStatement(sql);
+      ResultSet rs = pst.executeQuery();
 
-     */
+      while (rs.next()) {
+        int car_vehicle_number = rs.getInt(1);
+        int car_chassis_number = rs.getInt(2);
+        int car_model_id = rs.getInt(3);
+        int car_price_month = rs.getInt(4);
+        int subscription_type_id = rs.getInt(5);
+        int car_is_reserved = rs.getInt(6);
 
-    ArrayList<Car> availableCars = new ArrayList<Car>();
+        //int car_model_id = rs.getInt(7);
+        String car_model = rs.getString(8);
+        int car_hp = rs.getInt(9);
+        String car_brand = rs.getString(10);
+        String car_fuel_type = rs.getString(11);
+        String car_gearbox_type = rs.getString(12);
+        double car_co2_km = rs.getDouble(13);
+        String car_energy_label = rs.getString(14);
+        int car_distance_amount = rs.getInt(15);
+        String car_description = rs.getString(16);
 
-    for (Car car : cars) {
+        /*
+        CarModel carModel = new CarModel()
+         = new Car(car_vehicle_number, car_chassis_number, car_model_id, car_price_month, subscription_type_id, car_is_reserved);
+        car.add(cars);
+         */
 
-      // OBS not working! Adds 1 to to check the car after the return of the car
-     /*Instant endDateInstant = endDate.toInstant();
-      Instant plus1day = endDateInstant.plus(1, ChronoUnit.DAYS);*/
-
-
-      // create a timezone
-      ZoneId zoneId = ZoneId.of("Europe/Paris");
-
-      // create an LocalDate object using now(zoneId)
-     //  LocalDate today = LocalDate.now(zoneId);
-
-      //default time zone
-      //ZoneId defaultZoneId = ZoneId.systemDefault();
-
-      // convert from LocalDate to Date
-      //Date date = (Date) Date.from(today.atStartOfDay(defaultZoneId).toInstant());
-
-      // Findes det en sperre i Bootstrap som gør at man ikke kan vælge dato før dagens dato?
-
-      // Logik: getStartDate er bilerne, mens startDate er datoen man selv har valg
-      // car.getStartDate().after(date)
-
-      /*
-
-      if ( car.getStartDate() == null && car.getEndDate() == null || (car.getStartDate().before(startDate) &&
-          car.getEndDate().before(startDate)) || (car.getStartDate().after(endDate))){
-        availableCars.add(car);
       }
-      */
-
-
+    } catch (SQLException e) {
+      System.err.println("Cannot connect");
+      e.printStackTrace();
     }
-    return availableCars;
+
+    return cars;
+
+
   }
 }
