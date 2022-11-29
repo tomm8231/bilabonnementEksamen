@@ -45,13 +45,20 @@ public class HomeController {
 
     return "redirect:/lease-available-cars";
   }
-
+/*
   @GetMapping("/lease-available-cars")
   public String showAvailableCars(Model model, @RequestParam ("rd-start-date") String startDate,
                                   @RequestParam("rd-end-date") String endDate) {
     model.addAttribute("cars", registrationRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDate)));
     return "lease-available-cars";
   }
+*/
+  @GetMapping("/lease-available-cars")
+  public String showAvailableCars(Model model) {
+    model.addAttribute("car_model", registrationRepo.fetchCarsByDate());
+    return "lease-available-cars";
+  }
+
 /*
   @PostMapping("/lease-available-cars")
   public String chooseCar() {

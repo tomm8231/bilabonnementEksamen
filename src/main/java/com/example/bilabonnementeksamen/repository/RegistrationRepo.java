@@ -7,31 +7,33 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class RegistrationRepo {
 
-  @Value("${spring.datasource.url}")
+/*
+ @Value("${JDBCUrl}")
   private String databaseURL;
-  @Value("${spring.datasource.username}")
+  @Value("${JDBCUsername}")
   private String user;
-  @Value("${spring.datasource.password}")
+  @Value("${JDBCPassword}")
   private String password;
 
+ */
 
-  public List<CarModel> fetchCarsByDate(Date startDate, Date endDate) {
+  private final String databaseURL = "jdbc:mysql://localhost:3306/car_leasing";
+private final String user = "car_leasing_user";
+  private final String password =  "1234";
+
+
+
+  public List<CarModel> fetchCarsByDate() { // Date startDate, Date endDate
 
     ArrayList<Car> cars = new ArrayList<Car>();
 
     ArrayList<CarModel> carModels = new ArrayList<CarModel>(); // TODO: TEST-liste
-
 
 
     try {
@@ -43,9 +45,9 @@ public class RegistrationRepo {
           LEFT JOIN fuel f
           ON cm.car_fuel_type = f.car_fuel_type
           """;
+*/
 
-       */
-      PreparedStatement pst = conn.prepareStatement("SELECT * FROM car_leasing.car_model");
+      PreparedStatement pst = conn.prepareStatement("SELECT * FROM car_model");
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
@@ -54,12 +56,13 @@ public class RegistrationRepo {
         String car_brand = rs.getString(2);
         String car_model = rs.getString(3);
         int car_hp = rs.getInt(4);
-        Fuel car_fuel_type = (Fuel) rs.getObject(5);
+        String car_fuel_type =  rs.getString(5);
         String car_gearbox_type = rs.getString(6);
         double car_co2_km = rs.getDouble(7);
         String car_energy_label = rs.getString(8);
         int car_distance_amount = rs.getInt(9);
         String car_description = rs.getString(10);
+
 
         carModels.add(new CarModel(car_model_id, car_brand, car_model,
                 car_hp, car_fuel_type, car_gearbox_type,
@@ -92,7 +95,8 @@ public class RegistrationRepo {
 
       }
     } catch (SQLException e) {
-      System.err.println("Cannot connect");
+      System.err.println("Cannot connect to database");
+      System.out.println(databaseURL);
       e.printStackTrace();
     }
 
@@ -100,4 +104,5 @@ public class RegistrationRepo {
 
 
   }
+
 }

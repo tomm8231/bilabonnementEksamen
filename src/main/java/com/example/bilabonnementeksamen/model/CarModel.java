@@ -8,7 +8,7 @@ public class CarModel {
   private String car_brand;
   private String car_model;
   private int car_hp;
-  private Fuel car_fuel_type;
+  private String car_fuel_type;
   private String car_gearbox_type;
   private double car_co2_km;
   private String car_energy_label;
@@ -21,7 +21,7 @@ public class CarModel {
   }
 
   public CarModel(int car_model_id, String car_brand, String car_model,
-                  int car_hp, Fuel car_fuel_type, String car_gearbox_type,
+                  int car_hp, String car_fuel_type, String car_gearbox_type,
                   double car_co2_km, String car_energy_label,
                   int car_distance_amount, String car_description) {
     this.car_model_id = car_model_id;
@@ -68,11 +68,11 @@ public class CarModel {
     this.car_hp = car_hp;
   }
 
-  public Fuel getCar_fuel_type() {
+  public String getCar_fuel_type() {
     return car_fuel_type;
   }
 
-  public void setCar_fuel_type(Fuel car_fuel_type) {
+  public void setCar_fuel_type(String car_fuel_type) {
     this.car_fuel_type = car_fuel_type;
   }
 
