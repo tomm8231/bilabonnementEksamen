@@ -15,14 +15,30 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">Brand</th>
-                <th scope="col">Model</th>
+                <th scope="col">car_model_id</th>
+                <th scope="col">car_brand</th>
+                <th scope="col">car_model</th>
+                <th scope="col">car_hp</th>
+                <th scope="col">car_fuel_type</th>
+                <th scope="col">car_gearbox_type</th>
+                <th scope="col">car_co2_km</th>
+                <th scope="col">car_energy_label</th>
+                <th scope="col">car_distance_amount</th>
+                <th scope="col">car_description</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="car : ${cars}">
-                <td th:text="${car.brand}">Car</td>
-                <td th:text="${car.model}">Car</td>
+            <tr th:each="c : ${car_model}">
+                <td th:text="${c.car_model_id}">Car</td>
+                <td th:text="${c.car_brand}">Car</td>
+                <td th:text="${c.car_brand}">Car</td>
+                <td th:text="${c.car_hp}">Car</td>
+                <td th:text="${c.car_fuel_type}">Car</td>
+                <td th:text="${c.car_gearbox_type}">Car</td>
+                <td th:text="${c.car_co2_km}">Car</td>
+                <td th:text="${c.car_energy_label}">Car</td>
+                <td th:text="${c.car_distance_amount}">Car</td>
+                <td th:text="${c.car_description}">Car</td>
 
             </tr>
             </tbody>
