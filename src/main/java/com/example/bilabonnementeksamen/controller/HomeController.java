@@ -1,5 +1,6 @@
 package com.example.bilabonnementeksamen.controller;
 
+import com.example.bilabonnementeksamen.model.Customer;
 import com.example.bilabonnementeksamen.repository.RegistrationRepo;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 
 // @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
@@ -72,9 +74,31 @@ public class HomeController {
     return "lease-find-or-create-customer";
   }
 
-  @PostMapping("/lease-find-or-create-customer")
-  public String leaseAddYouser(){
-
-    return "lease-find-or-create-customer";
+  @PostMapping("/lease-create-customer")
+  public String leaseAddCustomer(@ModelAttribute Customer customer, HttpSession session){
+  registrationRepo.createCustomer(customer);
+  session.setAttribute("lease-customer", customer);
+    return "redirect:/lease-form/";
   }
+
+  @PostMapping("/lease-find-returning-customer")
+  public String leaseFindCustomer(@RequestParam ("returning-costumer-mail") String mail, HttpSession session){
+
+    Customer customer = registrationRepo.fetchCustomerByMail(mail);
+
+    if (customer.getCustomer_name() == null){
+      return "redirect:/lease-find-or-create-customer";
+    }
+    session.setAttribute("lease-customer", customer);
+    return "redirect:/lease-form";
+  }
+
+  @GetMapping("/lease-form")
+  public String showLeaseContract(HttpSession session, Model model) {
+    Customer customer = (Customer) session.getAttribute("lease-customer");
+    model.addAttribute("customer", customer);
+
+    return "lease-final-form";
+  }
+
 }
