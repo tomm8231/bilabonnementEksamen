@@ -259,4 +259,24 @@ public class RegistrationRepo {
       e.printStackTrace();
     }
   }
+
+  public void unreserveCarById(int car_vehicle_number) {
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = """
+          UPDATE car
+          SET car_is_reserved = 0
+          WHERE car_vehicle_number = ?;
+          """;
+
+
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setInt(1, car_vehicle_number);
+      pst.executeUpdate();
+
+    } catch (SQLException e) {
+      System.err.println("Cannot connect to database");
+      e.printStackTrace();
+    }
+  }
 }

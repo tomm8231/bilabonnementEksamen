@@ -41,4 +41,8 @@ public class RegistrationService {
     // Tilføj dage til slutdato
     return registrationRepo.fetchCarsByDate();
   }
+
+  public void unreserveCarById(int car_vehicle_number) {
+    registrationRepo.unreserveCarById(car_vehicle_number);
+  }
 }

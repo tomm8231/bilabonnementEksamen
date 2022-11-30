@@ -1,5 +1,6 @@
 package com.example.bilabonnementeksamen.controller;
 
+import com.example.bilabonnementeksamen.model.Car;
 import com.example.bilabonnementeksamen.model.Customer;
 import com.example.bilabonnementeksamen.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,6 @@ public class HomeController {
   }
 
 
-
   @GetMapping("/lease-contract")
   public String showNewContract() {
     return "lease-start-new-contract";
@@ -45,14 +45,15 @@ public class HomeController {
 
     return "redirect:/lease-available-cars";
   }
-/*
-  @GetMapping("/lease-available-cars")
-  public String showAvailableCars(Model model, @RequestParam ("rd-start-date") String startDate,
-                                  @RequestParam("rd-end-date") String endDate) {
-    model.addAttribute("cars", registrationRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDate)));
-    return "lease-available-cars";
-  }
-*/
+
+  /*
+    @GetMapping("/lease-available-cars")
+    public String showAvailableCars(Model model, @RequestParam ("rd-start-date") String startDate,
+                                    @RequestParam("rd-end-date") String endDate) {
+      model.addAttribute("cars", registrationRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDate)));
+      return "lease-available-cars";
+    }
+  */
   @GetMapping("/lease-available-cars")
   public String showAvailableCars(Model model) {
     model.addAttribute("car", registrationService.fetchCarsByDate());
@@ -61,10 +62,10 @@ public class HomeController {
 
   //sebastian
   @PostMapping("/lease-available-cars")
-  public String chooseCar(@RequestParam ("id") int id, HttpSession session) {
+  public String chooseCar(@RequestParam("id") int id, HttpSession session) {
 
     boolean carReservedStatus = registrationService.fetchCarReservedStatus(id);
-    if (carReservedStatus){
+    if (carReservedStatus) {
       return "redirect:/lease-available-cars";
     }
     registrationService.reserveCarById(id);
@@ -72,29 +73,28 @@ public class HomeController {
     //If-statement der tjekker om bilen er reserveret eller ej
 
 
-
     return "redirect:/lease-find-or-create-customer";
   }
 
 
   @GetMapping("/lease-find-or-create-customer")
-  public String showFindOrdCreateCustomer(){
+  public String showFindOrdCreateCustomer() {
     return "lease-find-or-create-customer";
   }
 
   @PostMapping("/lease-create-customer")
-  public String leaseAddCustomer(@ModelAttribute Customer customer, HttpSession session){
-  registrationService.createCustomer(customer);
-  session.setAttribute("lease-customer", customer);
+  public String leaseAddCustomer(@ModelAttribute Customer customer, HttpSession session) {
+    registrationService.createCustomer(customer);
+    session.setAttribute("lease-customer", customer);
     return "redirect:/lease-form/";
   }
 
   @PostMapping("/lease-find-returning-customer")
-  public String leaseFindCustomer(@RequestParam ("returning-costumer-mail") String mail, HttpSession session){
+  public String leaseFindCustomer(@RequestParam("returning-costumer-mail") String mail, HttpSession session) {
 
     Customer customer = registrationService.fetchCustomerByMail(mail);
 
-    if (customer.getCustomer_name() == null){
+    if (customer.getCustomer_name() == null) {
       return "redirect:/lease-find-or-create-customer";
     }
     session.setAttribute("lease-customer", customer);
@@ -107,6 +107,14 @@ public class HomeController {
     model.addAttribute("customer", customer);
 
     return "lease-final-form";
+  }
+
+  @PostMapping("/cancel-lease-contract")
+  public String cancelLeaseContract(HttpSession session) {
+    Car car = (Car) session.getAttribute("car");
+    registrationService.unreserveCarById(car.getCar_vehicle_number());
+    session.invalidate();
+    return "redirect:/lease-contract";
   }
 
 }

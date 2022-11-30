@@ -34,7 +34,9 @@
             <input type="text" id="returning-costumer-mail" name="returning-costumer-mail" class="form-control" required>
             <button class="mt-2" type="submit">søg kunde</button>
         </form>
-        <button class="btn btn-secondary btn-lg btn-block border w-50 mt-3">Annuler lejekontrakt</button>
+        <form action="/cancel-lease-contract" method="post" th:action="@{cancel-lease-contract}" class="btn btn-secondary btn-lg btn-block border w-50 mt-3">
+        <button type="submit">Annuller lejekontrakt</button>
+        </form>
     </div>
 </div>
 
