@@ -44,7 +44,7 @@
     <input type="text" id="car-hp" name="car-hp" class="form-control" readonly th:value="${car.car_model_id.getCar_hp()}">
 
     <label for="fuel-type" class="form-label"> Drivstof </label>
-    <input type="text" id="fuel-type" name="fuel-type" class="form-control" readonly th:value="${car.car_model_id.getCar_fuel_type()}">
+    <input type="text" id="fuel-type" name="fuel-type" class="form-control" readonly th:value="${car.car_model_id.getCar_fuel_type().getFuel_type()}">
 
     <label for="gearbox-type" class="form-label"> Automat/manuel </label>
     <input type="text" id="gearbox-type" name="gearbox-type" class="form-control" readonly th:value="${car.car_model_id.getCar_gearbox_type()}">
@@ -55,8 +55,8 @@
     <label for="energy-label" class="form-label"> Energimærkning </label>
     <input type="text" id="energy-label" name="energy-label" class="form-control" readonly th:value="${car.car_model_id.getCar_energy_label()}">
 
-    <label for="distance-amount" class="form-label"> Enhed for afstand </label>
-    <input type="text" id="distance-amount" name="distance-amount" class="form-control" readonly th:value="${car.car_model_id.getCar_distance_amount()}">
+    <label for="distance-amount" class="form-label">Afstand / rækkevidde</label>
+    <input type="text" id="distance-amount" name="distance-amount" class="form-control" readonly th:value="${car.car_model_id.getCar_distance_amount() + ' ' + car.car_model_id.getCar_fuel_type().getDistance_unit()}">
 
     <label for="subscription-type" class="form-label"> Abonnementstype </label>
     <input type="text" id="subscription-type" name="subscription-type" class="form-control" readonly th:value="${car.subscription_type_id.getSubscription_type_name()}">
