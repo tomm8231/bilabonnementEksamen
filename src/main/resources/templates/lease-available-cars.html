@@ -15,23 +15,35 @@
         <table class="show-cars-table table table-hover">
             <thead>
             <tr>
+<!--                (skal udkommentesres)-->
                 <th scope="col">Vogn nr</th>
-                <th scope="col">Stel nr</th>
-                <th scope="col">Bil model</th>
+                <th scope="col">Mærke</th>
+                <th scope="col">Model</th>
+                <th scope="col">HK</th>
+                <th scope="col">Brændstof</th>
+                <th scope="col">Co2 km</th>
+                <th scope="col">Gearbox</th>
                 <th scope="col">Pris/mnd</th>
+                <!--                (skal udkommentesres, da vi vælger det inden)-->
                 <th scope="col">Abo. type</th>
-                <th scope="col">Reserveret</th>
+                <th scope="col">Distance</th>
+                <th scope="col">Energimærke</th>
 
             </tr>
             </thead>
             <tbody>
             <tr th:each="c : ${car}">
                 <td th:text="${c.car_vehicle_number}">Car</td>
-                <td th:text="${c.car_chassis_number}">Car</td>
-                <td th:text="${c.car_model_id}">Car</td>
+                <td th:text="${c.getCar_model_id().car_brand}">Car</td>
+                <td th:text="${c.getCar_model_id().car_model}">Car</td>
+                <td th:text="${c.getCar_model_id().car_hp}">Car</td>
+                <td th:text="${c.getCar_model_id().getCar_fuel_type().fuel_type}">Car</td>
+                <td th:text="${c.getCar_model_id().car_co2_km}">Car</td>
+                <td th:text="${c.getCar_model_id().car_gearbox_type}">Car</td>
                 <td th:text="${c.car_price_month}">Car</td>
-                <td th:text="${c.subscription_type_id}">Car</td>
-                <td th:text="${c.car_is_reserved}">Car</td>
+                <td th:text="${c.getSubscription_type_id().subscription_type_name}">Car</td>
+                <td th:text="${c.getCar_model_id().car_distance_amount + ' ' + c.getCar_model_id().getCar_fuel_type().distance_unit}">Car</td>
+                <td th:text="${c.getCar_model_id().car_energy_label}">Car</td>
 
             </tr>
             </tbody>
