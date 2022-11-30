@@ -4,6 +4,7 @@ import com.example.bilabonnementeksamen.model.Car;
 import com.example.bilabonnementeksamen.model.CarModel;
 import com.example.bilabonnementeksamen.model.Customer;
 import com.example.bilabonnementeksamen.model.Fuel;
+import com.example.bilabonnementeksamen.model.Subscription_type;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +26,7 @@ public class RegistrationRepo {
  */
 
   private final String databaseURL = "jdbc:mysql://localhost:3306/car_leasing";
-private final String user = "car_leasing_user";
+  private final String user = "car_leasing_user";
   private final String password =  "1234";
 
   public Customer fetchCustomerByMail(String mail){
@@ -76,69 +77,65 @@ private final String user = "car_leasing_user";
   }
 
 
-  public List<CarModel> fetchCarsByDate() { // Date startDate, Date endDate
+
+  public List<Car> fetchCarsByDate() { // Date startDate, Date endDate
 
     ArrayList<Car> cars = new ArrayList<Car>();
-
-    ArrayList<CarModel> carModels = new ArrayList<CarModel>(); // TODO: TEST-liste
 
 
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
-      /*String sql = """
-          SELECT * FROM car c
-          LEFT JOIN car_model cm
-          ON c.car_model_id = cm.car_model_id
-          LEFT JOIN fuel f
-          ON cm.car_fuel_type = f.car_fuel_type
+      String sql = """
+        SELECT *
+          FROM car
+          INNER JOIN car_model
+          USING (car_model_id)
+          INNER JOIN subscription_type
+          USING (subscription_type_id)
+          INNER JOIN fuel
+          USING (car_fuel_type);
           """;
-*/
 
-      PreparedStatement pst = conn.prepareStatement("SELECT * FROM car_model");
+
+      PreparedStatement pst = conn.prepareStatement(sql);
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
 
-        int car_model_id = rs.getInt(1);
-        String car_brand = rs.getString(2);
-        String car_model = rs.getString(3);
-        int car_hp = rs.getInt(4);
-        String car_fuel_type =  rs.getString(5);
-        String car_gearbox_type = rs.getString(6);
-        double car_co2_km = rs.getDouble(7);
-        String car_energy_label = rs.getString(8);
-        int car_distance_amount = rs.getInt(9);
-        String car_description = rs.getString(10);
-
-
-        carModels.add(new CarModel(car_model_id, car_brand, car_model,
-                car_hp, car_fuel_type, car_gearbox_type,
-                car_co2_km, car_energy_label, car_distance_amount,
-                car_description));
-
-       /* int car_vehicle_number = rs.getInt(1);
-        int car_chassis_number = rs.getInt(2);
+        String car_fuel_type =  rs.getString(1);
+        int subscription_type_id = rs.getInt(2);
         int car_model_id = rs.getInt(3);
-        int car_price_month = rs.getInt(4);
-        int subscription_type_id = rs.getInt(5);
-        int car_is_reserved = rs.getInt(6);
+        int car_vehicle_number = rs.getInt(4);
+        int car_chassis_number = rs.getInt(5);
+        double car_price_month = rs.getDouble(6);
+        int car_is_reserved = rs.getInt(7);
+        String car_brand = rs.getString(8);
+        String car_model = rs.getString(9);
+        int car_hp = rs.getInt(10);
+        String car_gearbox_type = rs.getString(11);
+        double car_co2_km = rs.getDouble(12);
+        String car_energy_label = rs.getString(13);
+        double car_distance_amount = rs.getDouble(14);
+        String car_description = rs.getString(15);
+        String subscription_type_name = rs.getString(16);
+        String distance_unit = rs.getString(17);
 
-        //int car_model_id = rs.getInt(7);
-        String car_model = rs.getString(8);
-        int car_hp = rs.getInt(9);
-        String car_brand = rs.getString(10);
-        String car_fuel_type = rs.getString(11);
-        String car_gearbox_type = rs.getString(12);
-        double car_co2_km = rs.getDouble(13);
-        String car_energy_label = rs.getString(14);
-        int car_distance_amount = rs.getInt(15);
-        String car_description = rs.getString(16);
+        // Opretter et fuel objekt
+        Fuel fuel = new Fuel(car_fuel_type, distance_unit);
 
+        // Opretter et objekt af sub.type
+        Subscription_type subscription_type = new Subscription_type(subscription_type_id, subscription_type_name);
 
-        CarModel carModel = new CarModel()
-         = new Car(car_vehicle_number, car_chassis_number, car_model_id, car_price_month, subscription_type_id, car_is_reserved);
-        car.add(cars);
-         */
+        // Et carModel objekt skal have et fuel-objekt
+        CarModel carModel = new CarModel(car_model_id, car_brand, car_model,
+                car_hp, fuel, car_gearbox_type,
+                car_co2_km, car_energy_label, car_distance_amount,
+                car_description);
+
+        Car car = new Car(car_vehicle_number, car_chassis_number, carModel, car_price_month,
+            subscription_type, car_is_reserved);
+
+        cars.add(car);
 
       }
     } catch (SQLException e) {
@@ -147,7 +144,7 @@ private final String user = "car_leasing_user";
       e.printStackTrace();
     }
 
-    return carModels;
+    return cars;
 
 
   }
