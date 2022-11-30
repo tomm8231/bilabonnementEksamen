@@ -27,11 +27,11 @@ public class RegistrationRepo {
 
   private final String databaseURL = "jdbc:mysql://localhost:3306/car_leasing";
   private final String user = "car_leasing_user";
-  private final String password =  "1234";
+  private final String password = "1234";
 
-  public Customer fetchCustomerByMail(String mail){
+  public Customer fetchCustomerByMail(String mail) {
     Customer customer = new Customer();
-    try{
+    try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
       String sql = "SELECT * FROM customer where customer_mail = ?";
       PreparedStatement pst = conn.prepareStatement(sql);
@@ -48,8 +48,7 @@ public class RegistrationRepo {
         customer.setCustomer_phone_number(rs.getString(5));
 
 
-
-    }
+      }
     } catch (SQLException e) {
       System.err.println("Cannot add customer");
       e.printStackTrace();
@@ -58,24 +57,22 @@ public class RegistrationRepo {
   }
 
 
+  public void createCustomer(Customer customer) {
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "INSERT INTO customer (customer_name, customer_mail, customer_address, customer_phone_number) VALUES (?,?,?,?)";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setString(1, customer.getCustomer_name());
+      pst.setString(2, customer.getCustomer_mail());
+      pst.setString(3, customer.getCustomer_address());
+      pst.setString(4, customer.getCustomer_phone_number());
+      pst.executeUpdate();
 
-  public void createCustomer(Customer customer){
-    try{
-    Connection conn = DriverManager.getConnection(databaseURL, user, password);
-    String sql = "INSERT INTO customer (customer_name, customer_mail, customer_address, customer_phone_number) VALUES (?,?,?,?)";
-    PreparedStatement pst = conn.prepareStatement(sql);
-    pst.setString(1, customer.getCustomer_name());
-    pst.setString(2, customer.getCustomer_mail());
-    pst.setString(3, customer.getCustomer_address());
-    pst.setString(4, customer.getCustomer_phone_number());
-    pst.executeUpdate();
-
-  } catch (SQLException e) {
-    System.err.println("Cannot add customer");
-    e.printStackTrace();
+    } catch (SQLException e) {
+      System.err.println("Cannot add customer");
+      e.printStackTrace();
+    }
   }
-  }
-
 
 
   public List<Car> fetchCarsByDate() { // Date startDate, Date endDate
@@ -86,15 +83,16 @@ public class RegistrationRepo {
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
       String sql = """
-        SELECT *
-          FROM car
-          INNER JOIN car_model
-          USING (car_model_id)
-          INNER JOIN subscription_type
-          USING (subscription_type_id)
-          INNER JOIN fuel
-          USING (car_fuel_type);
-          """;
+          SELECT *
+            FROM car
+            INNER JOIN car_model
+            USING (car_model_id)
+            INNER JOIN subscription_type
+            USING (subscription_type_id)
+            INNER JOIN fuel
+            USING (car_fuel_type)
+            WHERE car_is_reserved = 0;
+            """;
 
 
       PreparedStatement pst = conn.prepareStatement(sql);
@@ -102,7 +100,7 @@ public class RegistrationRepo {
 
       while (rs.next()) {
 
-        String car_fuel_type =  rs.getString(1);
+        String car_fuel_type = rs.getString(1);
         int subscription_type_id = rs.getInt(2);
         int car_model_id = rs.getInt(3);
         int car_vehicle_number = rs.getInt(4);
@@ -128,9 +126,9 @@ public class RegistrationRepo {
 
         // Et carModel objekt skal have et fuel-objekt
         CarModel carModel = new CarModel(car_model_id, car_brand, car_model,
-                car_hp, fuel, car_gearbox_type,
-                car_co2_km, car_energy_label, car_distance_amount,
-                car_description);
+            car_hp, fuel, car_gearbox_type,
+            car_co2_km, car_energy_label, car_distance_amount,
+            car_description);
 
         Car car = new Car(car_vehicle_number, car_chassis_number, carModel, car_price_month,
             subscription_type, car_is_reserved);
@@ -154,16 +152,16 @@ public class RegistrationRepo {
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
       String sql = """
-        SELECT *
-          FROM car
-          INNER JOIN car_model
-          USING (car_model_id)
-          INNER JOIN subscription_type
-          USING (subscription_type_id)
-          INNER JOIN fuel
-          USING (car_fuel_type)
-          WHERE car_vehicle_number = ?;
-          """;
+          SELECT *
+            FROM car
+            INNER JOIN car_model
+            USING (car_model_id)
+            INNER JOIN subscription_type
+            USING (subscription_type_id)
+            INNER JOIN fuel
+            USING (car_fuel_type)
+            WHERE car_vehicle_number = ?;
+            """;
 
 
       PreparedStatement pst = conn.prepareStatement(sql);
@@ -172,7 +170,7 @@ public class RegistrationRepo {
 
       while (rs.next()) {
 
-        String car_fuel_type =  rs.getString(1);
+        String car_fuel_type = rs.getString(1);
         int subscription_type_id = rs.getInt(2);
         int car_model_id = rs.getInt(3);
         int car_vehicle_number = rs.getInt(4);
@@ -212,5 +210,53 @@ public class RegistrationRepo {
     }
 
     return car;
+  }
+
+  public int fetchCarReservedStatus(int id) {
+    int car_is_reserved = 0;
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = """
+          SELECT car_is_reserved FROM car
+          WHERE car_vehicle_number = ?;
+                              """;
+
+
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setInt(1, id);
+      ResultSet rs = pst.executeQuery();
+
+      while (rs.next()) {
+
+        car_is_reserved = rs.getInt(1);
+
+      }
+    } catch (SQLException e) {
+      System.err.println("Cannot connect to database");
+      e.printStackTrace();
+    }
+    return car_is_reserved;
+  }
+
+  public void reserveCarById(int id) {
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = """
+          UPDATE car
+          SET car_is_reserved = 1
+          WHERE car_vehicle_number = ?;
+          """;
+
+
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setInt(1, id);
+      pst.executeUpdate();
+
+    } catch (SQLException e) {
+      System.err.println("Cannot connect to database");
+      e.printStackTrace();
+    }
   }
 }

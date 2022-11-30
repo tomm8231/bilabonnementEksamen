@@ -6,6 +6,8 @@ import com.example.bilabonnementeksamen.repository.RegistrationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class RegistrationService {
@@ -27,6 +29,16 @@ public class RegistrationService {
   }
 
   public boolean fetchCarReservedStatus(int id) {
+   // 0 er false (er ikke reserveret) og 1 er true (er reserveret)
+    return registrationRepo.fetchCarReservedStatus(id) == 1;
+  }
 
+  public void reserveCarById(int id) {
+    registrationRepo.reserveCarById(id);
+  }
+
+  public List<Car> fetchCarsByDate() {
+    // Tilføj dage til slutdato
+    return registrationRepo.fetchCarsByDate();
   }
 }

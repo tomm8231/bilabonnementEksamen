@@ -64,7 +64,7 @@ public class HomeController {
   public String chooseCar(@RequestParam ("id") int id, HttpSession session) {
 
     boolean carReservedStatus = registrationService.fetchCarReservedStatus(id);
-    if (carReservedStatus.equals("reserved")){
+    if (carReservedStatus){
       return "redirect:/lease-available-cars";
     }
     registrationService.reserveCarById(id);
