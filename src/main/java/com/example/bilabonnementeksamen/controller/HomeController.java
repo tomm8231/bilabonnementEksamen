@@ -1,24 +1,22 @@
 package com.example.bilabonnementeksamen.controller;
 
 import com.example.bilabonnementeksamen.model.Customer;
-import com.example.bilabonnementeksamen.repository.RegistrationRepo;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import com.example.bilabonnementeksamen.service.RegistrationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
 
 // @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 
 @Controller
 public class HomeController {
 
-
-  RegistrationRepo registrationRepo = new RegistrationRepo();
+  @Autowired
+  RegistrationService registrationService;
 
 
   @GetMapping("/")
@@ -57,7 +55,7 @@ public class HomeController {
 */
   @GetMapping("/lease-available-cars")
   public String showAvailableCars(Model model) {
-    model.addAttribute("car", registrationRepo.fetchCarsByDate());
+    model.addAttribute("car", registrationService.fetchCarsByDate());
     return "lease-available-cars";
   }
 
@@ -65,12 +63,12 @@ public class HomeController {
   @PostMapping("/lease-available-cars")
   public String chooseCar(@RequestParam ("id") int id, HttpSession session) {
 
-    String carReservedStatus = registrationRepo.fetchCarReservedStatus(id);
+    boolean carReservedStatus = registrationService.fetchCarReservedStatus(id);
     if (carReservedStatus.equals("reserved")){
       return "redirect:/lease-available-cars";
     }
-    registrationRepo.reserveCarById(id);
-    session.setAttribute("car", registrationRepo.fetchCarsById(id));
+    registrationService.reserveCarById(id);
+    session.setAttribute("car", registrationService.fetchCarById(id));
     //If-statement der tjekker om bilen er reserveret eller ej
 
 
@@ -86,7 +84,7 @@ public class HomeController {
 
   @PostMapping("/lease-create-customer")
   public String leaseAddCustomer(@ModelAttribute Customer customer, HttpSession session){
-  registrationRepo.createCustomer(customer);
+  registrationService.createCustomer(customer);
   session.setAttribute("lease-customer", customer);
     return "redirect:/lease-form/";
   }
@@ -94,7 +92,7 @@ public class HomeController {
   @PostMapping("/lease-find-returning-customer")
   public String leaseFindCustomer(@RequestParam ("returning-costumer-mail") String mail, HttpSession session){
 
-    Customer customer = registrationRepo.fetchCustomerByMail(mail);
+    Customer customer = registrationService.fetchCustomerByMail(mail);
 
     if (customer.getCustomer_name() == null){
       return "redirect:/lease-find-or-create-customer";
