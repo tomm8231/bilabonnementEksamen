@@ -63,9 +63,16 @@ public class HomeController {
 
   //sebastian
   @PostMapping("/lease-available-cars")
-  public String chooseCar(@RequestParam ("id") int id) {
+  public String chooseCar(@RequestParam ("id") int id, HttpSession session) {
 
+    String carReservedStatus = registrationRepo.fetchCarReservedStatus(id);
+    if (carReservedStatus.equals("reserved")){
+      return "redirect:/lease-available-cars";
+    }
+    registrationRepo.reserveCarById(id);
+    session.setAttribute("car", registrationRepo.fetchCarsById(id));
     //If-statement der tjekker om bilen er reserveret eller ej
+
 
 
     return "redirect:/lease-find-or-create-customer";
