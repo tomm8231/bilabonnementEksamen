@@ -114,7 +114,7 @@ public class HomeController {
     Subscription_type subscription_type = (Subscription_type) session.getAttribute("subscription-type");
     model.addAttribute("subscription-type", subscription_type);
 
-    Car car = (Car) session.getAttribute("car-reserved");
+    Car car = (Car) session.getAttribute("car");
     model.addAttribute("car", car);
 
     Fuel fuel = (Fuel) session.getAttribute("fuel-type");
