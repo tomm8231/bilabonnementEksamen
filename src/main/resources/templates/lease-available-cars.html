@@ -16,6 +16,7 @@
             <thead>
             <tr>
 <!--                (skal udkommentesres)-->
+                <th scope="col"></th>
                 <th scope="col">Vogn nr</th>
                 <th scope="col">Mærke</th>
                 <th scope="col">Model</th>
@@ -33,6 +34,12 @@
             </thead>
             <tbody>
             <tr th:each="c : ${car}">
+                <td>
+                    <form action="/lease-available-cars" method="post" th:action="@{/lease-available-cars/}" >
+                        <input th:value="${c.car_vehicle_number}" type="hidden" name="id" readonly required>
+                        <button type="submit">Vælg</button>
+                    </form>
+                </td>
                 <td th:text="${c.car_vehicle_number}">Car</td>
                 <td th:text="${c.getCar_model_id().car_brand}">Car</td>
                 <td th:text="${c.getCar_model_id().car_model}">Car</td>

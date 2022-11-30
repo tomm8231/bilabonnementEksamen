@@ -61,13 +61,16 @@ public class HomeController {
     return "lease-available-cars";
   }
 
-/*
+  //sebastian
   @PostMapping("/lease-available-cars")
-  public String chooseCar() {
+  public String chooseCar(@RequestParam ("id") int id) {
+
     //If-statement der tjekker om bilen er reserveret eller ej
+
+
     return "redirect:/lease-find-or-create-customer";
   }
-*/
+
 
   @GetMapping("/lease-find-or-create-customer")
   public String showFindOrdCreateCustomer(){
