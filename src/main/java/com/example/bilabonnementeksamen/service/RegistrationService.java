@@ -1,7 +1,6 @@
 package com.example.bilabonnementeksamen.service;
 
-import com.example.bilabonnementeksamen.model.Car;
-import com.example.bilabonnementeksamen.model.Customer;
+import com.example.bilabonnementeksamen.model.*;
 import com.example.bilabonnementeksamen.repository.RegistrationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +43,18 @@ public class RegistrationService {
 
   public void unreserveCarById(int car_vehicle_number) {
     registrationRepo.unreserveCarById(car_vehicle_number);
+  }
+
+  // TODO: Skal den returnere en String eller Subscription???
+  public Subscription_type fetchSubscriptionById(int id) {
+    return registrationRepo.fetchCarById(id).getSubscription_type_id();
+  }
+
+  public Fuel fetchFuelTypeById(int id) {
+    return registrationRepo.fetchCarById(id).getCar_model_id().getCar_fuel_type();
+  }
+
+  public CarModel fetchCarModelById(int id) {
+    return registrationRepo.fetchCarById(id).getCar_model_id();
   }
 }
