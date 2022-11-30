@@ -15,30 +15,23 @@
         <table class="show-cars-table table table-hover">
             <thead>
             <tr>
-                <th scope="col">car_model_id</th>
-                <th scope="col">car_brand</th>
-                <th scope="col">car_model</th>
-                <th scope="col">car_hp</th>
-                <th scope="col">car_fuel_type</th>
-                <th scope="col">car_gearbox_type</th>
-                <th scope="col">car_co2_km</th>
-                <th scope="col">car_energy_label</th>
-                <th scope="col">car_distance_amount</th>
-                <th scope="col">car_description</th>
+                <th scope="col">Vogn nr</th>
+                <th scope="col">Stel nr</th>
+                <th scope="col">Bil model</th>
+                <th scope="col">Pris/mnd</th>
+                <th scope="col">Abo. type</th>
+                <th scope="col">Reserveret</th>
+
             </tr>
             </thead>
             <tbody>
-            <tr th:each="c : ${car_model}">
+            <tr th:each="c : ${car}">
+                <td th:text="${c.car_vehicle_number}">Car</td>
+                <td th:text="${c.car_chassis_number}">Car</td>
                 <td th:text="${c.car_model_id}">Car</td>
-                <td th:text="${c.car_brand}">Car</td>
-                <td th:text="${c.car_model}">Car</td>
-                <td th:text="${c.car_hp}">Car</td>
-                <td th:text="${c.car_fuel_type}">Car</td>
-                <td th:text="${c.car_gearbox_type}">Car</td>
-                <td th:text="${c.car_co2_km}">Car</td>
-                <td th:text="${c.car_energy_label}">Car</td>
-                <td th:text="${c.car_distance_amount}">Car</td>
-                <td th:text="${c.car_description}">Car</td>
+                <td th:text="${c.car_price_month}">Car</td>
+                <td th:text="${c.subscription_type_id}">Car</td>
+                <td th:text="${c.car_is_reserved}">Car</td>
 
             </tr>
             </tbody>

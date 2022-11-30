@@ -28,4 +28,12 @@ public class Subscription_type {
   public void setSubscription_type_name(String subscription_type_name) {
     this.subscription_type_name = subscription_type_name;
   }
+
+  @Override
+  public String toString() {
+    return "Subscription_type{" +
+        "subscription_type_id=" + subscription_type_id +
+        ", subscription_type_name='" + subscription_type_name + '\'' +
+        '}';
+  }
 }

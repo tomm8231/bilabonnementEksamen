@@ -109,9 +109,9 @@ public class RegistrationRepo {
         int car_chassis_number = rs.getInt(5);
         double car_price_month = rs.getDouble(6);
         int car_is_reserved = rs.getInt(7);
-        String car_brand = rs.getString(8);
-        String car_model = rs.getString(9);
-        int car_hp = rs.getInt(10);
+        String car_model = rs.getString(8);
+        int car_hp = rs.getInt(9);
+        String car_brand = rs.getString(10);
         String car_gearbox_type = rs.getString(11);
         double car_co2_km = rs.getDouble(12);
         String car_energy_label = rs.getString(13);
@@ -140,7 +140,6 @@ public class RegistrationRepo {
       }
     } catch (SQLException e) {
       System.err.println("Cannot connect to database");
-      System.out.println(databaseURL);
       e.printStackTrace();
     }
 

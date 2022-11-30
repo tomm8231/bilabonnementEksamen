@@ -57,7 +57,7 @@ public class HomeController {
 */
   @GetMapping("/lease-available-cars")
   public String showAvailableCars(Model model) {
-    model.addAttribute("car_model", registrationRepo.fetchCarsByDate());
+    model.addAttribute("car", registrationRepo.fetchCarsByDate());
     return "lease-available-cars";
   }
 
