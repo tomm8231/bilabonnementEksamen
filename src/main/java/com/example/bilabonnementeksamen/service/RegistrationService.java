@@ -5,6 +5,8 @@ import com.example.bilabonnementeksamen.repository.RegistrationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -36,9 +38,27 @@ public class RegistrationService {
     registrationRepo.reserveCarById(id);
   }
 
-  public List<Car> fetchCarsByDate() {
-    // Tilføj dage til slutdato
-    return registrationRepo.fetchCarsByDate();
+  public List<Car> fetchCarsByDate(String startDate, String endDate, String leaseType) {
+
+    //start dato tjekkes
+    LocalDate startDateBooking = LocalDate.parse(startDate);
+
+    if(startDateBooking.isBefore(LocalDate.now())){
+      startDateBooking = LocalDate.now();
+    }
+
+    //opdeler i limited eller unlimited
+    if (leaseType.equals("limited")){
+
+      LocalDate limitedEndDate = startDateBooking.plusDays(157);
+      return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking), Date.valueOf(limitedEndDate), leaseType);
+
+    } else {
+
+      return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking),Date.valueOf(endDate),leaseType);
+    }
+
+
   }
 
   public void unreserveCarById(int car_vehicle_number) {

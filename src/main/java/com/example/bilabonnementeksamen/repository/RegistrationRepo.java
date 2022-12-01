@@ -77,7 +77,7 @@ public class RegistrationRepo {
   }
 
 
-  public List<Car> fetchCarsByDate() { // Date startDate, Date endDate
+  public List<Car> fetchCarsByDate(Date startDate, Date endDate, String typeLease) {
 
     ArrayList<Car> cars = new ArrayList<Car>();
 

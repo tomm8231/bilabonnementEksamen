@@ -3,12 +3,15 @@ package com.example.bilabonnementeksamen.controller;
 import com.example.bilabonnementeksamen.model.*;
 import com.example.bilabonnementeksamen.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.util.Date;
 
 // @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 
@@ -31,24 +34,30 @@ public class HomeController {
 
 
   @GetMapping("/lease-contract")
-  public String showNewContract() {
+  public String showNewContract(Model model) {
+    model.addAttribute("today", LocalDate.now());
+//    model.addAttribute("today", LocalDate.now().getYear()+"-"+LocalDate.now().getMonth()+"-"+LocalDate.now().getDayOfMonth());
     return "lease-start-new-contract";
   }
 
   //Find biler ud fra dato og lejetype og send videre
   @PostMapping("/lease-limited-contract")
   public String findLimitedCarsByDate(@RequestParam("limited-start-date") String startDate,
-                               RedirectAttributes redirectAttributes) {
+                                      @RequestParam ("type-leasing") String typeLeasing,
+                                      RedirectAttributes redirectAttributes) {
     redirectAttributes.addAttribute("rd-start-date", startDate);
+    redirectAttributes.addAttribute("type-leasing", typeLeasing);
 
     return "redirect:/lease-available-cars";
   }
 
   @PostMapping("/lease-unlimited-contract")
   public String findUnlimitedCarsByDate(@RequestParam("unlimited-start-date") String startDate, @RequestParam("unlimited-end-date") String endDate,
-                               RedirectAttributes redirectAttributes) {
+                                        @RequestParam ("type-leasing") String typeLeasing, RedirectAttributes redirectAttributes) {
+
     redirectAttributes.addAttribute("rd-start-date", startDate);
     redirectAttributes.addAttribute("rd-end-date", endDate);
+    redirectAttributes.addAttribute("type-leasing", typeLeasing);
 
     return "redirect:/lease-available-cars";
   }
@@ -56,10 +65,13 @@ public class HomeController {
 
     @GetMapping("/lease-available-cars")
     public String showAvailableCars(Model model, @RequestParam ("rd-start-date") String startDate,
-                                    @RequestParam(value = "rd-end-date", required = false) String endDate) {
-      model.addAttribute("car", registrationService.fetchCarsByDate());
+                                    @RequestParam(value = "rd-end-date", required = false) String endDate,
+                                    @RequestParam ("type-leasing") String typeLeasing) {
+
+       model.addAttribute("car", registrationService.fetchCarsByDate(startDate, endDate, typeLeasing));
       return "lease-available-cars";
     }
+
   /*
   @GetMapping("/lease-available-cars")
   public String showAvailableCars(Model model, @RequestParam ) {
@@ -78,16 +90,9 @@ public class HomeController {
     if (carReservedStatus) {
       return "redirect:/lease-available-cars";
     }
+
     registrationService.reserveCarById(id);
     session.setAttribute("car", registrationService.fetchCarById(id));
-
-    session.setAttribute("subscription-type", registrationService.fetchSubscriptionById(id)); // fetchSubscriptionTypeById
-
-    session.setAttribute("fuel-type", registrationService.fetchFuelTypeById(id));
-
-    session.setAttribute("car-model", registrationService.fetchCarModelById(id));
-
-
     return "redirect:/lease-find-or-create-customer";
   }
 
