@@ -45,4 +45,8 @@ public class RegistrationService {
   public void unreserveCarById(int car_vehicle_number) {
     registrationRepo.unreserveCarById(car_vehicle_number);
   }
+
+  public void unreserveAllCarsFromSession() {
+    registrationRepo.unreserveAllCarsFromSession();
+  }
 }

@@ -117,4 +117,10 @@ public class HomeController {
     return "redirect:/lease-contract";
   }
 
+  @PostMapping("/unreserve-all-cars-session")
+  public String unreserveAllCarsFromSession(HttpSession session) {
+    registrationService.unreserveAllCarsFromSession();
+    session.invalidate();
+    return "redirect:/registration";
+  }
 }
