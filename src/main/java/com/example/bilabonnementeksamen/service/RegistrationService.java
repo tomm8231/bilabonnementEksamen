@@ -48,7 +48,7 @@ public class RegistrationService {
     }
 
     //opdeler i limited eller unlimited
-    if (leaseType.equals("limited")){
+    if (leaseType.equals("LIMITED")){
 
       LocalDate limitedEndDate = startDateBooking.plusDays(157);
       return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking), Date.valueOf(limitedEndDate), leaseType);
