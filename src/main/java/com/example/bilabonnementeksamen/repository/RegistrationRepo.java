@@ -85,19 +85,31 @@ public class RegistrationRepo {
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
       String sql = """
-          SELECT *
-            FROM car
-            INNER JOIN car_model
-            USING (car_model_id)
-            INNER JOIN subscription_type
-            USING (subscription_type_id)
-            INNER JOIN fuel
-            USING (car_fuel_type)
-            WHERE car_is_reserved = 0;
+            SELECT *
+             FROM car
+             INNER JOIN car_model
+             USING (car_model_id)
+             INNER JOIN subscription_type
+             USING (subscription_type_id)
+             INNER JOIN fuel
+             USING (car_fuel_type)
+             WHERE car_is_reserved = 0
+             AND subscription_type_name = ?
+             AND car_vehicle_number NOT IN
+            (SELECT car_vehicle_number
+             FROM reservation
+              WHERE (( ? < pickup_date)
+              AND (? < pickup_date))
+              OR ((? > return_date) AND (? > return_date));
             """;
 
 
       PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setString(1,typeLease);
+      pst.setDate(2,startDate);
+      pst.setDate(3,endDate);
+      pst.setDate(4,startDate);
+      pst.setDate(5,endDate);
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
