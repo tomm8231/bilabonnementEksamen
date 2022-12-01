@@ -111,17 +111,12 @@ public class HomeController {
     Customer customer = (Customer) session.getAttribute("lease-customer");
     model.addAttribute("customer", customer);
 
-    Subscription_type subscription_type = (Subscription_type) session.getAttribute("subscription-type");
-    model.addAttribute("subscription-type", subscription_type);
 
     Car car = (Car) session.getAttribute("car");
     model.addAttribute("car", car);
-
-    Fuel fuel = (Fuel) session.getAttribute("fuel-type");
-    model.addAttribute("fuel-type", fuel);
-
-    CarModel carModel = (CarModel) session.getAttribute("car-model");
-    model.addAttribute("car-model", carModel);
+    model.addAttribute("subscription-type", car.getSubscription_type_id());
+    model.addAttribute("fuel-type", car.getCar_model_id().getCar_fuel_type());
+    model.addAttribute("car-model", car.getCar_model_id());
 
     return "lease-final-form";
   }

@@ -45,7 +45,7 @@ public class RegistrationService {
     registrationRepo.unreserveCarById(car_vehicle_number);
   }
 
-  // TODO: Skal den returnere en String eller Subscription???
+
   public Subscription_type fetchSubscriptionById(int id) {
     return registrationRepo.fetchCarById(id).getSubscription_type_id();
   }
