@@ -100,7 +100,7 @@ public class RegistrationRepo {
              FROM reservation
               WHERE (( ? < pickup_date)
               AND (? < pickup_date))
-              OR ((? > return_date) AND (? > return_date));
+              OR ((? > return_date) AND (? > return_date)));
             """;
 
 

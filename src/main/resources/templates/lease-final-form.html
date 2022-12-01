@@ -24,9 +24,9 @@
 
     <label for="customer_phone_number" class="form-label"> Kundens telefonnummer </label>
     <input type="text" id="customer_phone_number" name="customer_phone_number" class="form-control" readonly th:value="${customer.customer_phone_number}">
+</form>
 
-
-
+<form action="/lease-final-form.html" th:action="@{/lease-final-form}" method="post">
     <label for="car-vehicle-number" class="form-label"> Vognnummer </label>
     <input type="text" id="car-vehicle-number" name="car-vehicle-number" class="form-control" readonly th:value="${car.getCar_vehicle_number()}">
 

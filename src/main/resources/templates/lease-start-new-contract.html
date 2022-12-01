@@ -15,7 +15,7 @@
         <form  action="/lease-limited-contract" method="post">
             <label for="limited-start-date" class="form-label"> Start dato </label>
             <input type="date" id="limited-start-date" name="limited-start-date" class="form-control" required th:min="${today}">
-            <input type="text" name="type-leasing" class="form-control" value="limited" hidden required>
+            <input type="text" name="type-leasing" class="form-control" value="LIMITED" hidden required>
 
             <button type="submit">Søg</button>
         </form>
@@ -26,7 +26,7 @@
             <input type="date" id="unlimited-start-date" name="unlimited-start-date" class="form-control" required>
             <label for="unlimited-end-date" class="form-label"> Slut dato </label>
             <input type="date" id="unlimited-end-date" name="unlimited-end-date" class="form-control" required>
-            <input type="text" name="type-leasing" class="form-control" value="unlimited" hidden required>
+            <input type="text" name="type-leasing" class="form-control" value="UNLIMITED" hidden required>
 
             <button type="submit">Søg</button>
         </form>
