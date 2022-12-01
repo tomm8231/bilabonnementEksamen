@@ -36,8 +36,16 @@ public class HomeController {
   }
 
   //Find biler ud fra dato og lejetype og send videre
-  @PostMapping("/lease-contract")
-  public String findCarsByDate(@RequestParam("start-date") String startDate, @RequestParam("end-date") String endDate,
+  @PostMapping("/lease-limited-contract")
+  public String findLimitedCarsByDate(@RequestParam("limited-start-date") String startDate,
+                               RedirectAttributes redirectAttributes) {
+    redirectAttributes.addAttribute("rd-start-date", startDate);
+
+    return "redirect:/lease-available-cars";
+  }
+
+  @PostMapping("/lease-unlimited-contract")
+  public String findUnlimitedCarsByDate(@RequestParam("unlimited-start-date") String startDate, @RequestParam("unlimited-end-date") String endDate,
                                RedirectAttributes redirectAttributes) {
     redirectAttributes.addAttribute("rd-start-date", startDate);
     redirectAttributes.addAttribute("rd-end-date", endDate);
@@ -45,19 +53,21 @@ public class HomeController {
     return "redirect:/lease-available-cars";
   }
 
-  /*
+
     @GetMapping("/lease-available-cars")
     public String showAvailableCars(Model model, @RequestParam ("rd-start-date") String startDate,
-                                    @RequestParam("rd-end-date") String endDate) {
-      model.addAttribute("cars", registrationRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDate)));
+                                    @RequestParam(value = "rd-end-date", required = false) String endDate) {
+      model.addAttribute("car", registrationService.fetchCarsByDate());
       return "lease-available-cars";
     }
-  */
+  /*
   @GetMapping("/lease-available-cars")
-  public String showAvailableCars(Model model) {
+  public String showAvailableCars(Model model, @RequestParam ) {
     model.addAttribute("car", registrationService.fetchCarsByDate());
     return "lease-available-cars";
   }
+
+   */
 
   //sebastian
   @PostMapping("/lease-available-cars")

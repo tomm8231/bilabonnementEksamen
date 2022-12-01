@@ -11,17 +11,22 @@
 <div class="d-flex h-100" >
     <nav th:replace="fragments/registration-sidebar-fragment :: registration-sidebar-fragment"></nav>
     <container class="h-100 d-flex flex-column gap-4 w-100 align-items-center justify-content-center">
-        <div><strong>Vælg start/slut på lejeperiode og type udlejning</strong></div>
-        <form  action="/lease-contract" method="post">
-            <label for="start-date" class="form-label"> Start dato </label>
-            <input type="date" id="start-date" name="start-date" class="form-control">
-            <label for="end-date" class="form-label"> Slut dato </label>
-            <input type="date" id="end-date" name="end-date" class="form-control">
-            <label for="rental-type" class="form-label"> Lejetype</label>
-            <select id="rental-type" class="form-select">
-                <option>Limited leasing</option>
-                <option>unlimited leasing</option>
-            </select>
+        <div><strong>Limited</strong></div>
+        <form  action="/lease-limited-contract" method="post">
+            <label for="limited-start-date" class="form-label"> Start dato </label>
+            <input type="date" id="limited-start-date" name="limited-start-date" class="form-control" required>
+
+
+            <button type="submit">Søg</button>
+        </form>
+
+        <div><strong>Unlimited</strong></div>
+        <form  action="/lease-unlimited-contract" method="post">
+            <label for="unlimited-start-date" class="form-label"> Start dato </label>
+            <input type="date" id="unlimited-start-date" name="unlimited-start-date" class="form-control" required>
+            <label for="unlimited-end-date" class="form-label"> Slut dato </label>
+            <input type="date" id="unlimited-end-date" name="unlimited-end-date" class="form-control" required>
+
             <button type="submit">Søg</button>
         </form>
     </container>
