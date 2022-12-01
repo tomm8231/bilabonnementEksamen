@@ -19,12 +19,13 @@
         <table class="show-cars-table table table-hover">
             <thead>
             <tr>
-                <th scope="col">Reservations nr.</th>
+                <th scope="col">ID</th>
                 <th scope="col">Vogn nr</th>
                 <th scope="col">Lejet fra</th> <!-- Udlejet fra inkl. tidspunkt-->
                 <th scope="col">Lejet til</th> <!-- Udlejet til inkl. tidspunkt-->
                 <th scope="col">Pris/mnd</th>
                 <th scope="col">Abo. type</th>
+                <th scope="col">Kunde info</th>
                 <th scope="col">Kommentar</th>
                 <th scope="col">Brændstof</th>
                 <th scope="col">Mærke</th>
@@ -39,11 +40,17 @@
                 <td th:text="${r.return_date + ' kl.' + r.return_time}">Car</td>
                 <td th:text="${r.getCar_vehicle_number().car_price_month}">Car</td>
                 <td th:text="${r.getCar_vehicle_number().getSubscription_type_id().subscription_type_name}">Car</td>
+
+                                                                    <!-- TODO: Nedenstående ville jeg gerne have alt om kunden, men kunne ikke lige få det formateret pænt               -->
                 <td>
-                    <button type="button" data-bs-toggle="popover" data-bs-placement="bottom"
+                    <button type="button" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="focus"
+                            th:title="${'Navn: ' + r.getCustomer_id().customer_name + ' Kunde adresse: '+ r.getCustomer_id().customer_address}" data-html="true" th:text="${'Vis'}"></button>
+                </td>
+
+                <td>
+                    <button type="button" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="focus"
                             th:title="${r.reservation_comment}" data-html="true" th:text="${'Vis'}"></button>
                 </td>
-<!--        original        <td th:text="${r.reservation_comment}">Car</td>-->
                 <td th:text="${r.getCar_vehicle_number().getCar_model_id().getCar_fuel_type().fuel_type}">Car</td>
                 <td th:text="${r.getCar_vehicle_number().getCar_model_id().car_model}">Car</td>
                 <td th:text="${r.getCar_vehicle_number().getCar_model_id().car_brand}">Car</td>
