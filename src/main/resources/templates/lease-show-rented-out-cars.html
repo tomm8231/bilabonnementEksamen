@@ -43,12 +43,14 @@
 
                                                                     <!-- TODO: Nedenstående ville jeg gerne have alt om kunden, men kunne ikke lige få det formateret pænt               -->
                 <td>
-                    <button type="button" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="focus"
-                            th:title="${'Navn: ' + r.getCustomer_id().customer_name + ' Kunde adresse: '+ r.getCustomer_id().customer_address}" data-html="true" th:text="${'Vis'}"></button>
+                    <button type="button" data-bs-toggle="popover" data-bs-placement="bottom"
+                            th:title="${r.getCustomer_id().customer_name + ', addr: ' + r.getCustomer_id().customer_address +
+                            ', mail: ' + r.getCustomer_id().customer_mail + ', tlf: ' + r.getCustomer_id().customer_phone_number}"
+                            data-html="true" th:text="${'Vis'}"></button>
                 </td>
 
                 <td>
-                    <button type="button" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-trigger="focus"
+                    <button type="button" data-bs-toggle="popover" data-bs-placement="bottom"
                             th:title="${r.reservation_comment}" data-html="true" th:text="${'Vis'}"></button>
                 </td>
                 <td th:text="${r.getCar_vehicle_number().getCar_model_id().getCar_fuel_type().fuel_type}">Car</td>
