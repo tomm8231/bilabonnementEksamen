@@ -81,4 +81,8 @@ public class RegistrationService {
   public void unreserveAllCarsFromSession() {
     registrationRepo.unreserveAllCarsFromSession();
   }
+
+  public List<Reservation> fetchAllReservations() {
+    return registrationRepo.fetchAllReservations();
+  }
 }

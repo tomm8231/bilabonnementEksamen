@@ -150,4 +150,10 @@ public class HomeController {
     session.invalidate();
     return "redirect:/registration";
   }
+
+  @GetMapping("/show-reserved-cars")
+  public String showReservedCars(Model model){
+    model.addAttribute("reservations",registrationService.fetchAllReservations());
+    return "lease-show-rented-out-cars";
+  }
 }
