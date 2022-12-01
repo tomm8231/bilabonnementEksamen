@@ -9,18 +9,69 @@
 
 </head>
 <body>
-<h1> It works just fine.</h1>
-<form action="#" >
+<h1> Lejekontrakt</h1>
+<div >
+<form action="/lease-final-form.html" th:action="@{/lease-final-form}" method="post">
+
     <label for="customer_name" class="form-label"> Kundens navn </label>
     <input type="text" id="customer_name" name="customer_name" class="form-control" readonly th:value="${customer.customer_name}" >
+
     <label for="customer_mail" class="form-label"> Kundens E-mail </label>
     <input type="text" id="customer_mail" name="customer_mail" class="form-control" readonly th:value="${customer.customer_mail}">
+
     <label for="customer_address" class="form-label"> Kundens Addresse </label>
     <input type="text" id="customer_address" name="customer_address" class="form-control" readonly th:value="${customer.customer_address}">
+
     <label for="customer_phone_number" class="form-label"> Kundens telefonnummer </label>
     <input type="text" id="customer_phone_number" name="customer_phone_number" class="form-control" readonly th:value="${customer.customer_phone_number}">
-    <button class="mt-2 mb-3 " type="submit">Fortsæt</button>
+
+
+
+    <label for="car-vehicle-number" class="form-label"> Vognnummer </label>
+    <input type="text" id="car-vehicle-number" name="car-vehicle-number" class="form-control" readonly th:value="${car.getCar_vehicle_number()}">
+
+    <label for="car-chassis-number" class="form-label"> Stelnummer </label>
+    <input type="text" id="car-chassis-number" name="car-chassis-number" class="form-control" readonly th:value="${car.getCar_chassis_number()}">
+
+    <label for="car-brand" class="form-label"> Mærke </label>
+    <input type="text" id="car-brand" name="car-brand" class="form-control" readonly th:value="${car.car_model_id.getCar_brand()}">
+
+    <label for="car-model" class="form-label"> Model </label>
+    <input type="text" id="car-model" name="car-model" class="form-control" readonly th:value="${car.car_model_id.getCar_model()}">
+
+    <label for="car-hp" class="form-label"> HK </label>
+    <input type="text" id="car-hp" name="car-hp" class="form-control" readonly th:value="${car.car_model_id.getCar_hp()}">
+
+    <label for="fuel-type" class="form-label"> Drivstof </label>
+    <input type="text" id="fuel-type" name="fuel-type" class="form-control" readonly th:value="${car.car_model_id.getCar_fuel_type().getFuel_type()}">
+
+    <label for="gearbox-type" class="form-label"> Automat/manuel </label>
+    <input type="text" id="gearbox-type" name="gearbox-type" class="form-control" readonly th:value="${car.car_model_id.getCar_gearbox_type()}">
+
+    <label for="co2-per-km" class="form-label"> Co2 per km </label>
+    <input type="text" id="co2-per-km" name="co2-per-km" class="form-control" readonly th:value="${car.car_model_id.getCar_co2_km()}">
+
+    <label for="energy-label" class="form-label"> Energimærkning </label>
+    <input type="text" id="energy-label" name="energy-label" class="form-control" readonly th:value="${car.car_model_id.getCar_energy_label()}">
+
+    <label for="distance-amount" class="form-label">Afstand / rækkevidde</label>
+    <input type="text" id="distance-amount" name="distance-amount" class="form-control" readonly th:value="${car.car_model_id.getCar_distance_amount() + ' ' + car.car_model_id.getCar_fuel_type().getDistance_unit()}">
+
+    <label for="subscription-type" class="form-label"> Abonnementstype </label>
+    <input type="text" id="subscription-type" name="subscription-type" class="form-control" readonly th:value="${car.subscription_type_id.getSubscription_type_name()}">
+
+    <label for="car-description" class="form-label"> Beskrivelse af bil </label>
+    <input type="text" id="car-description" name="car-description" class="form-control" readonly th:value="${car.car_model_id.getCar_description()}">
+
+    <label for="price-per-month" class="form-label"> Pris per måned </label>
+    <input type="text" id="price-per-month" name="price-per-month" class="form-control" readonly th:value="${car.car_price_month}">
+
+    <button class="mt-2 mb-3 " type="submit">Indsend lejekontrakt</button>
 </form>
+
+</div>
+
+
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

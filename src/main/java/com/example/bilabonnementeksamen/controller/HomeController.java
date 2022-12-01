@@ -1,7 +1,6 @@
 package com.example.bilabonnementeksamen.controller;
 
-import com.example.bilabonnementeksamen.model.Car;
-import com.example.bilabonnementeksamen.model.Customer;
+import com.example.bilabonnementeksamen.model.*;
 import com.example.bilabonnementeksamen.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,13 +63,19 @@ public class HomeController {
   @PostMapping("/lease-available-cars")
   public String chooseCar(@RequestParam("id") int id, HttpSession session) {
 
+    //If-statement der tjekker om bilen er reserveret eller ej
     boolean carReservedStatus = registrationService.fetchCarReservedStatus(id);
     if (carReservedStatus) {
       return "redirect:/lease-available-cars";
     }
     registrationService.reserveCarById(id);
     session.setAttribute("car", registrationService.fetchCarById(id));
-    //If-statement der tjekker om bilen er reserveret eller ej
+
+    session.setAttribute("subscription-type", registrationService.fetchSubscriptionById(id)); // fetchSubscriptionTypeById
+
+    session.setAttribute("fuel-type", registrationService.fetchFuelTypeById(id));
+
+    session.setAttribute("car-model", registrationService.fetchCarModelById(id));
 
 
     return "redirect:/lease-find-or-create-customer";
@@ -105,6 +110,13 @@ public class HomeController {
   public String showLeaseContract(HttpSession session, Model model) {
     Customer customer = (Customer) session.getAttribute("lease-customer");
     model.addAttribute("customer", customer);
+
+
+    Car car = (Car) session.getAttribute("car");
+    model.addAttribute("car", car);
+    model.addAttribute("subscription-type", car.getSubscription_type_id());
+    model.addAttribute("fuel-type", car.getCar_model_id().getCar_fuel_type());
+    model.addAttribute("car-model", car.getCar_model_id());
 
     return "lease-final-form";
   }

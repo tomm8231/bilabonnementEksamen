@@ -9,7 +9,6 @@ public class CarModel {
   private String car_model;
   private int car_hp;
   private Fuel car_fuel_type;
-  // private String car_fuel_type;
   private String car_gearbox_type;
   private double car_co2_km;
   private String car_energy_label;
