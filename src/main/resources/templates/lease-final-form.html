@@ -69,10 +69,10 @@
 
     <!-- Subscription input form -->
     <label for="reservation_id" class="form-label"> Reservation ID </label>
-    <input type="text" id="reservation_id" name="reservation_id" class="form-control" readonly th:value="${reservation.getReservation_id()}">
+    <input type="text" id="reservation_id" name="reservation_id" class="form-control" hidden th:value="0">
 
     <label for="pickup-date" class="form-label"> Hente dato </label>
-    <input type="text" id="pickup-date" name="pickup-date" class="form-control" readonly th:value="${reservation.getPickup_date()}">
+    <input type="text" id="pickup-date" name="pickup-date" class="form-control" readonly th:value="${location.getPickup_date()}">
 
     <label for="return-date" class="form-label"> Returdato</label>
     <input type="text" id="return-date" name="return-date" class="form-control" readonly th:value="${reservation.getReturn_date()}">
@@ -83,6 +83,16 @@
     <label for="return-time" class="form-label"> Retur tid</label>
     <input type="text" id="return-time" name="return-time" class="form-control" readonly th:value="${reservation.getReturn_time()}">
 
+    <label for="location-name" class="form-label">Navn på lokalitet</label>
+    <input type="text" id="location-name" name="location-name" class="form-control" readonly th:value="${reservation.getLocation_name()}">
+
+    <label for="location-address" class="form-label">Afhentningssted</label>
+    <input type="text" id="location-address" name="location-address" class="form-control" readonly th:value="${reservation.getLocation_address()}">
+
+    <label for="location-phone" class="form-label">Kontaktnummer værksted</label>
+    <input type="text" id="location-phone" name="location-phone" class="form-control" readonly th:value="${reservation.getLocation_phone()}">
+
+
     <!-- Sum til sammen? -->
     <label for="reservation_payment" class="form-label"> Betaling</label>
     <input type="text" id="reservation_payment" name="reservation_payment" class="form-control" readonly th:value="${reservation.getTotalAmount()}">
@@ -90,9 +100,8 @@
     <label for="reservation_comment" class="form-label"> Har du yderligere kommentarer til lejekontrakten?</label>
     <input type="text" id="reservation_comment" name="reservation_comment" class="form-control">
 
-    <label for="employee_id" class="form-label"> Kontrakten er behandlet af:</label>
-
-    <input type="text" id="employee_id" name="employee_id" class="form-control" readonly th:value="${reservation.getEmployee_id().getEmployee_initials()}">
+    <label for="employee_initials" class="form-label"> Kontrakten er behandlet af:</label>
+    <input type="text" id="employee_initials" name="employee_initials" class="form-control" readonly th:value="${reservation.getEmployee_id().getEmployee_initials()}">
 
     <button class="mt-2 mb-3 " type="submit">Indsend lejekontrakt</button>
 </form>

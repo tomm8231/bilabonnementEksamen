@@ -14,30 +14,11 @@
   <div>
 
     <h1 class="border-top border-dark">Ansat som er oprettet i systemet:</h1>
-    <form action="/lease-find-returning-customer" method="post">
-      <label for="returning-employee" class="form-label"> Ansat initialer </label>
-      <input type="text" id="returning-employee" name="returning-employee" class="form-control" required>
+    <form action="/lease-find-employee" method="post">
+      <label for="employee-id" class="form-label"> Ansat ID</label>
+      <input type="text" id="employee-id" name="employee-id" class="form-control" required>
       <button class="mt-2" type="submit">Søg ansat</button>
     </form>
-
-
-    <h1> Ny ansat</h1>
-    <div id="new-employee">
-      <form action="/lease-create-employee" th:action="@{lease-create-employee}" method="post" >
-
-        <input type="number" id="employee_id" name="employee_id" th:value="0" class="form-control" required hidden readonly>
-
-        <label for="employee_initials" class="form-label"> Ansat initialer </label>
-        <input type="text" id="employee_initials" name="employee_initials" class="form-control" required>
-
-        <label for="employee_name" class="form-label"> Ansat navn </label>
-        <input type="text" id="employee_name" name="employee_name" class="form-control" required>
-
-        <button class="mt-2 mb-3 " type="submit">Opret ny ansat</button>
-      </form>
-    </div>
-
-
 
 
     <form action="/cancel-lease-contract" method="post" th:action="@{/cancel-lease-contract}">

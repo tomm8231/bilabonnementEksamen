@@ -30,7 +30,8 @@
             <tr th:each="l : ${locations}">
                 <td>
                     <form action="/pickup-place" method="post" th:action="@{/pickup-place}" >
-                        <input th:value="${l.location_address}" type="hidden" name="id" readonly required>
+                        <input th:value="${l.location_address}" type="hidden" name="location_address" readonly required>
+
                         <button type="submit">Vælg</button>
                     </form>
                 </td>

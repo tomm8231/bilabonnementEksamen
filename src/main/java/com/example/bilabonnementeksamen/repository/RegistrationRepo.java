@@ -462,7 +462,7 @@ public class RegistrationRepo {
   public void createLocation(Location location) {
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
-      String sql = "INSERT INTO location (location_address, location_phone, location_name,) VALUES (?,?,?)";
+      String sql = "INSERT INTO location (location_address, location_phone_number, location_name) VALUES (?,?,?)";
       PreparedStatement pst = conn.prepareStatement(sql);
       pst.setString(1, location.getLocation_address());
       pst.setInt(2, location.getLocation_phone());
@@ -500,5 +500,57 @@ public class RegistrationRepo {
       e.printStackTrace();
     }
     return locations;
+  }
+
+  public Location fetchLocationByAddress(String locationAddress) {
+
+    Location location = new Location();
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "SELECT * FROM location where location_address = ?";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setString(1, locationAddress);
+
+      ResultSet rs = pst.executeQuery();
+
+      while (rs.next()) {
+
+        location.setLocation_address(rs.getString(1));
+        location.setLocation_phone(rs.getInt(2));
+        location.setLocation_name(rs.getString(3));
+      }
+    } catch (SQLException e) {
+      System.err.println("Cannot add customer");
+      e.printStackTrace();
+    }
+    return location;
+    }
+
+  public Employee fetchEmployeeById(int id) {
+
+    Employee employee = new Employee();
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "SELECT * FROM employee where employee_id = ?";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setInt(1, id);
+
+      ResultSet rs = pst.executeQuery();
+
+      while (rs.next()) {
+
+        employee.setEmployee_id(rs.getInt(1));
+        employee.setEmployee_initials(rs.getString(2));
+        employee.setEmployee_name(rs.getString(3));
+      }
+
+    } catch (SQLException e) {
+      System.err.println("Cannot add customer");
+      e.printStackTrace();
+    }
+    return employee;
+
   }
 }
