@@ -290,6 +290,7 @@ public class RegistrationRepo {
     }
   }
 
+  // Tommy
   public void unreserveAllCarsFromSession() {
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
@@ -412,8 +413,144 @@ public class RegistrationRepo {
     }
 
     return reservations;
-
-
   }
 
+  public void createReservation(Reservation reservation) {
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "INSERT INTO reservation () VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+      PreparedStatement pst = conn.prepareStatement(sql);
+
+      pst.setInt(1, reservation.getReservation_id());
+      pst.setObject(2, reservation.getCar_vehicle_number());
+      pst.setObject(3, reservation.getCustomer_id());
+      pst.setObject(4, reservation.getLocation_address());
+      pst.setObject(5, reservation.getPickup_date());
+      pst.setObject(6, reservation.getReturn_date());
+      pst.setObject(7, reservation.getPickup_time());
+      pst.setObject(8, reservation.getReturn_time());
+      pst.setDouble(9, reservation.getReservation_payment());
+      pst.setString(10, reservation.getReservation_comment());
+      pst.setObject(11, reservation.getEmployee_id());
+      pst.executeUpdate();
+
+    } catch (SQLException e) {
+      System.err.println("Cannot add customer");
+      e.printStackTrace();
+    }
+  }
+
+  // marcus
+  public void createEmployee(Employee employee) {
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "INSERT INTO employee (employee_id, employee_initials, employee_name) VALUES (?,?,?)";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setInt(1, employee.getEmployee_id());
+      pst.setString(2, employee.getEmployee_initials());
+      pst.setString(3, employee.getEmployee_name());
+      pst.executeUpdate();
+
+    } catch (SQLException e) {
+      System.err.println("Cannot add customer");
+      e.printStackTrace();
+    }
+  }
+
+  public void createLocation(Location location) {
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "INSERT INTO location (location_address, location_phone_number, location_name) VALUES (?,?,?)";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setString(1, location.getLocation_address());
+      pst.setInt(2, location.getLocation_phone());
+      pst.setString(3, location.getLocation_name());
+      pst.executeUpdate();
+
+    } catch (SQLException e) {
+      System.err.println("Cannot add location");
+      e.printStackTrace();
+    }
+  }
+
+  public List<Location> fetchAllLocations() {
+    ArrayList<Location> locations = new ArrayList<>();
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "SELECT * FROM location";
+      PreparedStatement pst = conn.prepareStatement(sql);
+
+      ResultSet rs = pst.executeQuery();
+
+      while (rs.next()) {
+        Location location = new Location();
+
+        location.setLocation_address(rs.getString(1));
+        location.setLocation_phone(rs.getInt(2));
+        location.setLocation_name(rs.getString(3));
+
+        locations.add(location);
+
+      }
+    } catch (SQLException e) {
+      System.err.println("Cannot fetch locations");
+      e.printStackTrace();
+    }
+    return locations;
+  }
+
+  public Location fetchLocationByAddress(String locationAddress) {
+
+    Location location = new Location();
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "SELECT * FROM location where location_address = ?";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setString(1, locationAddress);
+
+      ResultSet rs = pst.executeQuery();
+
+      while (rs.next()) {
+
+        location.setLocation_address(rs.getString(1));
+        location.setLocation_phone(rs.getInt(2));
+        location.setLocation_name(rs.getString(3));
+      }
+    } catch (SQLException e) {
+      System.err.println("Cannot add customer");
+      e.printStackTrace();
+    }
+    return location;
+    }
+
+  public Employee fetchEmployeeById(int id) {
+
+    Employee employee = new Employee();
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "SELECT * FROM employee where employee_id = ?";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setInt(1, id);
+
+      ResultSet rs = pst.executeQuery();
+
+      while (rs.next()) {
+
+        employee.setEmployee_id(rs.getInt(1));
+        employee.setEmployee_initials(rs.getString(2));
+        employee.setEmployee_name(rs.getString(3));
+      }
+
+    } catch (SQLException e) {
+      System.err.println("Cannot add customer");
+      e.printStackTrace();
+    }
+    return employee;
+
+  }
 }

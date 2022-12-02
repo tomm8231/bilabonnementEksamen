@@ -28,12 +28,14 @@
                 <button class="mt-2 mb-3 " type="submit">Fortsæt</button>
             </form>
         </div>
+
         <h1 class="border-top border-dark"> Eksisterende kunde</h1>
         <form action="/lease-find-returning-customer" method="post">
             <label for="returning-costumer-mail" class="form-label"> Kundens E-mail </label>
             <input type="text" id="returning-costumer-mail" name="returning-costumer-mail" class="form-control" required>
             <button class="mt-2" type="submit">søg kunde</button>
         </form>
+
         <form action="/cancel-lease-contract" method="post" th:action="@{/cancel-lease-contract}">
         <button class="btn btn-secondary btn-lg btn-block border w-50 mt-3" type="submit">Annuller lejekontrakt</button>
         </form>

@@ -48,18 +48,42 @@ public class RegistrationService {
     }
 
     //opdeler i limited eller unlimited
-    if (leaseType.equals("LIMITED")){
+
+    if (leaseType.equalsIgnoreCase("LIMITED")){
 
       LocalDate limitedEndDate = startDateBooking.plusDays(157);
-      return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking), Date.valueOf(limitedEndDate), leaseType);
 
-    } else {
+      return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking), Date.valueOf(limitedEndDate), leaseType.toUpperCase());
 
-      return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking),Date.valueOf(endDate),leaseType);
+    } else  {
+
+      return registrationRepo.fetchCarsByDate(Date.valueOf(startDate),Date.valueOf(endDate),leaseType.toUpperCase());
+    }
+  }
+
+  public LocalDate modifyStartDate(String startDate) {
+
+    //start dato tjekkes
+    LocalDate startDateBooking = LocalDate.parse(startDate);
+
+    if(startDateBooking.isBefore(LocalDate.now())){
+      startDateBooking = LocalDate.now();
     }
 
-
+    return startDateBooking;
   }
+
+  public LocalDate modifyEndDate(String startDate, String endDate) {
+
+    LocalDate startBooking = LocalDate.parse(startDate);
+    LocalDate bookingEndDate;
+
+    if(endDate == null){
+       return bookingEndDate = startBooking.plusDays(157);
+    }
+    return bookingEndDate = LocalDate.parse(endDate);
+  }
+
 
   public void unreserveCarById(int car_vehicle_number) {
     registrationRepo.unreserveCarById(car_vehicle_number);
@@ -84,5 +108,29 @@ public class RegistrationService {
 
   public List<Reservation> fetchAllReservations() {
     return registrationRepo.fetchAllReservations();
+  }
+
+  public void createReservation(Reservation reservation) {
+    registrationRepo.createReservation(reservation);
+  }
+
+  public void createEmployee(Employee employee) {
+    registrationRepo.createEmployee(employee);
+  }
+
+  public void createLocation(Location location) {
+    registrationRepo.createLocation(location);
+  }
+
+  public List<Location> fetchAllLocations() {
+    return registrationRepo.fetchAllLocations();
+  }
+
+  public Location fetchLocationByAddress(String locationAddress) {
+    return registrationRepo.fetchLocationByAddress(locationAddress);
+  }
+
+  public Employee fetchEmployeeById(int id) {
+    return registrationRepo.fetchEmployeeById(id);
   }
 }
