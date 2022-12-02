@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Rapportering og overvågning</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div th:fragment="registration-sidebar-fragment">
+<div th:fragment="business-sidebar-fragment">
     <div class="flex-shrink-0 p-3 bg-white h-100 border-end" style="width: 240px;">
         <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
             <!--  <svg class="bi me-2" width="30" height="24">
@@ -28,22 +28,22 @@
                     <ul class="btn-toggle-nav fw-normal pb-1 small list-unstyled ps-4"> <!-- ps-4 = padding start -->
                         <li><a href="#" class="link-dark rounded">Tilgængelige biler</a></li>
                         <li><a th:href="@{show-reserved-cars}" class="link-dark rounded">Udlejede biler</a></li>
-                        <li><a href="#" class="link-dark rounded">Nye biler</a></li>
+                        <li><a href="#" class="link-dark rounded">Pris udlejede biler</a></li>
                     </ul>
                 </div>
             </li>
             <li class="mb-1">
                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
                         data-bs-target="#dashboard-collapse" aria-expanded="false">
-                    Kontrakter
+               Rapportering
                 </button>
                 <div class="collapse" id="dashboard-collapse" style="">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
                         <!-- ms-2 = margin start .me-2 = 0.5rem-->
-                        <li><a th:href="@{lease-contract}" class="link-dark rounded">Opret ny lejekontrakt</a></li>
-                        <li><a href="#" class="link-dark rounded">Opret ny købskontrakt</a></li>
-                        <li><a href="#" class="link-dark rounded">Søg i kunderegister</a></li>
-                        <li><a href="#" class="link-dark rounded"></a></li>
+                        <li><a th:href="@{/}" class="link-dark rounded">Money money</a></li>
+                        <li><a th:href="@{/}" class="link-dark rounded">Link</a></li>
+                        <li><a th:href="@{/}" class="link-dark rounded">Link</a></li>
+                        <li><a th:href="@{/}" class="link-dark rounded"></a>Link</li>
                     </ul>
                 </div>
             </li>

@@ -20,6 +20,9 @@ public class HomeController {
   @Autowired
   RegistrationService registrationService;
 
+  //TODO: Hvordan kobles dette?
+  private BusinessInsightController businessInsightController;
+
 
   @GetMapping("/")
   public String index() {

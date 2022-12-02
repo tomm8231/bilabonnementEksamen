@@ -13,7 +13,7 @@
     <nav th:replace="fragments/registration-sidebar-fragment :: registration-sidebar-fragment"></nav>
     <container class= "h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
 
-        <h1> Du leder efter en bil i perioden xx.xx.xxxx - xx.xx.xxxx</h1>
+        <h3> Lejeperiode: </h3>
 
         <table class="show-cars-table table table-hover">
             <thead>
@@ -43,6 +43,7 @@
                         <button type="submit">Reservér</button>
                     </form>
                 </td>
+
                 <td th:text="${c.car_vehicle_number}">Car</td>
                 <td th:text="${c.getCar_model_id().car_brand}">Car</td>
                 <td th:text="${c.getCar_model_id().car_model}">Car</td>

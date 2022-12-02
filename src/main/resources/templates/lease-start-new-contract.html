@@ -13,7 +13,7 @@
     <container class="h-100 d-flex flex-column gap-4 w-100 align-items-center justify-content-center">
         <div><strong>Limited</strong></div>
 
-        <form  action="/lease-limited-contract" method="post">
+        <form action="/lease-limited-contract" method="post">
             <label for="limited-start-date" class="form-label"> Start dato </label>
             <input type="date" id="limited-start-date" name="limited-start-date" class="form-control" required th:min="${today}">
             <input type="text" name="type-leasing" class="form-control" value="LIMITED" hidden required>
