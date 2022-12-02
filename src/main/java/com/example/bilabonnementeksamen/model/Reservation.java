@@ -38,6 +38,11 @@ public class Reservation {
     this.employee_id = employee_id;
   }
 
+  // TODO: lave denne
+  public double getTotalAmount(){
+    // finde samlet pris for leje
+    return reservation_payment;
+  }
 
   public int getReservation_id() {
     return reservation_id;

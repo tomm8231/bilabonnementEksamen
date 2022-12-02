@@ -413,8 +413,50 @@ public class RegistrationRepo {
     }
 
     return reservations;
+  }
 
+  public void createReservation(Reservation reservation) {
 
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "INSERT INTO reservation () VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+      PreparedStatement pst = conn.prepareStatement(sql);
+
+      pst.setInt(1, reservation.getReservation_id());
+      pst.setObject(2, reservation.getCar_vehicle_number());
+      pst.setObject(3, reservation.getCustomer_id());
+      pst.setObject(4, reservation.getLocation_address());
+      pst.setObject(5, reservation.getPickup_date());
+      pst.setObject(6, reservation.getReturn_date());
+      pst.setObject(7, reservation.getPickup_time());
+      pst.setObject(8, reservation.getReturn_time());
+      pst.setDouble(9, reservation.getReservation_payment());
+      pst.setString(10, reservation.getReservation_comment());
+      pst.setObject(11, reservation.getEmployee_id());
+      pst.executeUpdate();
+
+    } catch (SQLException e) {
+      System.err.println("Cannot add customer");
+      e.printStackTrace();
+    }
+  }
+
+  // marcus
+  public void createEmployee(Employee employee) {
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "INSERT INTO employee (employee_id, employee_initials, employee_name) VALUES (?,?,?)";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setInt(1, employee.getEmployee_id());
+      pst.setString(2, employee.getEmployee_initials());
+      pst.setString(3, employee.getEmployee_name());
+      pst.executeUpdate();
+
+    } catch (SQLException e) {
+      System.err.println("Cannot add customer");
+      e.printStackTrace();
+    }
   }
 
   public void createLocation(Location location) {
