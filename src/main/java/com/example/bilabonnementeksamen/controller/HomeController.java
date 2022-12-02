@@ -163,12 +163,12 @@ public class HomeController {
 
   // Marcus og Tommy
   @PostMapping("/lease-form")
-  public String makeLeaseContract(@ModelAttribute Reservation reservation,
-                                  HttpSession session, @RequestParam("reservation-comment") String reservationComment){
+  public String makeLeaseContract(@ModelAttribute Reservation reservation){
     registrationService.createReservation(reservation);
-    session.setAttribute("reservation", reservation);
-    session.setAttribute("reservation-comment", reservationComment);
-        return "redirect:/lease-form-finished";
+//    session.setAttribute("reservation", reservation);  //er dette nødvendigt?
+//    session.setAttribute("reservation-comment", reservationComment); //er dette nødvendigt?
+//        return "redirect:/lease-form-finished";
+    return "redirect:/show-reserved-cars";
   }
 
   /*    Reservation reservation = (Reservation) session.getAttribute("id");

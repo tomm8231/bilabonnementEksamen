@@ -92,8 +92,9 @@
 
     <label for="employee_name" class="form-label"> Medarbejder fulde navn:</label>
     <input type="text" id="employee_name" name="employee_name" class="form-control" readonly th:value="${employee.employee_name}">
+</form>
 
-
+    <form action="/lease-form" th:action="@{/lease-form}" method="post">
     <!-- Reservation input form -->
 
     <label for="reservation_id" class="form-label"> Reservation ID </label>
@@ -109,15 +110,18 @@
     <input type="time" id="pickup-time" name="pickup-time" class="form-control">
 
     <label for="return-time" class="form-label"> Retur tid</label>
-    <input type="text" id="return-time" name="return-time" class="form-control">
+    <input type="time" id="return-time" name="return-time" class="form-control">
 
     <label for="reservation_comment" class="form-label"> Har du yderligere kommentarer til lejekontrakten?</label>
     <input type="text" id="reservation_comment" name="reservation_comment" class="form-control">
 
+    <!--   Vises ikke, men skal bruges for at oprettet objektet reservation     -->
+    <input type="text" id="reservation-car-vehicle-number" name="car-vehicle-number" class="form-control" readonly hidden th:value="${car.getCar_vehicle_number()}">
+    <input type="text" id="reservation-customer_id" name="customer_name" class="form-control" readonly hidden th:value="${customer.customer_id}" >
+    <input type="text" id="reservation-location-address" name="location-address" class="form-control" readonly hidden th:value="${location.getLocation_address()}">
 
 
-
-    <!-- Sum til sammen? -->
+        <!-- Sum til sammen? -->
 <!--    <label for="reservation_payment" class="form-label"> Betaling</label>-->
 <!--    <input type="text" id="reservation_payment" name="reservation_payment" class="form-control" readonly th:value="${reservation.getTotalAmount()}">-->
 

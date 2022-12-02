@@ -419,20 +419,22 @@ public class RegistrationRepo {
 
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
-      String sql = "INSERT INTO reservation () VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+//      String sql = "INSERT INTO reservation () VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+      String sql = "INSERT INTO reservation(car_vehicle_number, customer_id, location_address, pickup_date, return_date, pickup_time, return_time, reservation_payment, reservation_comment, employee_id)\n" +
+          "VALUES(?,?,?,?,?,?,?,?,?,?)";
       PreparedStatement pst = conn.prepareStatement(sql);
 
-      pst.setInt(1, reservation.getReservation_id());
-      pst.setObject(2, reservation.getCar_vehicle_number());
-      pst.setObject(3, reservation.getCustomer_id());
-      pst.setObject(4, reservation.getLocation_address());
-      pst.setObject(5, reservation.getPickup_date());
-      pst.setObject(6, reservation.getReturn_date());
-      pst.setObject(7, reservation.getPickup_time());
-      pst.setObject(8, reservation.getReturn_time());
-      pst.setDouble(9, reservation.getReservation_payment());
-      pst.setString(10, reservation.getReservation_comment());
-      pst.setObject(11, reservation.getEmployee_id());
+//      pst.setInt(1, reservation.getReservation_id()); -id tildeles af databasen
+      pst.setInt(1, reservation.getCar_vehicle_number().getCar_vehicle_number());
+      pst.setInt(2, reservation.getCustomer_id().getCustomer_id());
+      pst.setString(3, reservation.getLocation_address().getLocation_address());
+      pst.setDate(4, (Date) reservation.getPickup_date());
+      pst.setDate(5, (Date) reservation.getReturn_date());
+      pst.setTime(6, reservation.getPickup_time());
+      pst.setTime(7, reservation.getReturn_time());
+      pst.setDouble(8, reservation.getReservation_payment());
+      pst.setString(9, reservation.getReservation_comment());
+      pst.setInt(10, reservation.getEmployee_id().getEmployee_id());
       pst.executeUpdate();
 
     } catch (SQLException e) {
