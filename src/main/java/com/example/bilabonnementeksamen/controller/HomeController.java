@@ -2,6 +2,7 @@ package com.example.bilabonnementeksamen.controller;
 
 import com.example.bilabonnementeksamen.model.*;
 import com.example.bilabonnementeksamen.service.RegistrationService;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 
 // Før man har en database
 // @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
@@ -69,8 +73,11 @@ public class HomeController {
     public String showAvailableCars(Model model, @RequestParam ("rd-start-date") String startDate,
                                     @RequestParam(value = "rd-end-date", required = false) String endDate,
                                     @RequestParam ("type-leasing") String typeLeasing, HttpSession session) {
+
+
+    LocalDate returnDate = registrationService.modifyEndDate(startDate,endDate); //Man kan ikke ændre på, hvis endDate er null, så derfor en en LokalDate
     session.setAttribute("start-date", registrationService.modifyStartDate(startDate));
-    session.setAttribute("end-date", registrationService.modifyEndDate(startDate, endDate));
+    session.setAttribute("end-date", returnDate);
     model.addAttribute("car", registrationService.fetchCarsByDate(startDate, endDate, typeLeasing));
       return "lease-available-cars";
     }
@@ -141,8 +148,9 @@ public class HomeController {
   @GetMapping("/lease-final-form")
   // Skal man bruge @RequestParam for at
   public String showLeaseContract(HttpSession session, Model model) {
+
     Customer customer = (Customer) session.getAttribute("lease-customer");
-    model.addAttribute("lease-customer", customer);
+    model.addAttribute("customer", customer);
 
     Car car = (Car) session.getAttribute("car");
     model.addAttribute("car", car);
@@ -151,19 +159,53 @@ public class HomeController {
     model.addAttribute("location", location);
 
     Employee employee = (Employee) session.getAttribute("lease-employee");
-    model.addAttribute("lease-employee", employee);
+    model.addAttribute("employee", employee);
+
+    LocalDate bookingStartDate = (LocalDate) session.getAttribute("start-date");
+    model.addAttribute("startDate",bookingStartDate);
+
+    LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
+    model.addAttribute("endDate",bookingEndDate);
+
 
     return "lease-final-form";
   }
 
   // Marcus og Tommy
   @PostMapping("/lease-form")
-  public String makeLeaseContract(@ModelAttribute Reservation reservation,
-                                  HttpSession session, @RequestParam("reservation-comment") String reservationComment){
+  public String makeLeaseContract(@ModelAttribute Reservation reservation, HttpSession session,
+                                  @RequestParam ("pickup-time") Time pickupTime,
+                                  @RequestParam ("return-time") Time returnTime,
+                                  @RequestParam ("reservation_comment")String reservationComment,
+                                  @RequestParam ("pickup-date") Date pickupDate,
+                                  @RequestParam ("pickup-date") Date returnDate){
+
+    Reservation finalReservation = reservation;
+
+    //hvor vil vi lave den sidste del af objektet?
+    Customer customer = (Customer) session.getAttribute("lease-customer");
+    Car car = (Car) session.getAttribute("car");
+    Location location = (Location) session.getAttribute("lease-location");
+    Employee employee = (Employee) session.getAttribute("lease-employee");
+
+    finalReservation.setCustomer_id(customer);
+    finalReservation.setCar_vehicle_number(car);
+    finalReservation.setLocation_address(location);
+    finalReservation.setEmployee_id(employee);
+    finalReservation.setPickup_time(pickupTime);
+    finalReservation.setReturn_time(returnTime);
+    finalReservation.setReservation_comment(reservationComment);
+    finalReservation.setReturn_date(returnDate);
+    finalReservation.setPickup_date(pickupDate);
+    //slut på objekt skabelse
+
     registrationService.createReservation(reservation);
-    session.setAttribute("reservation", reservation);
-    session.setAttribute("reservation-comment", reservationComment);
-        return "redirect:/lease-form-finished";
+
+
+//    session.setAttribute("reservation", reservation);  //er dette nødvendigt?
+//    session.setAttribute("reservation-comment", reservationComment); //er dette nødvendigt?
+//        return "redirect:/lease-form-finished";
+    return "redirect:/show-reserved-cars";
   }
 
   /*    Reservation reservation = (Reservation) session.getAttribute("id");
