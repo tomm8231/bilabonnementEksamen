@@ -48,16 +48,17 @@ public class RegistrationService {
     }
 
     //opdeler i limited eller unlimited
-    if (leaseType.equals("LIMITED")){
+
+    if (leaseType.equalsIgnoreCase("LIMITED")){
 
       LocalDate limitedEndDate = startDateBooking.plusDays(157);
-      return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking), Date.valueOf(limitedEndDate), leaseType);
 
-    } else {
+      return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking), Date.valueOf(limitedEndDate), leaseType.toUpperCase());
 
-      return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking),Date.valueOf(endDate),leaseType);
+    } else  {
+
+      return registrationRepo.fetchCarsByDate(Date.valueOf(startDate),Date.valueOf(endDate),leaseType.toUpperCase());
     }
-
 
   }
 
@@ -84,5 +85,13 @@ public class RegistrationService {
 
   public List<Reservation> fetchAllReservations() {
     return registrationRepo.fetchAllReservations();
+  }
+
+  public void createReservation(Reservation reservation) {
+    registrationRepo.createReservation(reservation);
+  }
+
+  public void createEmployee(Employee employee) {
+    registrationRepo.createEmployee(employee);
   }
 }

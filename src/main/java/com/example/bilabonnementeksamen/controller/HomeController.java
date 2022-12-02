@@ -3,7 +3,6 @@ package com.example.bilabonnementeksamen.controller;
 import com.example.bilabonnementeksamen.model.*;
 import com.example.bilabonnementeksamen.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +10,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.Date;
 
+// Før man har en database
 // @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 
 @Controller
@@ -36,11 +35,10 @@ public class HomeController {
   @GetMapping("/lease-contract")
   public String showNewContract(Model model) {
     model.addAttribute("today", LocalDate.now());
-//    model.addAttribute("today", LocalDate.now().getYear()+"-"+LocalDate.now().getMonth()+"-"+LocalDate.now().getDayOfMonth());
     return "lease-start-new-contract";
   }
 
-  //Find biler ud fra dato og lejetype og send videre
+  // Fælles  - Find biler ud fra dato og lejetype og send videre
   @PostMapping("/lease-limited-contract")
   public String findLimitedCarsByDate(@RequestParam("limited-start-date") String startDate,
                                       @RequestParam ("type-leasing") String typeLeasing,
@@ -51,6 +49,7 @@ public class HomeController {
     return "redirect:/lease-available-cars";
   }
 
+  // Fælles
   @PostMapping("/lease-unlimited-contract")
   public String findUnlimitedCarsByDate(@RequestParam("unlimited-start-date") String startDate, @RequestParam("unlimited-end-date") String endDate,
                                         @RequestParam ("type-leasing") String typeLeasing, RedirectAttributes redirectAttributes) {
@@ -62,7 +61,7 @@ public class HomeController {
     return "redirect:/lease-available-cars";
   }
 
-
+// Fælles
     @GetMapping("/lease-available-cars")
     public String showAvailableCars(Model model, @RequestParam ("rd-start-date") String startDate,
                                     @RequestParam(value = "rd-end-date", required = false) String endDate,
@@ -72,14 +71,6 @@ public class HomeController {
       return "lease-available-cars";
     }
 
-  /*
-  @GetMapping("/lease-available-cars")
-  public String showAvailableCars(Model model, @RequestParam ) {
-    model.addAttribute("car", registrationService.fetchCarsByDate());
-    return "lease-available-cars";
-  }
-
-   */
 
   //sebastian
   @PostMapping("/lease-available-cars")
@@ -93,6 +84,7 @@ public class HomeController {
 
     registrationService.reserveCarById(id);
     session.setAttribute("car", registrationService.fetchCarById(id));
+
     return "redirect:/lease-find-or-create-customer";
   }
 
@@ -109,6 +101,19 @@ public class HomeController {
     return "redirect:/lease-form/";
   }
 
+  @GetMapping("/lease-find-or-create-employee")
+  public String showFindOrdCreateEmployee() {
+    return "lease-find-or-employee";
+  }
+
+  @PostMapping("/lease-create-employee")
+  public String leaseAddEmployee(@ModelAttribute Employee employee, HttpSession session) {
+    registrationService.createEmployee(employee);
+    session.setAttribute("lease-employee", employee);
+    return "redirect:/lease-final-form/";
+  }
+
+  // Sebastian
   @PostMapping("/lease-find-returning-customer")
   public String leaseFindCustomer(@RequestParam("returning-costumer-mail") String mail, HttpSession session) {
 
@@ -121,21 +126,40 @@ public class HomeController {
     return "redirect:/lease-form";
   }
 
+// Sebastian og Marcus
   @GetMapping("/lease-form")
+  // Skal man bruge @RequestParam for at
   public String showLeaseContract(HttpSession session, Model model) {
     Customer customer = (Customer) session.getAttribute("lease-customer");
     model.addAttribute("customer", customer);
 
-
     Car car = (Car) session.getAttribute("car");
     model.addAttribute("car", car);
-    model.addAttribute("subscription-type", car.getSubscription_type_id());
+
+// HvOR skal den settes og hvor skal den have get. Det er jo nogle af parametrene til reservation,
+    // som allerede er sat... og egentlig kun kommentar som er ny?
+    Reservation reservation = (Reservation) session.getAttribute("id");
+    model.addAttribute("reservation", reservation);
+
+    /*model.addAttribute("subscription-type", car.getSubscription_type_id());
     model.addAttribute("fuel-type", car.getCar_model_id().getCar_fuel_type());
     model.addAttribute("car-model", car.getCar_model_id());
 
+     */
     return "lease-final-form";
   }
 
+  // Marcus og Tommy
+  @PostMapping("/lease-form")
+  public String makeLeaseContract(@ModelAttribute Reservation reservation,
+                                  HttpSession session, @RequestParam("reservation-comment") String reservationComment){
+    registrationService.createReservation(reservation);
+    session.setAttribute("reservation", reservation);
+    session.setAttribute("reservation-comment", reservationComment);
+        return "redirect:/lease-form-finished";
+  }
+
+  // Sebastian
   @PostMapping("/cancel-lease-contract")
   public String cancelLeaseContract(HttpSession session) {
     Car car = (Car) session.getAttribute("car");
@@ -144,6 +168,7 @@ public class HomeController {
     return "redirect:/lease-contract";
   }
 
+ // Tommy
   @PostMapping("/unreserve-all-cars-session")
   public String unreserveAllCarsFromSession(HttpSession session) {
     registrationService.unreserveAllCarsFromSession();
