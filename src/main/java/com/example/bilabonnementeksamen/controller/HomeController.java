@@ -156,4 +156,18 @@ public class HomeController {
     model.addAttribute("reservations",registrationService.fetchAllReservations());
     return "lease-show-rented-out-cars";
   }
+
+  @GetMapping("/pickup-place")
+  public String showSelectPickupPlace(Model model) {
+    model.addAttribute("locations", registrationService.fetchAllLocations());
+    return "lease-select-location";
+  }
+
+  @PostMapping("/pickup-place")
+  public String selectPickupPlace(@ModelAttribute Location location, HttpSession session) {
+    registrationService.createLocation(location);
+    session.setAttribute("lease-location", location);
+    return "redirect:/lease-find-employee";
+  }
+
 }

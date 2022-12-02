@@ -85,4 +85,12 @@ public class RegistrationService {
   public List<Reservation> fetchAllReservations() {
     return registrationRepo.fetchAllReservations();
   }
+
+  public void createLocation(Location location) {
+    registrationRepo.createLocation(location);
+  }
+
+  public List<Location> fetchAllLocations() {
+    return registrationRepo.fetchAllLocations();
+  }
 }
