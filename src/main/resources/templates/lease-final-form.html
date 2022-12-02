@@ -13,6 +13,10 @@
 
 <form action="/lease-final-form" th:action="@{/lease-final-form}" method="post">
 
+    <!-- Customer   -->
+
+    <input type="text" id="customer_id" name="customer_name" class="form-control" readonly th:value="${customer.customer_id}" >
+
     <label for="customer_name" class="form-label"> Kundens navn </label>
     <input type="text" id="customer_name" name="customer_name" class="form-control" readonly th:value="${customer.customer_name}" >
 
@@ -23,10 +27,10 @@
     <input type="text" id="customer_address" name="customer_address" class="form-control" readonly th:value="${customer.customer_address}">
 
     <label for="customer_phone_number" class="form-label"> Kundens telefonnummer </label>
-    <input type="text" id="customer_phone_number" name="customer_phone_number" class="form-control" readonly th:value="${customer.customer_phone_number}">
-</form>
+    <input type="number" id="customer_phone_number" name="customer_phone_number" class="form-control" readonly th:value="${customer.customer_phone_number}">
 
-<form action="/lease-final-form" th:action="@{/lease-final-form}" method="post">
+    <!--    Car    -->
+
     <label for="car-vehicle-number" class="form-label"> Vognnummer </label>
     <input type="text" id="car-vehicle-number" name="car-vehicle-number" class="form-control" readonly th:value="${car.getCar_vehicle_number()}">
 
@@ -66,42 +70,57 @@
     <label for="price-per-month" class="form-label"> Pris per måned </label>
     <input type="text" id="price-per-month" name="price-per-month" class="form-control" readonly th:value="${car.car_price_month}">
 
+    <!--  Lokalitet -->
 
-    <!-- Subscription input form -->
+    <label for="location-name" class="form-label">Navn på lokalitet</label>
+    <input type="text" id="location-name" name="location-name" class="form-control" readonly th:value="${location.location_name}">
+
+    <label for="location-address" class="form-label">Afhentningssted</label>
+    <input type="text" id="location-address" name="location-address" class="form-control" readonly th:value="${location.getLocation_address()}">
+
+    <label for="location-phone" class="form-label">Kontaktnummer værksted</label>
+    <input type="text" id="location-phone" name="location-phone" class="form-control" readonly th:value="${location.location_phone}">
+
+    <!-- Employee   -->
+
+
+    <label for="employee_id" class="form-label"> Medarbejder id:</label>
+    <input type="text" id="employee_id" name="employee_id" class="form-control" readonly th:value="${employee.employee_id}">
+
+    <label for="employee_initials" class="form-label"> Medarbejder initialer:</label>
+    <input type="text" id="employee_initials" name="employee_initials" class="form-control" readonly th:value="${employee.employee_initials}">
+
+    <label for="employee_name" class="form-label"> Medarbejder fulde navn:</label>
+    <input type="text" id="employee_name" name="employee_name" class="form-control" readonly th:value="${employee.employee_name}">
+
+
+    <!-- Reservation input form -->
+
     <label for="reservation_id" class="form-label"> Reservation ID </label>
     <input type="text" id="reservation_id" name="reservation_id" class="form-control" hidden th:value="0">
 
     <label for="pickup-date" class="form-label"> Hente dato </label>
-    <input type="text" id="pickup-date" name="pickup-date" class="form-control" readonly th:value="${location.getPickup_date()}">
+    <input type="date" id="pickup-date" name="pickup-date" class="form-control" readonly th:value="${startDate}">
 
     <label for="return-date" class="form-label"> Returdato</label>
-    <input type="text" id="return-date" name="return-date" class="form-control" readonly th:value="${reservation.getReturn_date()}">
+    <input type="date" id="return-date" name="return-date" class="form-control" readonly th:value="${endDate}">
 
     <label for="pickup-time" class="form-label"> Hente tid</label>
-    <input type="text" id="pickup-time" name="pickup-time" class="form-control" readonly th:value="${reservation.getPickup_time()}">
+    <input type="time" id="pickup-time" name="pickup-time" class="form-control">
 
     <label for="return-time" class="form-label"> Retur tid</label>
-    <input type="text" id="return-time" name="return-time" class="form-control" readonly th:value="${reservation.getReturn_time()}">
-
-    <label for="location-name" class="form-label">Navn på lokalitet</label>
-    <input type="text" id="location-name" name="location-name" class="form-control" readonly th:value="${reservation.getLocation_name()}">
-
-    <label for="location-address" class="form-label">Afhentningssted</label>
-    <input type="text" id="location-address" name="location-address" class="form-control" readonly th:value="${reservation.getLocation_address()}">
-
-    <label for="location-phone" class="form-label">Kontaktnummer værksted</label>
-    <input type="text" id="location-phone" name="location-phone" class="form-control" readonly th:value="${reservation.getLocation_phone()}">
-
-
-    <!-- Sum til sammen? -->
-    <label for="reservation_payment" class="form-label"> Betaling</label>
-    <input type="text" id="reservation_payment" name="reservation_payment" class="form-control" readonly th:value="${reservation.getTotalAmount()}">
+    <input type="text" id="return-time" name="return-time" class="form-control">
 
     <label for="reservation_comment" class="form-label"> Har du yderligere kommentarer til lejekontrakten?</label>
     <input type="text" id="reservation_comment" name="reservation_comment" class="form-control">
 
-    <label for="employee_initials" class="form-label"> Kontrakten er behandlet af:</label>
-    <input type="text" id="employee_initials" name="employee_initials" class="form-control" readonly th:value="${reservation.getEmployee_id().getEmployee_initials()}">
+
+
+
+    <!-- Sum til sammen? -->
+<!--    <label for="reservation_payment" class="form-label"> Betaling</label>-->
+<!--    <input type="text" id="reservation_payment" name="reservation_payment" class="form-control" readonly th:value="${reservation.getTotalAmount()}">-->
+
 
     <button class="mt-2 mb-3 " type="submit">Indsend lejekontrakt</button>
 </form>

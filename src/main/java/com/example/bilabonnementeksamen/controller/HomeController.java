@@ -66,6 +66,7 @@ public class HomeController {
     public String showAvailableCars(Model model, @RequestParam ("rd-start-date") String startDate,
                                     @RequestParam(value = "rd-end-date", required = false) String endDate,
                                     @RequestParam ("type-leasing") String typeLeasing, HttpSession session) {
+
     session.setAttribute("start-date", registrationService.modifyStartDate(startDate));
     session.setAttribute("end-date", registrationService.modifyEndDate(startDate, endDate));
     model.addAttribute("car", registrationService.fetchCarsByDate(startDate, endDate, typeLeasing));
@@ -138,8 +139,9 @@ public class HomeController {
   @GetMapping("/lease-final-form")
   // Skal man bruge @RequestParam for at
   public String showLeaseContract(HttpSession session, Model model) {
+
     Customer customer = (Customer) session.getAttribute("lease-customer");
-    model.addAttribute("lease-customer", customer);
+    model.addAttribute("customer", customer);
 
     Car car = (Car) session.getAttribute("car");
     model.addAttribute("car", car);
@@ -148,7 +150,13 @@ public class HomeController {
     model.addAttribute("location", location);
 
     Employee employee = (Employee) session.getAttribute("lease-employee");
-    model.addAttribute("lease-employee", employee);
+    model.addAttribute("employee", employee);
+
+    LocalDate bookingStartDate = (LocalDate) session.getAttribute("start-date");
+    model.addAttribute("startDate",bookingStartDate);
+
+    LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
+    model.addAttribute("endDate",bookingStartDate);
 
     return "lease-final-form";
   }
