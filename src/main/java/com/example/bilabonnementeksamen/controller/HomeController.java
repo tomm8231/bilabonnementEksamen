@@ -172,7 +172,7 @@ public class HomeController {
 
   // Marcus og Tommy
   @PostMapping("/lease-form")
-  public String makeLeaseContract(@ModelAttribute Reservation reservation, HttpSession session,
+  public String makeLeaseContract(HttpSession session,
                                   @RequestParam ("pickup-time") String pickupTime,
                                   @RequestParam ("return-time") String returnTime,
                                   @RequestParam ("reservation_payment")int reservationPayment,

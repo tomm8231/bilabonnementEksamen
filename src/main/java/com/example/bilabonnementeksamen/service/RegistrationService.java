@@ -136,6 +136,7 @@ public class RegistrationService {
                              LocalDate pickup_date, LocalDate return_date, String pickup_time, String return_time,
                              int reservation_payment, String reservation_comment, Employee employee_id){
 
+    //String der modtages er i "hr:min", men Time format i SQL kræver "hr:min:sec", derfor en tilføjelse til string
     String fixedPickupTime = pickup_time + ":00";
     String fixedReturnTime = return_time + ":00";
 
