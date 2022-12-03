@@ -417,7 +417,6 @@ public class RegistrationRepo {
     return reservations;
   }
 
-  // TODO Virker MEN med Hardcoded tid, da der sker en fejl pga. manglende nano-sekunder
   public void createReservation(Car car_vehicle_number, Customer customer_id, Location location_address, LocalDate pickup_date,
                                  LocalDate return_date, String pickup_time, String return_time, int reservation_payment,
                                  String reservation_comment, Employee employee_id) {
@@ -435,10 +434,8 @@ public class RegistrationRepo {
       pst.setString(3, location_address.getLocation_address());
       pst.setDate(4, Date.valueOf(pickup_date));
       pst.setDate(5, Date.valueOf(return_date));
-//      pst.setTime(6, Time.valueOf("12:00:00"));
       pst.setTime(6, Time.valueOf(pickup_time));
       pst.setTime(7, Time.valueOf(return_time));
-//      pst.setTime(7, Time.valueOf("12:00:00"));
       pst.setDouble(8, reservation_payment);
       pst.setString(9, reservation_comment);
       pst.setInt(10, employee_id.getEmployee_id());
