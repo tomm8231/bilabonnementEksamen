@@ -136,8 +136,11 @@ public class RegistrationService {
                              LocalDate pickup_date, LocalDate return_date, String pickup_time, String return_time,
                              int reservation_payment, String reservation_comment, Employee employee_id){
 
+    String fixedPickupTime = pickup_time + ":00";
+    String fixedReturnTime = return_time + ":00";
+
     registrationRepo.createReservation(car_vehicle_number, customer_id, location_address, pickup_date,
-        return_date, pickup_time, return_time, reservation_payment, reservation_comment, employee_id);
+        return_date, fixedPickupTime, fixedReturnTime, reservation_payment, reservation_comment, employee_id);
   }
 
 }

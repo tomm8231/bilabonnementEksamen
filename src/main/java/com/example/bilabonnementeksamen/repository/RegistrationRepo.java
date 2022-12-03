@@ -333,7 +333,8 @@ public class RegistrationRepo {
              INNER JOIN subscription_type
              USING (subscription_type_id)
              INNER JOIN fuel
-             USING (car_fuel_type);           
+             USING (car_fuel_type)
+             ORDER BY reservation_id;           
              """;
 
       PreparedStatement pst = conn.prepareStatement(sql);
@@ -434,8 +435,10 @@ public class RegistrationRepo {
       pst.setString(3, location_address.getLocation_address());
       pst.setDate(4, Date.valueOf(pickup_date));
       pst.setDate(5, Date.valueOf(return_date));
-      pst.setTime(6, Time.valueOf("12:00:00"));
-      pst.setTime(7, Time.valueOf("12:00:00"));
+//      pst.setTime(6, Time.valueOf("12:00:00"));
+      pst.setTime(6, Time.valueOf(pickup_time));
+      pst.setTime(7, Time.valueOf(return_time));
+//      pst.setTime(7, Time.valueOf("12:00:00"));
       pst.setDouble(8, reservation_payment);
       pst.setString(9, reservation_comment);
       pst.setInt(10, employee_id.getEmployee_id());
