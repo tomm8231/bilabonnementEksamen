@@ -11,8 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Date;
 
 // Før man har en database
@@ -174,32 +173,21 @@ public class HomeController {
   // Marcus og Tommy
   @PostMapping("/lease-form")
   public String makeLeaseContract(@ModelAttribute Reservation reservation, HttpSession session,
-                                  @RequestParam ("pickup-time") Time pickupTime,
-                                  @RequestParam ("return-time") Time returnTime,
-                                  @RequestParam ("reservation_comment")String reservationComment,
-                                  @RequestParam ("pickup-date") Date pickupDate,
-                                  @RequestParam ("pickup-date") Date returnDate){
+                                  @RequestParam ("pickup-time") String pickupTime,
+                                  @RequestParam ("return-time") String returnTime,
+                                  @RequestParam ("reservation_payment")int reservationPayment,
+                                  @RequestParam ("reservation_comment")String reservationComment ){
 
-    Reservation finalReservation = reservation;
-
-    //hvor vil vi lave den sidste del af objektet?
+    //gemte sessionsobjekter til oprettelse af reservation
     Customer customer = (Customer) session.getAttribute("lease-customer");
     Car car = (Car) session.getAttribute("car");
     Location location = (Location) session.getAttribute("lease-location");
     Employee employee = (Employee) session.getAttribute("lease-employee");
+    LocalDate bookingStartDate = (LocalDate) session.getAttribute("start-date");
+    LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
 
-    finalReservation.setCustomer_id(customer);
-    finalReservation.setCar_vehicle_number(car);
-    finalReservation.setLocation_address(location);
-    finalReservation.setEmployee_id(employee);
-    finalReservation.setPickup_time(pickupTime);
-    finalReservation.setReturn_time(returnTime);
-    finalReservation.setReservation_comment(reservationComment);
-    finalReservation.setReturn_date(returnDate);
-    finalReservation.setPickup_date(pickupDate);
-    //slut på objekt skabelse
-
-    registrationService.createReservation(reservation);
+    registrationService.createReservation(car,customer,location,bookingStartDate,bookingEndDate, pickupTime, returnTime,
+                                          reservationPayment, reservationComment,employee);
 
 
 //    session.setAttribute("reservation", reservation);  //er dette nødvendigt?
@@ -208,8 +196,6 @@ public class HomeController {
     return "redirect:/show-reserved-cars";
   }
 
-  /*    Reservation reservation = (Reservation) session.getAttribute("id");
-    model.addAttribute("reservation", reservation);*/
 
   // Sebastian
   @PostMapping("/cancel-lease-contract")

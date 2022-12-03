@@ -112,10 +112,6 @@ public class RegistrationService {
     return registrationRepo.fetchAllReservations();
   }
 
-  public void createReservation(Reservation reservation) {
-    registrationRepo.createReservation(reservation);
-  }
-
   public void createEmployee(Employee employee) {
     registrationRepo.createEmployee(employee);
   }
@@ -135,4 +131,13 @@ public class RegistrationService {
   public Employee fetchEmployeeById(int id) {
     return registrationRepo.fetchEmployeeById(id);
   }
+
+  public void createReservation(Car car_vehicle_number, Customer customer_id, Location location_address,
+                             LocalDate pickup_date, LocalDate return_date, String pickup_time, String return_time,
+                             int reservation_payment, String reservation_comment, Employee employee_id){
+
+    registrationRepo.createReservation(car_vehicle_number, customer_id, location_address, pickup_date,
+        return_date, pickup_time, return_time, reservation_payment, reservation_comment, employee_id);
+  }
+
 }

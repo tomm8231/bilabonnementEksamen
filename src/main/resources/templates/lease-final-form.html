@@ -106,13 +106,16 @@
     <input type="date" id="pickup-date" name="pickup-date" class="form-control" readonly th:value="${startDate}">
 
     <label for="return-date" class="form-label"> Returdato</label>
-    <input type="" id="return-date" name="return-date" class="form-control" readonly th:value="${endDate}">
+    <input type="date" id="return-date" name="return-date" class="form-control" readonly th:value="${endDate}">
 
     <label for="pickup-time" class="form-label"> Hente tid</label>
     <input type="time" id="pickup-time" name="pickup-time" class="form-control">
 
     <label for="return-time" class="form-label"> Retur tid</label>
     <input type="time" id="return-time" name="return-time" class="form-control">
+
+    <label for="reservation_payment" class="form-label"> Har skal der betales?</label>
+    <input type="number" id="reservation_payment" name="reservation_payment" class="form-control">
 
     <label for="reservation_comment" class="form-label"> Har du yderligere kommentarer til lejekontrakten?</label>
     <input type="text" id="reservation_comment" name="reservation_comment" class="form-control">

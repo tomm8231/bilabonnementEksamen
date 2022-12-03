@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -415,26 +416,29 @@ public class RegistrationRepo {
     return reservations;
   }
 
-  public void createReservation(Reservation reservation) {
+  // TODO Virker MEN med Hardcoded tid, da der sker en fejl pga. manglende nano-sekunder
+  public void createReservation(Car car_vehicle_number, Customer customer_id, Location location_address, LocalDate pickup_date,
+                                 LocalDate return_date, String pickup_time, String return_time, int reservation_payment,
+                                 String reservation_comment, Employee employee_id) {
 
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
-//      String sql = "INSERT INTO reservation () VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-      String sql = "INSERT INTO reservation(car_vehicle_number, customer_id, location_address, pickup_date, return_date, pickup_time, return_time, reservation_payment, reservation_comment, employee_id)\n" +
-          "VALUES(?,?,?,?,?,?,?,?,?,?)";
+
+      String sql = "INSERT INTO reservation(car_vehicle_number, customer_id, location_address, pickup_date, " +
+                    "return_date, pickup_time, return_time, reservation_payment, reservation_comment, employee_id)\n" +
+                    "VALUES(?,?,?,?,?,?,?,?,?,?)";
       PreparedStatement pst = conn.prepareStatement(sql);
 
-//      pst.setInt(1, reservation.getReservation_id()); -id tildeles af databasen
-      pst.setInt(1, reservation.getCar_vehicle_number().getCar_vehicle_number());
-      pst.setInt(2, reservation.getCustomer_id().getCustomer_id());
-      pst.setString(3, reservation.getLocation_address().getLocation_address());
-      pst.setDate(4, (Date) reservation.getPickup_date());
-      pst.setDate(5, (Date) reservation.getReturn_date());
-      pst.setTime(6, reservation.getPickup_time());
-      pst.setTime(7, reservation.getReturn_time());
-      pst.setDouble(8, reservation.getReservation_payment());
-      pst.setString(9, reservation.getReservation_comment());
-      pst.setInt(10, reservation.getEmployee_id().getEmployee_id());
+      pst.setInt(1, car_vehicle_number.getCar_vehicle_number());
+      pst.setInt(2, customer_id.getCustomer_id());
+      pst.setString(3, location_address.getLocation_address());
+      pst.setDate(4, Date.valueOf(pickup_date));
+      pst.setDate(5, Date.valueOf(return_date));
+      pst.setTime(6, Time.valueOf("12:00:00"));
+      pst.setTime(7, Time.valueOf("12:00:00"));
+      pst.setDouble(8, reservation_payment);
+      pst.setString(9, reservation_comment);
+      pst.setInt(10, employee_id.getEmployee_id());
       pst.executeUpdate();
 
     } catch (SQLException e) {
@@ -442,6 +446,7 @@ public class RegistrationRepo {
       e.printStackTrace();
     }
   }
+
 
   // marcus
   public void createEmployee(Employee employee) {
