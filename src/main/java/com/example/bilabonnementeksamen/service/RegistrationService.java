@@ -82,7 +82,7 @@ public class RegistrationService {
       bookingEndDate = startBooking.plusDays(157);
       return bookingEndDate;
     }
-    bookingEndDate= LocalDate.parse(endDate);
+    bookingEndDate = LocalDate.parse(endDate);
     return bookingEndDate;
   }
 

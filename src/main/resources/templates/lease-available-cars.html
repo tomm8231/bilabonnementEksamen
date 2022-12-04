@@ -13,12 +13,11 @@
     <nav th:replace="fragments/registration-sidebar-fragment :: registration-sidebar-fragment"></nav>
     <container class= "h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
 
-        <h3> Lejeperiode: </h3>
+        <h3> Lejeperiode: <strong th:text="${bookingStart}"></strong> til <strong th:text="${bookingRetur}"></strong> </h3>
 
         <table class="show-cars-table table table-hover">
             <thead>
             <tr>
-                <!--                (skal udkommentesres)-->
                 <th scope="col"></th>
                 <th scope="col">Vogn nr</th>
                 <th scope="col">Mærke</th>
@@ -28,7 +27,7 @@
                 <th scope="col">Co2 km</th>
                 <th scope="col">Gearbox</th>
                 <th scope="col">Pris/mnd</th>
-                <!--                (skal udkommentesres, da vi vælger det inden)-->
+                <!--                (skal udkommentesres ?, da vi vælger det inden)-->
                 <th scope="col">Abo. type</th>
                 <th scope="col">Distance</th>
                 <th scope="col">Energimærke</th>

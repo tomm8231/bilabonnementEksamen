@@ -73,10 +73,17 @@ public class HomeController {
                                     @RequestParam(value = "rd-end-date", required = false) String endDate,
                                     @RequestParam ("type-leasing") String typeLeasing, HttpSession session) {
 
+    //Der tilrettes så begge datoer kan brues fremad
+    LocalDate startReservationDate = registrationService.modifyStartDate(startDate);
+    LocalDate returnReservationDate = registrationService.modifyEndDate(startDate,endDate);
 
-    LocalDate returnDate = registrationService.modifyEndDate(startDate,endDate); //Man kan ikke ændre på, hvis endDate er null, så derfor en en LokalDate
-    session.setAttribute("start-date", registrationService.modifyStartDate(startDate));
-    session.setAttribute("end-date", returnDate);
+    //Datoerne gemmes
+    session.setAttribute("start-date", startReservationDate);
+    session.setAttribute("end-date", returnReservationDate);
+
+    //alt der renderes i view
+    model.addAttribute("bookingStart", startReservationDate);
+    model.addAttribute("bookingRetur", returnReservationDate);
     model.addAttribute("car", registrationService.fetchCarsByDate(startDate, endDate, typeLeasing));
       return "lease-available-cars";
     }
@@ -118,9 +125,10 @@ public class HomeController {
 
   @PostMapping("/lease-find-employee")
   public String leaseAddEmployee(@RequestParam ("employee-id") int id, HttpSession session) {
-   // registrationService.createEmployee(employee);
+
     Employee employee = registrationService.fetchEmployeeById(id);
 
+    //If-statement der tjekker om medarbejderen findes i systemet
     if (employee.getEmployee_name() == null) {
       return "redirect:/lease-find-employee";
     }
@@ -136,6 +144,7 @@ public class HomeController {
 
     Customer customer = registrationService.fetchCustomerByMail(mail);
 
+    //If-statement der tjekker om kunden findes i systemet
     if (customer.getCustomer_name() == null) {
       return "redirect:/lease-find-or-create-customer";
     }
@@ -148,6 +157,7 @@ public class HomeController {
   // Skal man bruge @RequestParam for at
   public String showLeaseContract(HttpSession session, Model model) {
 
+    //Alle objekterne fra processen hentes fra session og tilføjes til view
     Customer customer = (Customer) session.getAttribute("lease-customer");
     model.addAttribute("customer", customer);
 
@@ -186,12 +196,14 @@ public class HomeController {
     LocalDate bookingStartDate = (LocalDate) session.getAttribute("start-date");
     LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
 
+    //reservationen oprettes
     registrationService.createReservation(car,customer,location,bookingStartDate,bookingEndDate, pickupTime, returnTime,
                                           reservationPayment, reservationComment,employee);
-    //bil er ikke længere i process
+
+    //bil er ikke længere i process, og status ændres
     registrationService.unreserveCarById(car.getCar_vehicle_number());
 
-    //nulstil session
+    //nulstil session da oprettelsen er færdig
     session.invalidate();
 
 
