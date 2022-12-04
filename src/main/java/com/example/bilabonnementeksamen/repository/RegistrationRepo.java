@@ -95,9 +95,8 @@ public class RegistrationRepo {
              AND car_vehicle_number NOT IN
             (SELECT car_vehicle_number
              FROM reservation
-              WHERE (( ? < pickup_date)
-              AND (? < pickup_date))
-              OR ((? > return_date) AND (? > return_date)));
+              WHERE (pickup_date BETWEEN ? AND ?)
+              OR (return_date BETWEEN ? AND ? ));
             """;
 
 

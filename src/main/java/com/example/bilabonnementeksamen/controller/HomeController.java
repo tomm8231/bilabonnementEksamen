@@ -170,7 +170,7 @@ public class HomeController {
     return "lease-final-form";
   }
 
-  // Marcus og Tommy
+  // Marcus og Tommy og sebastian
   @PostMapping("/lease-form")
   public String makeLeaseContract(HttpSession session,
                                   @RequestParam ("pickup-time") String pickupTime,
@@ -188,6 +188,11 @@ public class HomeController {
 
     registrationService.createReservation(car,customer,location,bookingStartDate,bookingEndDate, pickupTime, returnTime,
                                           reservationPayment, reservationComment,employee);
+    //bil er ikke længere i process
+    registrationService.unreserveCarById(car.getCar_vehicle_number());
+
+    //nulstil session
+    session.invalidate();
 
 
 //    session.setAttribute("reservation", reservation);  //er dette nødvendigt?
