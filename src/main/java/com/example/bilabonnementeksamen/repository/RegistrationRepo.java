@@ -20,14 +20,7 @@ public class RegistrationRepo {
   @Value("${JDBCPassword}")
   private String password;
 
- /*
 
-  private final String databaseURL = "jdbc:mysql://localhost:3306/car_leasing";
-  private final String user = "car_leasing_user";
-  private final String password = "1234";
-
-
-  */
   public Customer fetchCustomerByMail(String mail) {
     Customer customer = new Customer();
     try {

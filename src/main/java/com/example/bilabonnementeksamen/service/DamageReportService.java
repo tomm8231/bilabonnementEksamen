@@ -10,5 +10,8 @@ public class DamageReportService {
   @Autowired
   DamageReportRepo damageReportRepo;
 
-
+//TODO: Hvordan skal dette skrives? Reservation
+  public Object fetchReservationInfo(int id) {
+    return damageReportRepo.fetchReservationInfoById(id);
+  }
 }
