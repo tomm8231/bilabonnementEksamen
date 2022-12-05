@@ -1,10 +1,289 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add problem</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
+
 </head>
-<body>
-<h1>TEST TEST</h1>
+<body class="">
+<h1> Lejekontrakt</h1>
+
+<!--<div class="d-flex flex-column w-100 align-items-center justify-content-center">-->
+<div class="w-100 ms-1">
+    <form action="/lease-final-form" th:action="@{/lease-final-form}" method="post">
+
+        <!-- Customer   -->
+        <div class="mb-3 row">
+            <label for="customer_id" class="col-sm-2 col-form-label">Kunde ID: </label>
+            <div class="col-sm-10">
+                <!--  class="form-control changed to form-control-plaintext-->
+                <input type="text" id="customer_id" name="customer_id" class="form-control-plaintext" readonly
+                       th:value="${reservation.getCustomer_id().customer_name}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="customer_name" class="col-sm-2 col-form-label"> Kundens navn: </label>
+            <div class="col-sm-10">
+                <input type="text" id="customer_name" name="customer_name" class="form-control-plaintext" readonly
+                       th:value="${customer.customer_name}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="customer_mail" class="col-sm-2 col-form-label"> Kundens e-mail: </label>
+            <div class="col-sm-10">
+                <input type="text" id="customer_mail" name="customer_mail" class="form-control-plaintext" readonly
+                       th:value="${customer.customer_mail}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="customer_address" class="col-sm-2 col-form-label"> Kundens adresse: </label>
+            <div class="col-sm-10">
+                <input type="text" id="customer_address" name="customer_address" class="form-control-plaintext" readonly
+                       th:value="${customer.customer_address}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="customer_phone_number" class="col-sm-2 col-form-label"> Kundens telefonnummer: </label>
+            <div class="col-sm-10">
+                <input type="number" id="customer_phone_number" name="customer_phone_number"
+                       class="form-control-plaintext"
+                       readonly th:value="${customer.customer_phone_number}">
+            </div>
+        </div>
+
+        <!--    Car    -->
+        <div class="mb-3 row">
+            <label for="car-vehicle-number" class="col-sm-2 col-form-label"> Vognnummer: </label>
+            <div class="col-sm-10">
+                <input type="text" id="car-vehicle-number" name="car-vehicle-number" class="form-control-plaintext"
+                       readonly th:value="${car.getCar_vehicle_number()}">
+            </div>
+        </div>
+
+
+        <div class="mb-3 row">
+            <label for="car-chassis-number" class="col-sm-2 col-form-label"> Stelnummer: </label>
+            <div class="col-sm-10">
+                <input type="text" id="car-chassis-number" name="car-chassis-number" class="form-control-plaintext"
+                       readonly th:value="${car.getCar_chassis_number()}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="car-brand" class="col-sm-2 col-form-label"> Mærke </label>
+            <div class="col-sm-10">
+                <input type="text" id="car-brand" name="car-brand" class="form-control-plaintext" readonly
+                       th:value="${car.car_model_id.getCar_brand()}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="car-model" class="col-sm-2 col-form-label"> Model </label>
+            <div class="col-sm-10">
+                <input type="text" id="car-model" name="car-model" class="form-control-plaintext" readonly
+                       th:value="${car.car_model_id.getCar_model()}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="car-hp" class="col-sm-2 col-form-label"> HK </label>
+            <div class="col-sm-10">
+                <input type="text" id="car-hp" name="car-hp" class="form-control-plaintext" readonly
+                       th:value="${car.car_model_id.getCar_hp()}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="fuel-type" class="col-sm-2 col-form-label"> Drivstof </label>
+            <div class="col-sm-10">
+                <input type="text" id="fuel-type" name="fuel-type" class="form-control-plaintext" readonly
+                       th:value="${car.car_model_id.car_fuel_type.distance_unit}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="gearbox-type" class="col-sm-2 col-form-label"> Automat/manuel </label>
+            <div class="col-sm-10">
+                <input type="text" id="gearbox-type" name="gearbox-type" class="form-control-plaintext" readonly
+                       th:value="${car.car_model_id.getCar_gearbox_type()}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="co2-per-km" class="col-sm-2 col-form-label"> Co2 per km </label>
+            <div class="col-sm-10">
+                <input type="text" id="co2-per-km" name="co2-per-km" class="form-control-plaintext" readonly
+                       th:value="${car.car_model_id.getCar_co2_km()}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="energy-label" class="col-sm-2 col-form-label"> Energimærkning </label>
+            <div class="col-sm-10">
+                <input type="text" id="energy-label" name="energy-label" class="form-control-plaintext" readonly
+                       th:value="${car.car_model_id.getCar_energy_label()}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="distance-amount" class="col-sm-2 col-form-label">Afstand / rækkevidde</label>
+            <div class="col-sm-10">
+                <input type="text" id="distance-amount" name="distance-amount" class="form-control-plaintext" readonly
+                       th:value="${car.car_model_id.getCar_distance_amount() + ' ' + car.car_model_id.getCar_fuel_type().getDistance_unit()}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="subscription-type" class="col-sm-2 col-form-label"> Abonnementstype </label>
+            <div class="col-sm-10">
+                <input type="text" id="subscription-type" name="subscription-type" class="form-control-plaintext"
+                       readonly th:value="${car.subscription_type_id.getSubscription_type_name()}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="car-description" class="col-sm-2 col-form-label"> Beskrivelse af bil </label>
+            <div class="col-sm-10">
+                <input type="text" id="car-description" name="car-description" class="form-control-plaintext" readonly
+                       th:value="${car.car_model_id.getCar_description()}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="price-per-month" class="col-sm-2 col-form-label"> Pris per måned </label>
+            <div class="col-sm-10">
+                <input type="text" id="price-per-month" name="price-per-month" class="form-control-plaintext" readonly
+                       th:value="${car.car_price_month}">
+            </div>
+        </div>
+
+        <!--  Lokalitet -->
+        <div class="mb-3 row">
+            <label for="location-name" class="col-sm-2 col-form-label">Navn på lokalitet</label>
+            <div class="col-sm-10">
+                <input type="text" id="location-name" name="location-name" class="form-control-plaintext" readonly
+                       th:value="${location.location_name}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="location-address" class="col-sm-2 col-form-label">Afhentningssted</label>
+            <div class="col-sm-10">
+                <input type="text" id="location-address" name="location-address" class="form-control-plaintext"
+                       readonly th:value="${location.getLocation_address()}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="location-phone" class="col-sm-2 col-form-label">Kontaktnummer værksted</label>
+            <div class="col-sm-10">
+                <input type="text" id="location-phone" name="location-phone" class="form-control-plaintext" readonly
+                       th:value="${location.location_phone}">
+            </div>
+        </div>
+
+        <!-- Employee   -->
+
+        <div class="mb-3 row">
+            <label for="employee_id" class="col-sm-2 col-form-label"> Medarbejder id:</label>
+            <div class="col-sm-10">
+                <input type="text" id="employee_id" name="employee_id" class="form-control-plaintext" readonly
+                       th:value="${employee.employee_id}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="employee_initials" class="col-sm-2 col-form-label"> Medarbejder initialer:</label>
+            <div class="col-sm-10">
+                <input type="text" id="employee_initials" name="employee_initials" class="form-control-plaintext"
+                       readonly th:value="${employee.employee_initials}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="employee_name" class="col-sm-2 col-form-label"> Medarbejder fulde navn:</label>
+            <div class="col-sm-10">
+                <input type="text" id="employee_name" name="employee_name" class="form-control-plaintext" readonly
+                       th:value="${employee.employee_name}">
+            </div>
+        </div>
+    </form>
+
+    <form action="/lease-form" th:action="@{/lease-form}" method="post">
+        <!-- Reservation input form -->
+
+        <label for="reservation_id" class="col-sm-2 col-form-label"> Reservation ID </label>
+        <input type="text" id="reservation_id" name="reservation_id" class="form-control" hidden th:value="0">
+
+        <div class="mb-3 row">
+            <label for="pickup-date" class="col-sm-2 col-form-label"> Hente dato </label>
+            <div class="col-sm-10">
+                <input type="date" id="pickup-date" name="pickup-date" class="form-control-plaintext" readonly
+                       th:value="${startDate}">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="return-date" class="col-sm-2 col-form-label"> Returdato</label>
+            <input type="date" id="return-date" name="return-date" class="form-control-plaintext" readonly
+                   th:value="${endDate}">
+        </div>
+
+        <div class="mb-3 row">
+            <label for="pickup-time" class="col-sm-2 col-form-label"> Hente tid</label>
+            <div class="col-sm-10">
+                <input type="time" id="pickup-time" name="pickup-time" class="form-control-plaintext">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="return-time" class="col-sm-2 col-form-label"> Retur tid</label>
+            <div class="col-sm-10">
+                <input type="time" id="return-time" name="return-time" class="form-control-plaintext">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="reservation_payment" class="col-sm-2 col-form-label"> Sum betaling</label>
+            <div class="col-sm-10">
+                <input type="number" id="reservation_payment" name="reservation_payment" class="form-control-plaintext">
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label for="reservation_comment" class="form-label"> Har du yderligere kommentarer til
+                lejekontrakten?</label>
+            <input type="text" id="reservation_comment" name="reservation_comment" class="form-control-plaintext">
+        </div>
+
+        <!--   Vises ikke, men skal bruges for at oprettet objektet reservation     -->
+        <input type="text" id="reservation-car-vehicle-number" name="car-vehicle-number" class="form-control"
+               readonly
+               hidden th:value="${car.getCar_vehicle_number()}">
+        <input type="text" id="reservation-customer_id" name="customer_name" class="form-control" readonly hidden
+               th:value="${customer.customer_id}">
+        <input type="text" id="reservation-location-address" name="location-address" class="form-control" readonly
+               hidden th:value="${location.getLocation_address()}">
+
+
+
+        <button class="mt-2 mb-3 " type="submit">Indsend lejekontrakt</button>
+    </form>
+</div>
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+<script src="sidebars.js"></script>
 </body>
 </html>
+

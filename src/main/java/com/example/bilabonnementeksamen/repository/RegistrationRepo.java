@@ -91,7 +91,17 @@ public class RegistrationRepo {
               WHERE (pickup_date BETWEEN ? AND ?)
               OR (return_date BETWEEN ? AND ? ));
             """;
-
+/*
+    Jeg vil se alle biler
+    joined med alt indhold
+    HVOR bilen ikke er i en reservationsprocess
+    OG subsciption_type_name er lig typen jeg ønsker
+    OG car_vehicle_number ikke matcher med nogen fra følgende liste af car_vehicle_number:
+    -- Jeg vil se alle car_vehicle_number FRA reservation
+    -- Hvor (min ønskede startdato og slutdato, ikke ligger i en peiode med en pick_update)
+    -- ELLER
+    --(Hvor min ønskede startdato og slutdato, ikke ligger i en peiode med en pick_update)
+*/
 
       PreparedStatement pst = conn.prepareStatement(sql);
       pst.setString(1,typeLease);
