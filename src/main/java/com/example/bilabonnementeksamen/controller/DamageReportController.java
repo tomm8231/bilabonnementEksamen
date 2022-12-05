@@ -2,6 +2,7 @@ package com.example.bilabonnementeksamen.controller;
 
 import com.example.bilabonnementeksamen.model.Reservation;
 import com.example.bilabonnementeksamen.service.DamageReportService;
+import com.sun.istack.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,8 @@ public class DamageReportController {
 
   @PostMapping ("/find-reservation-info")
   public String fetchReservationInfo(@RequestParam("reservation-id") int id, RedirectAttributes redirectAttributes){
-    redirectAttributes.addAttribute("reservation", damageReportService.fetchReservationInfo(id));
+    Reservation reservation = (Reservation) damageReportService.fetchReservationInfo(id);
+    redirectAttributes.addAttribute("reservation", reservation);
     return "redirect:/problem-form";
   }
 

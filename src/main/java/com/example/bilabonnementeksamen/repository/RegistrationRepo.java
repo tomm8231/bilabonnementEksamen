@@ -440,7 +440,7 @@ public class RegistrationRepo {
   }
 
 
-  // marcus
+  // marcus og Tommy
   public void createEmployee(Employee employee) {
 
     try {
@@ -452,8 +452,9 @@ public class RegistrationRepo {
       pst.setString(3, employee.getEmployee_name());
       pst.executeUpdate();
 
+
     } catch (SQLException e) {
-      System.err.println("Cannot add customer");
+      System.err.println("Cannot add employee");
       e.printStackTrace();
     }
   }
@@ -467,6 +468,8 @@ public class RegistrationRepo {
       pst.setInt(2, location.getLocation_phone());
       pst.setString(3, location.getLocation_name());
       pst.executeUpdate();
+
+
 
     } catch (SQLException e) {
       System.err.println("Cannot add location");

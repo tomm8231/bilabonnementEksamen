@@ -246,5 +246,18 @@ public class RegistrationController {
     return "redirect:/lease-find-employee";
   }
 
+  //Giver det mening at mappings vedr. oprettelse af medarbejdere ligger i registrationController?
+  @GetMapping("/create-employee")
+  public String showCreateEmployee() {
+    return "create-employee";
+  }
 
+  @PostMapping("/create-employee")
+  public String createEmployee(@RequestParam ("employee_id") int id,
+                               @RequestParam ("employee_initials") String initials,
+                               @RequestParam ("employee_name") String name) {
+    Employee employee = new Employee(id, initials,name);
+    registrationService.createEmployee(employee);
+    return "redirect:/create-employee";
+  }
 }
