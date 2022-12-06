@@ -567,6 +567,7 @@ public class RegistrationRepo {
 
   }
 
+  // Tommy
   public String checkForDuplicateInitialsEmployee(String initials) {
     Employee employee = new Employee();
 
@@ -593,6 +594,8 @@ public class RegistrationRepo {
     return employee.getEmployee_initials();
   }
 
+
+  // Tommy
   public Employee fetchEmployeeByInitials(String employee_initials) {
     Employee employee = new Employee();
 
