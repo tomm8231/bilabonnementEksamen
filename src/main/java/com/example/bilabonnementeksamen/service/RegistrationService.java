@@ -30,7 +30,7 @@ public class RegistrationService {
   }
 
   public boolean fetchCarReservedStatus(int id) {
-   // 0 er false (er ikke reserveret) og 1 er true (er reserveret)
+    // 0 er false (er ikke reserveret) og 1 er true (er reserveret)
     return registrationRepo.fetchCarReservedStatus(id) == 1;
   }
 
@@ -43,21 +43,21 @@ public class RegistrationService {
     //start dato tjekkes
     LocalDate startDateBooking = LocalDate.parse(startDate);
 
-    if(startDateBooking.isBefore(LocalDate.now())){
+    if (startDateBooking.isBefore(LocalDate.now())) {
       startDateBooking = LocalDate.now();
     }
 
     //opdeler i limited eller unlimited
 
-    if (leaseType.equalsIgnoreCase("LIMITED")){
+    if (leaseType.equalsIgnoreCase("LIMITED")) {
 
       LocalDate limitedEndDate = startDateBooking.plusDays(157);
 
       return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking), Date.valueOf(limitedEndDate), leaseType.toUpperCase());
 
-    } else  {
+    } else {
 
-      return registrationRepo.fetchCarsByDate(Date.valueOf(startDate),Date.valueOf(endDate),leaseType.toUpperCase());
+      return registrationRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDate), leaseType.toUpperCase());
     }
   }
 
@@ -66,7 +66,7 @@ public class RegistrationService {
     //start dato tjekkes
     LocalDate startDateBooking = LocalDate.parse(startDate);
 
-    if(startDateBooking.isBefore(LocalDate.now())){
+    if (startDateBooking.isBefore(LocalDate.now())) {
       startDateBooking = LocalDate.now();
     }
 
@@ -78,7 +78,7 @@ public class RegistrationService {
     LocalDate startBooking = LocalDate.parse(startDate);
     LocalDate bookingEndDate;
 
-    if(endDate == null){
+    if (endDate == null) {
       bookingEndDate = startBooking.plusDays(157);
       return bookingEndDate;
     }
@@ -133,8 +133,8 @@ public class RegistrationService {
   }
 
   public void createReservation(Car car_vehicle_number, Customer customer_id, Location location_address,
-                             LocalDate pickup_date, LocalDate return_date, String pickup_time, String return_time,
-                             int reservation_payment, String reservation_comment, Employee employee_id){
+                                LocalDate pickup_date, LocalDate return_date, String pickup_time, String return_time,
+                                int reservation_payment, String reservation_comment, Employee employee_id) {
 
     //String der modtages er i "hr:min", men Time format i SQL kræver "hr:min:sec", derfor en tilføjelse til string
     String fixedPickupTime = pickup_time + ":00";
@@ -144,18 +144,38 @@ public class RegistrationService {
         return_date, fixedPickupTime, fixedReturnTime, reservation_payment, reservation_comment, employee_id);
   }
 
-  public double calculateIncome (List<Reservation> reservations) {
+  public double calculateIncome(List<Reservation> reservations) {
 
     double sum = 0;
 
-    for (Reservation reservation : reservations){
+    for (Reservation reservation : reservations) {
 
       sum += reservation.getCar_vehicle_number().getCar_price_month();
-
     }
 
-
     return sum;
+  }
+
+  // Marcus
+  public boolean checkIfLocationExist(Location location) {
+
+    List<Location> locations = registrationRepo.fetchAllLocations();
+    Location newLocation;
+    boolean locationAlreadyExist = false;
+
+    // Hente en liste over alle locations
+    for (int i = 0; i < locations.size(); i++) {
+
+      newLocation = locations.get(i);
+
+      // Location findes allerede med samme adresse
+      if (location.getLocation_address().equals(newLocation.getLocation_address())) {
+        locationAlreadyExist = true;
+      } else {
+        locationAlreadyExist = false;
+      }
+    }
+    return locationAlreadyExist;
   }
 
 }

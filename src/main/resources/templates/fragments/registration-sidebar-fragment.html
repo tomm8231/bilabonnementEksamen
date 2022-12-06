@@ -24,6 +24,7 @@
                         data-bs-target="#home-collapse" aria-expanded="false">
                     Dashboard
                 </button>
+
                 <div class="collapse px-20" id="home-collapse" style="">
                     <ul class="btn-toggle-nav fw-normal pb-1 small list-unstyled ps-4"> <!-- ps-4 = padding start -->
                         <li><a href="#" class="link-dark rounded">Tilgængelige biler</a></li>
@@ -32,9 +33,10 @@
                     </ul>
                 </div>
             </li>
+
             <li class="mb-1">
                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#dashboard-collapse" aria-expanded="false">
+                        data-bs-target="#contracts-collapse" aria-expanded="false">
                     Kontrakter
                 </button>
                 <div class="collapse" id="contracts-collapse" style="">
@@ -51,13 +53,13 @@
 
             <li class="mb-1">
                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#dashboard-collapse" aria-expanded="false">
+                        data-bs-target="#employee-collapse" aria-expanded="false">
                Ansatte
                 </button>
                 <div class="collapse" id="employee-collapse" style="">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
                         <!-- ms-2 = margin start .me-2 = 0.5rem-->
-                        <li><a th:href="@{lease-new-employee}" class="link-dark rounded">Opret ny ansat</a></li>
+                        <li><a th:href="@{create-employee}" class="link-dark rounded">Opret ny ansat</a></li>
                         <li><a th:href="@{lease-new-location}" class="link-dark rounded">Opret ny lokalitet</a></li>
                         <li><a href="#" class="link-dark rounded">Se alle ansatte - - not implemented</a></li>
                         <li><a href="#" class="link-dark rounded"></a>Se alle lokaliteter - not implemented</li>
