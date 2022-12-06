@@ -19,6 +19,7 @@ public class RegistrationRepo {
   private String user;
   @Value("${JDBCPassword}")
   private String password;
+  
 
 
   public Customer fetchCustomerByMail(String mail) {

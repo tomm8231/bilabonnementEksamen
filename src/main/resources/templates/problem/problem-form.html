@@ -11,15 +11,15 @@
 <body class="">
 <h1> Bekræft valg af bil</h1>
 
-<!--<div class="d-flex flex-column w-100 align-items-center justify-content-center">-->
-<div class="w-100 ms-1">
-    <form action="/lease-final-form" th:action="@{/lease-final-form}" method="post">
 
-        <!-- Customer   -->
+<div class="w-100 ms-1">
+    <form action="/registrate-problem" th:action="@{/registrate-problem}" method="get">
+
+
         <div class="mb-3 row">
             <label for="customer_id" class="col-sm-2 col-form-label">Kunde ID: </label>
             <div class="col-sm-10">
-                <!--  class="form-control changed to form-control-plaintext-->
+
                 <input type="text" id="customer_id" name="customer_id" class="form-control-plaintext" readonly
                        th:value="${reservation.getCustomer_id().customer_id}">
             </div>
