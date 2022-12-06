@@ -566,4 +566,56 @@ public class RegistrationRepo {
     return employee;
 
   }
+
+  public String checkForDuplicateInitialsEmployee(String initials) {
+    Employee employee = new Employee();
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "SELECT * FROM employee where employee_initials = ?";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setString(1, initials);
+
+      ResultSet rs = pst.executeQuery();
+
+      while (rs.next()) {
+
+        employee.setEmployee_id(rs.getInt(1));
+        employee.setEmployee_initials(rs.getString(2));
+        employee.setEmployee_name(rs.getString(3));
+      }
+
+    } catch (SQLException e) {
+      System.err.println("Cannot connect to database");
+      e.printStackTrace();
+    }
+
+    return employee.getEmployee_initials();
+  }
+
+  public Employee fetchEmployeeByInitials(String employee_initials) {
+    Employee employee = new Employee();
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "SELECT * FROM employee where employee_initials = ?";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setString(1, employee_initials);
+
+      ResultSet rs = pst.executeQuery();
+
+      while (rs.next()) {
+
+        employee.setEmployee_id(rs.getInt(1));
+        employee.setEmployee_initials(rs.getString(2));
+        employee.setEmployee_name(rs.getString(3));
+      }
+
+    } catch (SQLException e) {
+      System.err.println("Cannot connect to database");
+      e.printStackTrace();
+    }
+
+    return employee;
+  }
 }

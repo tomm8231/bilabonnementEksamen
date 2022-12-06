@@ -177,4 +177,25 @@ public class RegistrationService {
     return locationAlreadyExist;
 }
 
+  public int checkForDuplicateInitialsEmployee(Employee employee) {
+    int number = 0;
+    String name = registrationRepo.checkForDuplicateInitialsEmployee(employee.getEmployee_initials());
+
+    if (employee.getEmployee_name().contains(" ") && (!employee.getEmployee_initials().contains(" "))) {
+      //Hvis initialer allerede findes
+      if (name != null) {
+        number = 1;
+      } else { //Hvis initialer ikke allerede findes
+        registrationRepo.createEmployee(employee);
+        number = 2;
+      }
+    }
+
+    return number;
+  }
+
+
+  public Employee fetchEmployeeByInitials(String initials) {
+    return registrationRepo.fetchEmployeeByInitials(initials);
+  }
 }

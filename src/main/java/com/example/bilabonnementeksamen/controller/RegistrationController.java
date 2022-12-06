@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class RegistrationController {
@@ -120,7 +121,7 @@ public class RegistrationController {
 
     //If-statement der tjekker om medarbejderen findes i systemet
     if (employee.getEmployee_name() == null) {
-      return "redirect:/lease-find-employee"; //TODO: skal det her være /registration/ først?
+      return "redirect:/lease-find-employee";
     }
 
     session.setAttribute("lease-employee", employee);
@@ -239,6 +240,15 @@ public class RegistrationController {
     return "redirect:/lease-find-employee";
   }
 
+  @GetMapping("/lease-economy")
+  public String showEconomy(Model model){
+    List<Reservation> reservations = registrationService.fetchAllReservations();
+    model.addAttribute(reservations);
+
+    double totalLeaseSum = registrationService.calculateIncome(reservations);
+    model.addAttribute("totalSum", totalLeaseSum);
+    return "/lease-income";
+  }
 
   //Giver det mening at mappings vedr. oprettelse af medarbejdere ligger i registrationController?
   @GetMapping("/create-employee")
@@ -250,14 +260,24 @@ public class RegistrationController {
   @PostMapping("/create-employee")
   public String createEmployee(@ModelAttribute Employee employee, RedirectAttributes redirectAttributes) {
 
-    //TODO:tjekke at medarbejders initialer ikke allerede er oprettet
-    //Hvis initialer allerede findes (if-tjek)
-    redirectAttributes.addAttribute("message", "Initialer findes allerede" );
-    // return "redirect:/create-employee";
+    //TODO: tjekke at medarbejders initialer ikke allerede er oprettet
 
-    //hvis succes med oprettelse (Ellers)
-    registrationService.createEmployee(employee);
-    redirectAttributes.addAttribute("message", "Medarbejder + medarbejders navn, oprrettet med id = ?" );
+
+    int messageOption = registrationService.checkForDuplicateInitialsEmployee(employee);
+
+    switch (messageOption) {
+
+      case 1 -> {
+        redirectAttributes.addAttribute("message", "Initialer findes allerede");
+      }
+      case 2 -> {
+        registrationService.createEmployee(employee);
+        Employee newEmployee = registrationService.fetchEmployeeByInitials(employee.getEmployee_initials());
+        redirectAttributes.addAttribute("message", "Medarbejder " + newEmployee.getEmployee_name() + " (" + newEmployee.getEmployee_initials() + ") er oprettet med ID #" + newEmployee.getEmployee_id());
+      }
+    }
+
+
     return "redirect:/create-employee";
   }
 
