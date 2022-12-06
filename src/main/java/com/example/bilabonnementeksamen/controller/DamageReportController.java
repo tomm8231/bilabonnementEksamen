@@ -49,4 +49,10 @@ public class DamageReportController {
   }
 
 
+  @GetMapping("/registrate-problem")
+  public String resgistrateProblem(){
+    return "/problem/problem-registration-input";
+  }
+
+
 }
