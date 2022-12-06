@@ -1,9 +1,6 @@
 package com.example.bilabonnementeksamen.controller;
 
-import com.example.bilabonnementeksamen.model.Car;
-import com.example.bilabonnementeksamen.model.Customer;
-import com.example.bilabonnementeksamen.model.Employee;
-import com.example.bilabonnementeksamen.model.Location;
+import com.example.bilabonnementeksamen.model.*;
 import com.example.bilabonnementeksamen.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class RegistrationController {
@@ -244,6 +243,16 @@ public class RegistrationController {
     Location location = registrationService.fetchLocationByAddress(locationAddress);
     session.setAttribute("lease-location", location);
     return "redirect:/lease-find-employee";
+  }
+
+  @GetMapping("/lease-economy")
+  public String showEconomy(Model model){
+    List<Reservation> reservations = registrationService.fetchAllReservations();
+    model.addAttribute(reservations);
+
+    double totalLeaseSum = registrationService.calculateIncome(reservations);
+    model.addAttribute("totalSum", totalLeaseSum);
+    return "/lease-income";
   }
 
 

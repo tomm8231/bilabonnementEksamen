@@ -144,4 +144,18 @@ public class RegistrationService {
         return_date, fixedPickupTime, fixedReturnTime, reservation_payment, reservation_comment, employee_id);
   }
 
+  public double calculateIncome (List<Reservation> reservations) {
+
+    double sum = 0;
+
+    for (Reservation reservation : reservations){
+
+      sum += reservation.getCar_vehicle_number().getCar_price_month();
+
+    }
+
+
+    return sum;
+  }
+
 }
