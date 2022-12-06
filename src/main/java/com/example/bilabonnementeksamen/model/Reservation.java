@@ -126,4 +126,21 @@ public class Reservation {
   public void setEmployee_id(Employee employee_id) {
     this.employee_id = employee_id;
   }
+
+  @Override
+  public String toString() {
+    return "Reservation{" +
+        "reservation_id=" + reservation_id +
+        ", car_vehicle_number=" + car_vehicle_number +
+        ", customer_id=" + customer_id +
+        ", location_address=" + location_address +
+        ", pickup_date=" + pickup_date +
+        ", return_date=" + return_date +
+        ", pickup_time=" + pickup_time +
+        ", return_time=" + return_time +
+        ", reservation_payment=" + reservation_payment +
+        ", reservation_comment='" + reservation_comment + '\'' +
+        ", employee_id=" + employee_id +
+        '}';
+  }
 }

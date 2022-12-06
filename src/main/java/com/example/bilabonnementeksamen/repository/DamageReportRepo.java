@@ -20,7 +20,7 @@ public class DamageReportRepo {
   private String password;
 
 // TODO: check retur type
-  public Object fetchReservationInfoById(int id) {
+  public Reservation fetchReservationInfoById(int id) {
 
       Reservation reservation = new Reservation();
 
