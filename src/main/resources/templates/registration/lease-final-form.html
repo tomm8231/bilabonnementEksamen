@@ -9,10 +9,10 @@
 
 </head>
 <body>
-<nav th:replace="fragments/registration-sidebar-fragment :: registration-sidebar-fragment"></nav>
+
 <h1> Lejekontrakt</h1>
 
-<!--<div class="d-flex flex-column w-100 align-items-center justify-content-center">-->
+<div class="d-flex flex-column w-100 align-items-center justify-content-center">
 <div class="w-100 ms-1">
     <form action="/lease-final-form" th:action="@{/lease-final-form}" method="post">
 
@@ -239,14 +239,14 @@
         <div class="mb-3 row">
             <label for="pickup-time" class="col-sm-2 col-form-label"> Hente tid</label>
             <div class="col-sm-10">
-                <input type="time" id="pickup-time" name="pickup-time" class="form-control-plaintext">
+                <input type="time" id="pickup-time" name="pickup-time">
             </div>
         </div>
 
         <div class="mb-3 row">
             <label for="return-time" class="col-sm-2 col-form-label"> Retur tid</label>
             <div class="col-sm-10">
-                <input type="time" id="return-time" name="return-time" class="form-control-plaintext">
+                <input type="time" id="return-time" name="return-time">
             </div>
         </div>
 
@@ -257,10 +257,10 @@
             </div>
         </div>
 
-        <div class="mb-3 row">
+        <div class="mb-3 reservation-comment">
             <label for="reservation_comment" class="form-label"> Har du yderligere kommentarer til
                 lejekontrakten?</label>
-            <input type="text" id="reservation_comment" name="reservation_comment" class="form-control-plaintext">
+            <input type="text" id="reservation_comment" name="reservation_comment">
         </div>
 
             <!--   Vises ikke, men skal bruges for at oprettet objektet reservation     -->
@@ -280,7 +280,13 @@
 
             <button class="mt-2 mb-3 " type="submit">Indsend lejekontrakt</button>
     </form>
+
+    <form action="/cancel-lease-contract" method="post" th:action="@{/cancel-lease-contract}">
+        <button class="btn btn-secondary btn-lg btn-block border w-15 mt-3" type="submit">Annuller lejekontrakt</button>
+    </form>
 </div>
+</div>
+
 
 
 

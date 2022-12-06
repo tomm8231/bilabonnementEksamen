@@ -13,8 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class RegistrationController {
@@ -26,14 +24,14 @@ public class RegistrationController {
 
   @GetMapping("/registration")
   public String showRegistrationPage() {
-    return "registration-home-page";
+    return "/registration/registration-home-page";
   }
 
 
   @GetMapping("/lease-contract")
   public String showNewContract(Model model) {
     model.addAttribute("today", LocalDate.now());
-    return "lease-start-new-contract";
+    return "/registration/lease-start-new-contract";
   }
 
   // Fælles - Find biler ud fra dato og lejetype og send videre
@@ -77,7 +75,7 @@ public class RegistrationController {
     model.addAttribute("bookingStart", startReservationDate);
     model.addAttribute("bookingRetur", returnReservationDate);
     model.addAttribute("car", registrationService.fetchCarsByDate(startDate, endDate, typeLeasing));
-    return "/lease/lease-available-cars";
+    return "/registration/lease-available-cars";
   }
 
 
@@ -100,7 +98,7 @@ public class RegistrationController {
 
   @GetMapping("/lease-find-or-create-customer")
   public String showFindOrdCreateCustomer() {
-    return "lease-find-or-create-customer";
+    return "/registration/lease-find-or-create-customer";
   }
 
   @PostMapping("/lease-create-customer")
@@ -112,7 +110,7 @@ public class RegistrationController {
 
   @GetMapping("/lease-find-employee")
   public String showFindOrdCreateEmployee() {
-    return "lease-find-employee";
+    return "/registration/lease-find-employee";
   }
 
   @PostMapping("/lease-find-employee")
@@ -122,7 +120,7 @@ public class RegistrationController {
 
     //If-statement der tjekker om medarbejderen findes i systemet
     if (employee.getEmployee_name() == null) {
-      return "redirect:/lease-find-employee";
+      return "redirect:/lease-find-employee"; //TODO: skal det her være /registration/ først?
     }
 
     session.setAttribute("lease-employee", employee);
@@ -169,10 +167,10 @@ public class RegistrationController {
     model.addAttribute("endDate",bookingEndDate);
 
 
-    return "lease-final-form";
+    return "/registration/lease-final-form";
   }
 
-  // Marcus og Tommy og sebastian
+  // Marcus, Tommy og Sebastian
   @PostMapping("/lease-form")
   public String makeLeaseContract(HttpSession session,
                                   @RequestParam ("pickup-time") String pickupTime,
@@ -198,9 +196,6 @@ public class RegistrationController {
     //nulstil session da oprettelsen er færdig
     session.invalidate();
 
-
-//    session.setAttribute("reservation", reservation);  //er dette nødvendigt?
-//    session.setAttribute("reservation-comment", reservationComment); //er dette nødvendigt?
 //        return "redirect:/lease-form-finished";
     return "redirect:/show-reserved-cars";
   }
@@ -226,13 +221,13 @@ public class RegistrationController {
   @GetMapping("/show-reserved-cars")
   public String showReservedCars(Model model){
     model.addAttribute("reservations",registrationService.fetchAllReservations());
-    return "lease-show-rented-out-cars";
+    return "/registration/lease-show-rented-out-cars";
   }
 
   @GetMapping("/pickup-place")
   public String showSelectPickupPlace(Model model) {
     model.addAttribute("locations", registrationService.fetchAllLocations());
-    return "lease-select-location";
+    return "/registration/lease-select-location";
   }
 
   // Tommy
@@ -244,27 +239,18 @@ public class RegistrationController {
     return "redirect:/lease-find-employee";
   }
 
-  @GetMapping("/lease-economy")
-  public String showEconomy(Model model){
-    List<Reservation> reservations = registrationService.fetchAllReservations();
-    model.addAttribute(reservations);
-
-    double totalLeaseSum = registrationService.calculateIncome(reservations);
-    model.addAttribute("totalSum", totalLeaseSum);
-    return "/lease-income";
-  }
 
   //Giver det mening at mappings vedr. oprettelse af medarbejdere ligger i registrationController?
   @GetMapping("/create-employee")
   public String showCreateEmployee( @RequestParam (value = "message", required = false) String message, Model model) {
     model.addAttribute("message", message);
-    return "create-employee";
+    return "/registration/create-employee";
   }
 
   @PostMapping("/create-employee")
   public String createEmployee(@ModelAttribute Employee employee, RedirectAttributes redirectAttributes) {
 
-    //TODO: tjekke at medarbejders initialer ikke allerede er oprettet
+    //TODO:tjekke at medarbejders initialer ikke allerede er oprettet
     //Hvis initialer allerede findes (if-tjek)
     redirectAttributes.addAttribute("message", "Initialer findes allerede" );
     // return "redirect:/create-employee";
@@ -279,7 +265,7 @@ public class RegistrationController {
   @GetMapping("/lease-new-location")
   public String showCreateNewLocation(@RequestParam (value = "message", required = false) String message, Model model){
     model.addAttribute("message", message);
-    return "/lease/lease-new-location";
+    return "/registration/lease-new-location";
   }
 
 

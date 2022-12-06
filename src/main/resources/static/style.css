@@ -11,3 +11,8 @@ body {
     height: 100vh;
 }
 
+
+.reservation-comment {
+    width: 200px;
+    height: 200px;
+}

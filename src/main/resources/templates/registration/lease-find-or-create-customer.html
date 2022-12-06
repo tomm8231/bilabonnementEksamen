@@ -8,14 +8,15 @@
     <link rel="stylesheet" href="/style.css">
 
 </head>
-<body style="height: 100vh">
+<body>
 
-<div class="h-100 d-flex flex-column w-100 align-items-center justify-content-center">
+<div class="d-flex flex-column w-100 align-items-center justify-content-center">
     <div>
         <h1> Ny Kunde</h1>
         <div id="new-costumer">
-            <form action="/lease-create-customer" method="post" >
-                <input type="number" id="customer_id" name="customer_id" th:value="0" class="form-control" required hidden readonly>
+            <form action="/lease-create-customer" method="post">
+                <input type="number" id="customer_id" name="customer_id" th:value="0" class="form-control" required
+                       hidden readonly>
                 <label for="customer_name" class="form-label"> Kundens navn </label>
                 <input type="text" id="customer_name" name="customer_name" class="form-control" required>
                 <label for="customer_mail" class="form-label"> Kundens E-mail </label>
@@ -32,12 +33,14 @@
         <h1 class="border-top border-dark"> Eksisterende kunde</h1>
         <form action="/lease-find-returning-customer" method="post">
             <label for="returning-costumer-mail" class="form-label"> Kundens E-mail </label>
-            <input type="text" id="returning-costumer-mail" name="returning-costumer-mail" class="form-control" required>
+            <input type="text" id="returning-costumer-mail" name="returning-costumer-mail" class="form-control"
+                   required>
             <button class="mt-2" type="submit">søg kunde</button>
         </form>
 
         <form action="/cancel-lease-contract" method="post" th:action="@{/cancel-lease-contract}">
-        <button class="btn btn-secondary btn-lg btn-block border w-50 mt-3" type="submit">Annuller lejekontrakt</button>
+            <button class="btn btn-secondary btn-lg btn-block border w-50 mt-3" type="submit">Annuller lejekontrakt
+            </button>
         </form>
     </div>
 </div>
