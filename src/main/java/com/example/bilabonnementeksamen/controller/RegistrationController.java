@@ -290,57 +290,10 @@ public class RegistrationController {
       redirectAttributes.addAttribute("message", "Lokalitet findes allerede");
     } else {
       registrationService.createLocation(location);
-      redirectAttributes.addAttribute("message", "Du har oprettet en ny lokalitet: " /* +
-          location.getLocation_name()+ ' ' + location.getLocation_address() + ' ' + location.getLocation_phone()*/);
+      redirectAttributes.addAttribute("message", "Du har oprettet en ny lokalitet: "  +
+          location.getLocation_name()+ ", " + location.getLocation_address() + ". Telefonnummer: " + location.getLocation_phone());
     }
-
-    return "redirect:/lease/lease-new-location";
+// redirect til en get eller post (ikke html!)
+    return "redirect:/lease-new-location";
   }
-
-/*
-// Marcus
-  @GetMapping("/lease-new-location")
-  public String showCreateLocation() {
-    return "/lease/lease-new-location";
-  }
-
-
-// Marcus bruge @Rq
-  @PostMapping("/lease-create-location")
-  public String leaseCreateNewLocation(@ModelAttribute Location location, HttpSession session) {
-    registrationService.createLocation(location);
-    session.setAttribute("lease-location", location);
-    return "redirect:/lease-confirm-new-location";
-  }
-
-
-  // Marcus html: lease-confirm-new-location
-  @GetMapping ("/lease-confirm-location")
-  public String showConfirmationNewLocation(HttpSession session){
-    session.getAttribute("lease-location");
-
-    Location location = (Location) session.getAttribute("lease-location");
-
-    session.invalidate();
-
-    return "/lease/lease-confirm-new-location";
-  }
-
-
-  @PostMapping ("lease-confirm-location")
-  public String showConfirmationNewLocation(HttpSession session){
-    session.getAttribute("lease-location");
-
-    Location location = (Location) session.getAttribute("lease-location");
-
-    //nulstil session da oprettelsen er færdig
-    session.invalidate();
-
-    return "/lease/lease-confirm-new-location";
-  }
-
- */
-
-
-
 }

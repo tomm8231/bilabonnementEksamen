@@ -171,11 +171,10 @@ public class RegistrationService {
       // Location findes allerede med samme adresse
       if (location.getLocation_address().equals(newLocation.getLocation_address())) {
         locationAlreadyExist = true;
-      } else {
-        locationAlreadyExist = false;
       }
-    }
-    return locationAlreadyExist;
+
   }
+    return locationAlreadyExist;
+}
 
 }
