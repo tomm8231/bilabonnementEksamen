@@ -257,16 +257,24 @@ public class RegistrationController {
 
   //Giver det mening at mappings vedr. oprettelse af medarbejdere ligger i registrationController?
   @GetMapping("/create-employee")
-  public String showCreateEmployee() {
+  public String showCreateEmployee( @RequestParam (value = "message", required = false) String message, Model model) {
+
+    model.addAttribute("message", message);
+
     return "create-employee";
   }
 
   @PostMapping("/create-employee")
-  public String createEmployee(@RequestParam ("employee_id") int id,
-                               @RequestParam ("employee_initials") String initials,
-                               @RequestParam ("employee_name") String name) {
-    Employee employee = new Employee(id, initials,name);
+  public String createEmployee(@ModelAttribute Employee employee, RedirectAttributes redirectAttributes) {
+
+    //TODO: tjekke at medarbejders initialer ikke allerede er oprettet
+    //Hvis initialer allerede findes (if-tjek)
+    redirectAttributes.addAttribute("message", "Initialer findes allerede" );
+    // return "redirect:/create-employee";
+
+    //hvis succes med oprettelse (Ellers)
     registrationService.createEmployee(employee);
+    redirectAttributes.addAttribute("message", "Medarbejder + medarbejders navn, oprrettet med id = ?" );
     return "redirect:/create-employee";
   }
 }
