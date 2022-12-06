@@ -37,14 +37,30 @@
                         data-bs-target="#dashboard-collapse" aria-expanded="false">
                     Kontrakter
                 </button>
-                <div class="collapse" id="dashboard-collapse" style="">
+                <div class="collapse" id="contracts-collapse" style="">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
                         <!-- ms-2 = margin start .me-2 = 0.5rem-->
                         <li><a th:href="@{lease-contract}" class="link-dark rounded">Opret ny lejekontrakt</a></li>
-                        <li><a href="#" class="link-dark rounded">Opret ny købskontrakt</a></li>
-                        <li><a href="#" class="link-dark rounded">Søg i kunderegister</a></li>
+                        <li><a href="#" class="link-dark rounded">Opret ny købskontrakt - not implemented</a></li>
+                        <li><a href="#" class="link-dark rounded">Søg i kunderegister - not implemented</a></li>
                         <li><a href="#" class="link-dark rounded"></a></li>
                         <li><a th:href="@{lease-economy}" class="link-dark rounded">Økonomi</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="mb-1">
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+                        data-bs-target="#dashboard-collapse" aria-expanded="false">
+               Ansatte
+                </button>
+                <div class="collapse" id="employee-collapse" style="">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
+                        <!-- ms-2 = margin start .me-2 = 0.5rem-->
+                        <li><a th:href="@{lease-new-employee}" class="link-dark rounded">Opret ny ansat</a></li>
+                        <li><a th:href="@{lease-new-location}" class="link-dark rounded">Opret ny lokalitet</a></li>
+                        <li><a href="#" class="link-dark rounded">Se alle ansatte - - not implemented</a></li>
+                        <li><a href="#" class="link-dark rounded"></a>Se alle lokaliteter - not implemented</li>
                     </ul>
                 </div>
             </li>
@@ -57,9 +73,9 @@
                 </button>
                 <div class="collapse" id="account-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
-                        <li><a href="#" class="link-dark rounded">IT-ansvarlig</a></li>
-                        <li><a href="#" class="link-dark rounded">Helpdesk</a></li>
-                        <li><a href="#" class="link-dark rounded">SAP</a></li>
+                        <li><a href="#" class="link-dark rounded">IT-ansvarlig - not implemented</a></li>
+                        <li><a href="#" class="link-dark rounded">Helpdesk - not implemented</a></li>
+                        <li><a href="#" class="link-dark rounded">SAP - not implemented</a></li>
                         <li class="mt-4">
                             <form action="/unreserve-all-cars-session" method="post" th:action="@{unreserve-all-cars-session}">
                                 <button type="submit" class="link-dark rounded">Afreservér alle biler (session)</button>

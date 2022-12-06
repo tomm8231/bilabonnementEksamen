@@ -49,4 +49,10 @@ public class DamageReportController {
   }
 
 
+  @GetMapping("/lease-new-location")
+  public String showCreateNewLocation(){
+    return "lease/lease-new-location";
+  }
+
+
 }

@@ -77,7 +77,7 @@ public class RegistrationController {
     model.addAttribute("bookingStart", startReservationDate);
     model.addAttribute("bookingRetur", returnReservationDate);
     model.addAttribute("car", registrationService.fetchCarsByDate(startDate, endDate, typeLeasing));
-    return "lease-available-cars";
+    return "/lease/lease-available-cars";
   }
 
 
@@ -205,6 +205,49 @@ public class RegistrationController {
     return "redirect:/show-reserved-cars";
   }
 
+// Marcus
+  @GetMapping("/lease-new-location")
+  public String showCreateLocation() {
+    return "/lease/lease-new-location";
+  }
+
+
+// Marcus bruge @Rq
+  @PostMapping("/lease-create-location")
+  public String leaseCreateNewLocation(@ModelAttribute Location location, HttpSession session) {
+    registrationService.createLocation(location);
+    session.setAttribute("lease-location", location);
+    return "redirect:/lease-confirm-new-location";
+  }
+
+
+  // Marcus html: lease-confirm-new-location
+  @GetMapping ("/lease-confirm-location")
+  public String showConfirmationNewLocation(HttpSession session){
+    session.getAttribute("lease-location");
+
+    Location location = (Location) session.getAttribute("lease-location");
+
+    session.invalidate();
+
+    return "/lease/lease-confirm-new-location";
+  }
+/*
+
+  @PostMapping ("lease-confirm-location")
+  public String showConfirmationNewLocation(HttpSession session){
+    session.getAttribute("lease-location");
+
+    Location location = (Location) session.getAttribute("lease-location");
+
+    //nulstil session da oprettelsen er færdig
+    session.invalidate();
+
+    return "/lease/lease-confirm-new-location";
+  }
+
+ */
+
 
   // Sebastian
   @PostMapping("/cancel-lease-contract")
@@ -269,4 +312,23 @@ public class RegistrationController {
     registrationService.createEmployee(employee);
     return "redirect:/create-employee";
   }
+
+
+  @GetMapping("/lease-new-location")
+  public String showCreateNewLocation(){
+    return "/lease/lease-new-location";
+  }
+
+
+  @PostMapping ("/lease-new-location")
+  public String createNewLocation(){
+
+    //TODO: check om location allerede findes
+
+    return "redirect:/lease/lease-new-location";
+  }
+
+
+
+
 }
