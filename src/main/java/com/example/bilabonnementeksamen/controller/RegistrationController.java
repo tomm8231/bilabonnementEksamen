@@ -37,7 +37,7 @@ public class RegistrationController {
   // Fælles - Find biler ud fra dato og lejetype og send videre
   @PostMapping("/lease-limited-contract")
   public String findLimitedCarsByDate(@RequestParam("limited-start-date") String startDate,
-                                      @RequestParam("type-leasing") String typeLeasing,
+                                      @RequestParam ("type-leasing") String typeLeasing,
                                       RedirectAttributes redirectAttributes) {
     redirectAttributes.addAttribute("rd-start-date", startDate);
     redirectAttributes.addAttribute("type-leasing", typeLeasing);
@@ -48,7 +48,7 @@ public class RegistrationController {
   // Fælles
   @PostMapping("/lease-unlimited-contract")
   public String findUnlimitedCarsByDate(@RequestParam("unlimited-start-date") String startDate, @RequestParam("unlimited-end-date") String endDate,
-                                        @RequestParam("type-leasing") String typeLeasing, RedirectAttributes redirectAttributes) {
+                                        @RequestParam ("type-leasing") String typeLeasing, RedirectAttributes redirectAttributes) {
 
     redirectAttributes.addAttribute("rd-start-date", startDate);
     redirectAttributes.addAttribute("rd-end-date", endDate);
@@ -59,13 +59,13 @@ public class RegistrationController {
 
   // Fælles
   @GetMapping("/lease-available-cars")
-  public String showAvailableCars(Model model, @RequestParam("rd-start-date") String startDate,
+  public String showAvailableCars(Model model, @RequestParam ("rd-start-date") String startDate,
                                   @RequestParam(value = "rd-end-date", required = false) String endDate,
-                                  @RequestParam("type-leasing") String typeLeasing, HttpSession session) {
+                                  @RequestParam ("type-leasing") String typeLeasing, HttpSession session) {
 
     //Der tilrettes så begge datoer kan brues fremad
     LocalDate startReservationDate = registrationService.modifyStartDate(startDate);
-    LocalDate returnReservationDate = registrationService.modifyEndDate(startDate, endDate);
+    LocalDate returnReservationDate = registrationService.modifyEndDate(startDate,endDate);
 
     //Datoerne gemmes
     session.setAttribute("start-date", startReservationDate);
@@ -114,7 +114,7 @@ public class RegistrationController {
   }
 
   @PostMapping("/lease-find-employee")
-  public String leaseAddEmployee(@RequestParam("employee-id") int id, HttpSession session) {
+  public String leaseAddEmployee(@RequestParam ("employee-id") int id, HttpSession session) {
 
     Employee employee = registrationService.fetchEmployeeById(id);
 
@@ -161,10 +161,10 @@ public class RegistrationController {
     model.addAttribute("employee", employee);
 
     LocalDate bookingStartDate = (LocalDate) session.getAttribute("start-date");
-    model.addAttribute("startDate", bookingStartDate);
+    model.addAttribute("startDate",bookingStartDate);
 
     LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
-    model.addAttribute("endDate", bookingEndDate);
+    model.addAttribute("endDate",bookingEndDate);
 
 
     return "lease-final-form";
@@ -173,10 +173,10 @@ public class RegistrationController {
   // Marcus og Tommy og sebastian
   @PostMapping("/lease-form")
   public String makeLeaseContract(HttpSession session,
-                                  @RequestParam("pickup-time") String pickupTime,
-                                  @RequestParam("return-time") String returnTime,
-                                  @RequestParam("reservation_payment") int reservationPayment,
-                                  @RequestParam("reservation_comment") String reservationComment) {
+                                  @RequestParam ("pickup-time") String pickupTime,
+                                  @RequestParam ("return-time") String returnTime,
+                                  @RequestParam ("reservation_payment")int reservationPayment,
+                                  @RequestParam ("reservation_comment")String reservationComment ){
 
     //gemte sessionsobjekter til oprettelse af reservation
     Customer customer = (Customer) session.getAttribute("lease-customer");
@@ -187,8 +187,8 @@ public class RegistrationController {
     LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
 
     //reservationen oprettes
-    registrationService.createReservation(car, customer, location, bookingStartDate, bookingEndDate, pickupTime, returnTime,
-        reservationPayment, reservationComment, employee);
+    registrationService.createReservation(car,customer,location,bookingStartDate,bookingEndDate, pickupTime, returnTime,
+        reservationPayment, reservationComment,employee);
 
     //bil er ikke længere i process, og status ændres
     registrationService.unreserveCarById(car.getCar_vehicle_number());
@@ -222,8 +222,8 @@ public class RegistrationController {
 
   // Sebastian
   @GetMapping("/show-reserved-cars")
-  public String showReservedCars(Model model) {
-    model.addAttribute("reservations", registrationService.fetchAllReservations());
+  public String showReservedCars(Model model){
+    model.addAttribute("reservations",registrationService.fetchAllReservations());
     return "lease-show-rented-out-cars";
   }
 
@@ -235,7 +235,7 @@ public class RegistrationController {
 
   // Tommy
   @PostMapping("/pickup-place")
-  public String selectPickupPlace(@RequestParam("location_address") String locationAddress, HttpSession session) {
+  public String selectPickupPlace(@RequestParam ("location_address") String locationAddress, HttpSession session) {
     // flyttes til meny: registrationService.createLocation(location);
     Location location = registrationService.fetchLocationByAddress(locationAddress);
     session.setAttribute("lease-location", location);
@@ -243,7 +243,7 @@ public class RegistrationController {
   }
 
   @GetMapping("/lease-economy")
-  public String showEconomy(Model model) {
+  public String showEconomy(Model model){
     List<Reservation> reservations = registrationService.fetchAllReservations();
     model.addAttribute(reservations);
 
@@ -285,69 +285,23 @@ public class RegistrationController {
 
 
   @GetMapping("/lease-new-location")
-  public String showCreateNewLocation(@RequestParam(value = "message", required = false) String message, Model model) {
+  public String showCreateNewLocation(@RequestParam (value = "message", required = false) String message, Model model){
     model.addAttribute("message", message);
     return "/lease/lease-new-location";
   }
 
 
-  @PostMapping("/lease-new-location")
-  public String createNewLocation(@ModelAttribute Location location, RedirectAttributes redirectAttributes) {
+  @PostMapping ("/lease-new-location")
+  public String createNewLocation(@ModelAttribute Location location, RedirectAttributes redirectAttributes){
 
-    if (registrationService.checkIfLocationExist(location)) {
+    if(registrationService.checkIfLocationExist(location)){
       redirectAttributes.addAttribute("message", "Lokalitet findes allerede");
     } else {
       registrationService.createLocation(location);
-      redirectAttributes.addAttribute("message", "Du har oprettet en ny lokalitet: " /* +
-          location.getLocation_name()+ ' ' + location.getLocation_address() + ' ' + location.getLocation_phone()*/);
+      redirectAttributes.addAttribute("message", "Du har oprettet en ny lokalitet: "  +
+          location.getLocation_name()+ ", " + location.getLocation_address() + ". Telefonnummer: " + location.getLocation_phone());
     }
-
-    return "redirect:/lease/lease-new-location";
+// redirect til en get eller post (ikke html!)
+    return "redirect:/lease-new-location";
   }
-
-/*
-// Marcus
-  @GetMapping("/lease-new-location")
-  public String showCreateLocation() {
-    return "/lease/lease-new-location";
-  }
-
-
-// Marcus bruge @Rq
-  @PostMapping("/lease-create-location")
-  public String leaseCreateNewLocation(@ModelAttribute Location location, HttpSession session) {
-    registrationService.createLocation(location);
-    session.setAttribute("lease-location", location);
-    return "redirect:/lease-confirm-new-location";
-  }
-
-
-  // Marcus html: lease-confirm-new-location
-  @GetMapping ("/lease-confirm-location")
-  public String showConfirmationNewLocation(HttpSession session){
-    session.getAttribute("lease-location");
-
-    Location location = (Location) session.getAttribute("lease-location");
-
-    session.invalidate();
-
-    return "/lease/lease-confirm-new-location";
-  }
-
-
-  @PostMapping ("lease-confirm-location")
-  public String showConfirmationNewLocation(HttpSession session){
-    session.getAttribute("lease-location");
-
-    Location location = (Location) session.getAttribute("lease-location");
-
-    //nulstil session da oprettelsen er færdig
-    session.invalidate();
-
-    return "/lease/lease-confirm-new-location";
-  }
-
- */
-
-
 }
