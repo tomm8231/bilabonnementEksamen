@@ -421,7 +421,7 @@ public class RegistrationRepo {
   }
 
   public void createReservation(Car car_vehicle_number, Customer customer_id, Location location_address, LocalDate pickup_date,
-                                 LocalDate return_date, String pickup_time, String return_time, int reservation_payment,
+                                 LocalDate return_date, String pickup_time, String return_time, double reservation_payment,
                                  String reservation_comment, Employee employee_id) {
 
     try {

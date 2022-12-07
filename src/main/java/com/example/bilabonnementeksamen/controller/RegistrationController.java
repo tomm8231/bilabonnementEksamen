@@ -167,8 +167,10 @@ public class RegistrationController {
     model.addAttribute("endDate",bookingEndDate);
 
     //TODO: ændre til double?
-    int paymentTotal = (int) registrationService.calculatePaymentTotal("startDate", "endDate", car);
+    double paymentTotal = registrationService.calculatePaymentTotal(bookingStartDate, bookingEndDate, car);
     model.addAttribute("paymentTotal", paymentTotal);
+
+
 
     return "/registration/lease-final-form";
   }
@@ -179,7 +181,7 @@ public class RegistrationController {
   public String makeLeaseContract(HttpSession session,
                                   @RequestParam ("pickup-time") String pickupTime,
                                   @RequestParam ("return-time") String returnTime,
-                                  @RequestParam ("paymentTotal") int paymentTotal,
+                                  @RequestParam ("paymentTotal") double paymentTotal,
                                   @RequestParam ("reservation_comment")String reservationComment ){
 
     //gemte sessionsobjekter til oprettelse af reservation
@@ -189,9 +191,6 @@ public class RegistrationController {
     Employee employee = (Employee) session.getAttribute("lease-employee");
     LocalDate bookingStartDate = (LocalDate) session.getAttribute("start-date");
     LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
-
-    //TODO: ændre til double?
-    // paymentTotal = (int) registrationService.calculatePaymentTotal(pickupTime, returnTime, car);
 
     //reservationen oprettes
     registrationService.createReservation(car,customer,location,bookingStartDate,bookingEndDate, pickupTime, returnTime,

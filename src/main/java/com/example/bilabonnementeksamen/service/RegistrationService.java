@@ -135,7 +135,7 @@ public class RegistrationService {
 
   public void createReservation(Car car_vehicle_number, Customer customer_id, Location location_address,
                                 LocalDate pickup_date, LocalDate return_date, String pickup_time, String return_time,
-                                int reservation_payment, String reservation_comment, Employee employee_id) {
+                                double reservation_payment, String reservation_comment, Employee employee_id) {
 
     //String der modtages er i "hr:min", men Time format i SQL kræver "hr:min:sec", derfor en tilføjelse til string
     String fixedPickupTime = pickup_time + ":00";
@@ -200,19 +200,16 @@ public class RegistrationService {
     return registrationRepo.fetchEmployeeByInitials(initials);
   }
 
-  public double calculatePaymentTotal(String pickupTime, String returnTime, Car car) {
+  public double calculatePaymentTotal(LocalDate pickupDate, LocalDate returnDate, Car car) {
 
     // Finder antal måneder for reservation og * med price per month
 
     double paymentTotal= 0;
 
-    LocalDate pickupTimeLocalDate = LocalDate.parse(pickupTime);
-    LocalDate returnTimeLocalDate = LocalDate.parse(returnTime);
-
     double pricePerMonth = car.getCar_price_month();
 
-    int monthValuePickupTime = pickupTimeLocalDate.getMonthValue();
-    int monthValueReturnTime = returnTimeLocalDate.getMonthValue();
+    int monthValuePickupTime = pickupDate.getMonthValue();
+    int monthValueReturnTime = returnDate.getMonthValue();
     double noOfMonths = monthValueReturnTime - monthValuePickupTime;
 
     paymentTotal = pricePerMonth * noOfMonths;
