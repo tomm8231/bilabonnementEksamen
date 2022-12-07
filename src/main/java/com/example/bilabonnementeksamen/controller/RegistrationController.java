@@ -310,11 +310,20 @@ public class RegistrationController {
     return "redirect:/lease-new-location";
   }
 
+  //Sebastian
   @GetMapping("/show-all-locations")
   public String showAllLocations(Model model){
     ArrayList<Location> locations = (ArrayList<Location>) registrationService.fetchAllLocations();
     model.addAttribute("locations", locations);
     return "/registration/lease-show-locations";
+  }
+
+  //Sebastian
+  @GetMapping("/show-all-empolyees")
+  public String showAllEmplyees(Model model){
+    ArrayList<Employee> employees = registrationService.fetchAllEployees();
+    model.addAttribute("emplyees", employees);
+    return "/registration/lease-show-employees";
   }
 
 }

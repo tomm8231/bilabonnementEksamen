@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Alle lokaliteter</title>
+    <title>Alle medarbejdere</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
@@ -14,21 +14,21 @@
     <nav th:replace="fragments/registration-sidebar-fragment :: registration-sidebar-fragment"></nav>
     <container class= "d-flex flex-column gap-4 align-items-center justify-content-center ps-5">
 
-        <h3> Alle medarbejder </h3>
+        <h3> Alle samarbejds lokaliteter </h3>
 
         <table class="show-cars-table table table-hover">
             <thead>
             <tr>
+                <th scope="col">Medarbejder ID</th>
                 <th scope="col">Navn</th>
                 <th scope="col">Adresse</th>
-                <th scope="col">Telefon nummer</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="l : ${locations}">
-                <td th:text="${l.location_name}">navn</td>
-                <td th:text="${l.location_address}">adresse</td>
-                <td th:text="${l.location_phone}">telefon nummer</td>
+            <tr th:each="e : ${emplyees}">
+                <td th:text="${e.employee_id}">telefon nummer</td>
+                <td th:text="${e.employee_name}">navn</td>
+                <td th:text="${e.employee_initials}">adresse</td>
             </tr>
             </tbody>
         </table>
@@ -42,7 +42,6 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 <script src="sidebars.js"></script>
-
 
 </body>
 </html>

@@ -621,4 +621,32 @@ public class RegistrationRepo {
 
     return employee;
   }
+
+  //Sebastian
+  public ArrayList<Employee> fetchAllEmplyees() {
+    ArrayList<Employee> employees = new ArrayList<>();
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "SELECT * FROM employee";
+      PreparedStatement pst = conn.prepareStatement(sql);
+
+      ResultSet rs = pst.executeQuery();
+
+      while (rs.next()) {
+        int employee_id = rs.getInt(1);
+        String employee_initials = rs.getString(2);
+        String employee_name = rs.getString(3);
+
+        Employee employee = new Employee(employee_id, employee_initials, employee_name);
+
+        employees.add(employee);
+      }
+
+    } catch (SQLException e) {
+      System.err.println("Cannot connect to database");
+      e.printStackTrace();
+    }
+    return employees;
+  }
 }
