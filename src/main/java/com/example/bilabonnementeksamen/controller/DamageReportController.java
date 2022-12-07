@@ -1,6 +1,8 @@
 package com.example.bilabonnementeksamen.controller;
 
+import com.example.bilabonnementeksamen.model.Employee;
 import com.example.bilabonnementeksamen.model.Problem;
+import com.example.bilabonnementeksamen.model.ProblemReport;
 import com.example.bilabonnementeksamen.model.Reservation;
 import com.example.bilabonnementeksamen.service.DamageReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +87,39 @@ public class DamageReportController {
     return "redirect:/problem-overview";
   }
 
+/*
+  @GetMapping("/problem-form")
+  public String showFormRegistration(HttpSession session, Model model) {
+    Reservation reservation = (Reservation) session.getAttribute("reservation");
+    model.addAttribute("reservation", reservation);
+    return "/problem/problem-form";
+  }
 
+ */
+
+  @PostMapping("/problem-report-submit")
+  public String createProblemReport(HttpSession session){
+    ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
+    Reservation reservation = (Reservation) session.getAttribute("reservation");
+
+    damageReportService.createProblemReport(listOfProblems, reservation);
+    return "redirect:/result";
+  }
+
+  @GetMapping("/result")
+  public String showProblemReport(HttpSession session, Model model){
+    ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
+    Reservation reservation = (Reservation) session.getAttribute("reservation");
+    int reportId = damageReportService.fetchReportId(listOfProblems, reservation);
+    model.addAttribute("report_id", reportId);
+    return "/problem/problem-form-result";
+  }
+
+
+  @PostMapping("/result")
+  public String sendProblemReport(){
+    //TODO: lave en metode for at oprette en pdf til kunden
+    return "redirect:/damage-home-page";
+  }
 
 }

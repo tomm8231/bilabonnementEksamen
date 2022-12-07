@@ -13,50 +13,60 @@
 
 <div class="h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
 
-    <container class= "h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
+    <container class="h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
 
-    <h1> Alle fejl og mangler</h1>
+        <h1> Alle fejl og mangler</h1>
 
-    <table class="table table-hover">
-        <thead>
-        <tr>
+        <table class="table table-hover">
+            <thead>
+            <tr>
 
-            <th scope="col">id</th>
-            <th scope="col">Type</th>
-            <th scope="col">Pris</th>
-            <th scope="col">Beskrivelse</th>
-            <th scope="col"></th>
+                <th scope="col">id</th>
+                <th scope="col">Type</th>
+                <th scope="col">Pris</th>
+                <th scope="col">Beskrivelse</th>
+                <th scope="col"></th>
 
-        </tr>
-        </thead>
-        <tbody>
+            </tr>
+            </thead>
+            <tbody>
 
 
-        <tr th:each="p : ${problems}">
+            <tr th:each="p : ${problems}">
 
-            <td th:text="${p.problem_type}">Problem</td>
-            <td th:text="${p.problem_description}">Problem</td>
-            <td th:text="${p.problem_price}">Problem</td>
+                <td th:text="${p.problem_type}">Problem</td>
+                <td th:text="${p.problem_price}">Problem</td>
+                <td th:text="${p.problem_description}">Problem</td>
 
-            <td>
-                <!--<form action="/" method="post" th:action="">
-                    <button type="submit">Slet</button>
-                </form>-->
 
-                <p><a th:href="@{'/deleteSpecificDamage/'  + ${p.problem_id+problems.size}}">Slet</p>
-            </td>
-        </tr>
+                <td>
+                    <!--<form action="/" method="post" th:action="">
+                        <button type="submit">Slet</button>
+                    </form>-->
 
-        </tbody>
-    </table>
+                    <p><a th:href="@{'/deleteSpecificDamage/'  + ${p.problem_id+problems.size}}">Slet</a></p>
+                </td>
+            </tr>
 
-    <form action="/damage-home-page" method="get">
-        <button class="mt-2 mb-3 " type="submit">Annuller</button>
-    </form>
+            </tbody>
+        </table>
+        <div class="d-flex w-100 justify-content-evenly">
+
+        <form action="/problem-form" method="get">
+            <button class="mt-2 mb-3 " type="submit">Tilføj mere</button>
+        </form>
+
+        <form action="/damage-home-page" method="get">
+            <button class="mt-2 mb-3 " type="submit">Annuller</button>
+        </form>
+
+        <form action="/problem-report-submit" method="post">
+            <button class="mt-2 mb-3 " type="submit">Godkend</button>
+        </form>
+        </div>
+
     </container>
 </div>
-
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

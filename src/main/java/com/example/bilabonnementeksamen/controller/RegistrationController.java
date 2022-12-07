@@ -105,7 +105,9 @@ public class RegistrationController {
   @PostMapping("/lease-create-customer")
   public String leaseAddCustomer(@ModelAttribute Customer customer, HttpSession session) {
     registrationService.createCustomer(customer);
-    session.setAttribute("lease-customer", customer);
+    Customer newCustomer = registrationService.fetchCustomerByMail(customer.getCustomer_mail());
+    session.setAttribute("lease-customer", newCustomer);
+
     return "redirect:/pickup-place";
   }
 
