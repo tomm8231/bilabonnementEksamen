@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -197,5 +198,25 @@ public class RegistrationService {
 
   public Employee fetchEmployeeByInitials(String initials) {
     return registrationRepo.fetchEmployeeByInitials(initials);
+  }
+
+  public double calculatePaymentTotal(String pickupTime, String returnTime, Car car) {
+
+    // Finder antal måneder for reservation og * med price per month
+
+    double paymentTotal= 0;
+
+    LocalDate pickupTimeLocalDate = LocalDate.parse(pickupTime);
+    LocalDate returnTimeLocalDate = LocalDate.parse(returnTime);
+
+    double pricePerMonth = car.getCar_price_month();
+
+    int monthValuePickupTime = pickupTimeLocalDate.getMonthValue();
+    int monthValueReturnTime = returnTimeLocalDate.getMonthValue();
+    double noOfMonths = monthValueReturnTime - monthValuePickupTime;
+
+    paymentTotal = pricePerMonth * noOfMonths;
+
+    return paymentTotal;
   }
 }

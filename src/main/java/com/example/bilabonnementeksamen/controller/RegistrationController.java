@@ -145,7 +145,6 @@ public class RegistrationController {
 
   // Sebastian og Marcus
   @GetMapping("/lease-final-form")
-  // Skal man bruge @RequestParam for at
   public String showLeaseContract(HttpSession session, Model model) {
 
     //Alle objekterne fra processen hentes fra session og tilføjes til view
@@ -167,16 +166,20 @@ public class RegistrationController {
     LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
     model.addAttribute("endDate",bookingEndDate);
 
+    //TODO: ændre til double?
+    int paymentTotal = (int) registrationService.calculatePaymentTotal("startDate", "endDate", car);
+    model.addAttribute("paymentTotal", paymentTotal);
 
     return "/registration/lease-final-form";
   }
 
   // Marcus, Tommy og Sebastian
+  //TODO: fjernet   @RequestParam ("reservation_payment")int reservationPayment for en metode
   @PostMapping("/lease-form")
   public String makeLeaseContract(HttpSession session,
                                   @RequestParam ("pickup-time") String pickupTime,
                                   @RequestParam ("return-time") String returnTime,
-                                  @RequestParam ("reservation_payment")int reservationPayment,
+                                  @RequestParam ("paymentTotal") int paymentTotal,
                                   @RequestParam ("reservation_comment")String reservationComment ){
 
     //gemte sessionsobjekter til oprettelse af reservation
@@ -187,9 +190,12 @@ public class RegistrationController {
     LocalDate bookingStartDate = (LocalDate) session.getAttribute("start-date");
     LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
 
+    //TODO: ændre til double?
+    // paymentTotal = (int) registrationService.calculatePaymentTotal(pickupTime, returnTime, car);
+
     //reservationen oprettes
     registrationService.createReservation(car,customer,location,bookingStartDate,bookingEndDate, pickupTime, returnTime,
-        reservationPayment, reservationComment,employee);
+        paymentTotal, reservationComment,employee);
 
     //bil er ikke længere i process, og status ændres
     registrationService.unreserveCarById(car.getCar_vehicle_number());
@@ -197,7 +203,6 @@ public class RegistrationController {
     //nulstil session da oprettelsen er færdig
     session.invalidate();
 
-//        return "redirect:/lease-form-finished";
     return "redirect:/show-reserved-cars";
   }
 
