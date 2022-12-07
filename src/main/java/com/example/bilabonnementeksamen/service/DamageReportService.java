@@ -15,4 +15,16 @@ public class DamageReportService {
   public Reservation fetchReservationInfo(int id) {
     return damageReportRepo.fetchReservationInfoById(id);
   }
+
+  public int checkIdInUse(int id) {
+    Reservation reservation = damageReportRepo.checkIdInUse(id);
+
+    if (reservation.getReservation_comment() == null) {
+      System.out.println("1");
+      return 1;
+    } else {
+      System.out.println("2");
+      return 2;
+    }
+  }
 }

@@ -36,9 +36,20 @@ public class DamageReportController {
   @PostMapping("/find-reservation-info")
   public String fetchReservationInfo(@RequestParam("reservation-id") int id, HttpSession session) {
 
-    Reservation reservation = damageReportService.fetchReservationInfo(id);
-    session.setAttribute("reservation", reservation);
-    return "redirect:/problem-form";
+    int numberOption = damageReportService.checkIdInUse(id);
+    switch (numberOption) {
+      case 1 -> {
+        Reservation reservation = damageReportService.fetchReservationInfo(id);
+        session.setAttribute("reservation", reservation);
+        return "redirect:/problem-form";
+      }
+      case 2 -> {
+        return "redirect:/find-reservation-info";
+      }
+      default -> {
+        return "redirect:/find-reservation-info";
+      }
+    }
   }
 
 
