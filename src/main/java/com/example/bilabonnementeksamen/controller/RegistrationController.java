@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -308,4 +309,21 @@ public class RegistrationController {
 // redirect til en get eller post (ikke html!)
     return "redirect:/lease-new-location";
   }
+
+  //Sebastian
+  @GetMapping("/show-all-locations")
+  public String showAllLocations(Model model){
+    ArrayList<Location> locations = (ArrayList<Location>) registrationService.fetchAllLocations();
+    model.addAttribute("locations", locations);
+    return "/registration/lease-show-locations";
+  }
+
+  //Sebastian
+  @GetMapping("/show-all-empolyees")
+  public String showAllEmplyees(Model model){
+    ArrayList<Employee> employees = registrationService.fetchAllEployees();
+    model.addAttribute("emplyees", employees);
+    return "/registration/lease-show-employees";
+  }
+
 }

@@ -37,7 +37,7 @@ public class DamageReportController {
 
   @PostMapping("/find-reservation-info")
   public String fetchReservationInfo(@RequestParam("reservation-id") int id, HttpSession session) {
-    //TODO: check om reservation findes
+
     Reservation reservation = damageReportService.fetchReservationInfo(id);
     session.setAttribute("reservation", reservation);
     return "redirect:/problem-form";
@@ -78,8 +78,7 @@ public class DamageReportController {
     return "/problem/problem-input-overview";
   }
 
-  //TODO: fix
-  @GetMapping("/deleteSpecificDamage/{problem_id}")
+  @GetMapping("/deleteSpecificDamage")
   public String deleteSingleDamage(HttpSession session, Model model){
     ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
     model.addAttribute("problems", listOfProblems);

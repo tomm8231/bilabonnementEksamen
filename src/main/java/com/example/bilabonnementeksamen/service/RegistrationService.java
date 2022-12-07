@@ -11,6 +11,7 @@ import java.sql.Date;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -235,5 +236,10 @@ public class RegistrationService {
     double paymentTotal2decimals =  bigDecimal.doubleValue();
 
     return paymentTotal2decimals;
+  }
+
+  //sebastian
+  public ArrayList<Employee> fetchAllEployees() {
+    return registrationRepo.fetchAllEmplyees();
   }
 }
