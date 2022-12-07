@@ -66,7 +66,7 @@ public class RegistrationController {
 
     //Der tilrettes så begge datoer kan brues fremad
     LocalDate startReservationDate = registrationService.modifyStartDate(startDate);
-    LocalDate returnReservationDate = registrationService.modifyEndDate(startDate,endDate);
+    LocalDate returnReservationDate = registrationService.modifyEndDateLimited(startDate,endDate);
 
     //Datoerne gemmes
     session.setAttribute("start-date", startReservationDate);

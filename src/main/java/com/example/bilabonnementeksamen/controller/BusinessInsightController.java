@@ -34,4 +34,12 @@ public class BusinessInsightController {
     return "/business/business-income";
   }
 
+
+  //TODO:  Sebastian skal ikke denne ligge her?? Det er den samme html siden som i registration...
+  @GetMapping("/show-reserved-cars")
+  public String showReservedCars(Model model){
+    model.addAttribute("reservations",registrationService.fetchAllReservations());
+    return "/registration/lease-show-rented-out-cars";
+  }
+
 }

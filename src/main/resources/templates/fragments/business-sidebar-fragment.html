@@ -21,9 +21,8 @@
                         data-bs-target="#home-collapse" aria-expanded="false">
                     Dashboard
                 </button>
-                <div class="collapse px-20" id="home-collapse" style="">
-                    <ul class="btn-toggle-nav fw-normal pb-1 small list-unstyled ps-4"> <!-- ps-4 = padding start -->
-                        <li><a href="#" class="link-dark rounded">Tilgængelige biler</a></li>
+                <div>
+                    <ul class="btn-toggle-nav fw-normal pb-1 small list-unstyled ps-4">
                         <li><a th:href="@{show-reserved-cars}" class="link-dark rounded">Udlejede biler</a></li>
                         <li><a th:href="@{business-economy}" class="link-dark rounded">Månedlig indkomst</a></li>
                     </ul>
