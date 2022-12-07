@@ -10,8 +10,8 @@
 </head>
 <body>
 
-<div class="d-flex h-100">
-    <main class="border-start p-4">
+<div class="d-flex h-100 align-items-center justify-content-center">
+    <main class="p-4">
         <div class="h-100 d-flex flex-column w-100 align-items-center justify-content-center">
             <div>
 
@@ -19,12 +19,12 @@
 
                 <form action="/registrate-problem" method="post">
                     <div class="form-check">
-                        <input type="radio" id="problem_type_damage" name="problem_type" value="skade" class="form-check-input">
+                        <input type="radio" id="problem_type_damage" name="problem_type" value="skade" class="form-check-input" required>
                         <label class="form-check-label" for="problem_type_damage">Skade</label>
                     </div>
 
                     <div class="form-check">
-                        <input type="radio" id="problem_type_missing" name="problem_type" value="mangel" class="form-check-input">
+                        <input type="radio" id="problem_type_missing" name="problem_type" value="mangel" class="form-check-input" required>
                         <label class="form-check-label" for="problem_type_missing">Mangel</label>
                     </div>
 
