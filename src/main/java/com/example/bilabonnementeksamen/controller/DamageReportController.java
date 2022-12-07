@@ -37,7 +37,7 @@ public class DamageReportController {
 
   @PostMapping("/find-reservation-info")
   public String fetchReservationInfo(@RequestParam("reservation-id") int id, HttpSession session) {
-
+    //TODO: check om reservation findes
     Reservation reservation = damageReportService.fetchReservationInfo(id);
     session.setAttribute("reservation", reservation);
     return "redirect:/problem-form";
@@ -56,21 +56,21 @@ public class DamageReportController {
   public String registrateProblem() {
     return "/problem/problem-registration-input";
   }
-
+// Sebastian og Daniel
   @PostMapping("/registrate-problem")
   public String registrateMoreProblem(HttpSession session, @ModelAttribute Problem problem) {
     ArrayList<Problem> listOfProblems = new ArrayList<>();
 
     if (session.getAttribute("problems") != null) {
       listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
-      listOfProblems.add(problem);
-    } else {
-      listOfProblems.add(problem);
     }
+      listOfProblems.add(problem);
+
     session.setAttribute("problems", listOfProblems);
     return "redirect:/registrate-problem";
   }
 
+  // Viser alle problem som er tilføjet
   @GetMapping("/problem-overview")
   public String showProblemOverview(HttpSession session, Model model) {
     ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
@@ -78,6 +78,7 @@ public class DamageReportController {
     return "/problem/problem-input-overview";
   }
 
+  //TODO: fix
   @GetMapping("/deleteSpecificDamage/{problem_id}")
   public String deleteSingleDamage(HttpSession session, Model model){
     ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
@@ -86,16 +87,6 @@ public class DamageReportController {
 
     return "redirect:/problem-overview";
   }
-
-/*
-  @GetMapping("/problem-form")
-  public String showFormRegistration(HttpSession session, Model model) {
-    Reservation reservation = (Reservation) session.getAttribute("reservation");
-    model.addAttribute("reservation", reservation);
-    return "/problem/problem-form";
-  }
-
- */
 
   @PostMapping("/problem-report-submit")
   public String createProblemReport(HttpSession session){
@@ -106,10 +97,13 @@ public class DamageReportController {
     return "redirect:/result";
   }
 
+  // Bekræftelse til ansat på at man har oprettet en skaderapport
   @GetMapping("/result")
   public String showProblemReport(HttpSession session, Model model){
     ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
+    // Finde reservationen
     Reservation reservation = (Reservation) session.getAttribute("reservation");
+    // Finde report_id
     int reportId = damageReportService.fetchReportId(listOfProblems, reservation);
     model.addAttribute("report_id", reportId);
     return "/problem/problem-form-result";

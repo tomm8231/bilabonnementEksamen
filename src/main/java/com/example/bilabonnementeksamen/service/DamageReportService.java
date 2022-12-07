@@ -1,7 +1,6 @@
 package com.example.bilabonnementeksamen.service;
 
 import com.example.bilabonnementeksamen.model.Problem;
-import com.example.bilabonnementeksamen.model.ProblemReport;
 import com.example.bilabonnementeksamen.model.Reservation;
 import com.example.bilabonnementeksamen.repository.DamageReportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,13 @@ public class DamageReportService {
     return damageReportRepo.fetchReservationInfoById(id);
   }
 
-
+// Sebastian og lidt Marcus
+  // TODO: Kan metoden også returnere en int og overholde GRASP?
   public void createProblemReport(ArrayList<Problem> listOfProblems, Reservation reservation) {
     double totalPrice = calculateTotalPriceReport(listOfProblems);
+    // Opretter en rapport
     damageReportRepo.createProblemReport(reservation, totalPrice);
+    // Opretter problemer til rapporten (id bliver først oprettet når den er lavet i databasen)
     int report_id = damageReportRepo.fetchReportId(reservation, totalPrice);
     damageReportRepo.createProblems(listOfProblems, report_id);
   }

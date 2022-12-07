@@ -277,7 +277,7 @@ public class RegistrationController {
         redirectAttributes.addAttribute("message", "Initialer findes allerede");
       }
       case 2 -> {
-        registrationService.createEmployee(employee);
+       registrationService.createEmployee(employee);
         Employee newEmployee = registrationService.fetchEmployeeByInitials(employee.getEmployee_initials());
         redirectAttributes.addAttribute("message", "Medarbejder " + newEmployee.getEmployee_name() + " (" + newEmployee.getEmployee_initials() + ") er oprettet med ID #" + newEmployee.getEmployee_id());
       }

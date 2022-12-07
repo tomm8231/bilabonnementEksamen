@@ -187,7 +187,6 @@ public class RegistrationService {
       if (name != null) {
         number = 1;
       } else { //Hvis initialer ikke allerede findes
-        registrationRepo.createEmployee(employee);
         number = 2;
       }
     }
