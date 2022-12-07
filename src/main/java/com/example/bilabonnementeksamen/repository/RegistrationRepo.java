@@ -568,22 +568,22 @@ public class RegistrationRepo {
   }
 
   // Tommy
-  public String checkForDuplicateInitialsEmployee(String initials) {
-    Employee employee = new Employee();
+  public String checkForDuplicateInitialsEmployee(Employee employee) {
 
+    Employee newEmployee = new Employee();
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
       String sql = "SELECT * FROM employee where employee_initials = ?";
       PreparedStatement pst = conn.prepareStatement(sql);
-      pst.setString(1, initials);
+      pst.setString(1, employee.getEmployee_initials());
 
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
 
-        employee.setEmployee_id(rs.getInt(1));
-        employee.setEmployee_initials(rs.getString(2));
-        employee.setEmployee_name(rs.getString(3));
+        newEmployee.setEmployee_id(rs.getInt(1));
+        newEmployee.setEmployee_initials(rs.getString(2));
+        newEmployee.setEmployee_name(rs.getString(3));
       }
 
     } catch (SQLException e) {
@@ -591,7 +591,7 @@ public class RegistrationRepo {
       e.printStackTrace();
     }
 
-    return employee.getEmployee_initials();
+    return newEmployee.getEmployee_initials();
   }
 
 
