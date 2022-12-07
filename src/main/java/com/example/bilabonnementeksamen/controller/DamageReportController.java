@@ -63,10 +63,9 @@ public class DamageReportController {
 
     if (session.getAttribute("problems") != null) {
       listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
-      listOfProblems.add(problem);
-    } else {
-      listOfProblems.add(problem);
     }
+
+    listOfProblems.add(problem);
     session.setAttribute("problems", listOfProblems);
     return "redirect:/registrate-problem";
   }
@@ -78,7 +77,7 @@ public class DamageReportController {
     return "/problem/problem-input-overview";
   }
 
-  @GetMapping("/deleteSpecificDamage/{problem_id}")
+  @GetMapping("/deleteSpecificDamage")
   public String deleteSingleDamage(HttpSession session, Model model){
     ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
     model.addAttribute("problems", listOfProblems);
