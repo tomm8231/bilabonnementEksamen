@@ -319,10 +319,10 @@ public class RegistrationController {
   }
 
   //Sebastian
-  @GetMapping("/show-all-empolyees")
+  @GetMapping("/show-all-employees")
   public String showAllEmplyees(Model model){
     ArrayList<Employee> employees = registrationService.fetchAllEployees();
-    model.addAttribute("emplyees", employees);
+    model.addAttribute("employees", employees);
     return "/registration/lease-show-employees";
   }
 
