@@ -37,14 +37,23 @@
                 <td th:text="${p.problem_type}">Problem</td>
                 <td th:text="${p.problem_price}">Problem</td>
                 <td th:text="${p.problem_description}">Problem</td>
-
-
                 <td>
-                    <!--<form action="/" method="post" th:action="">
-                        <button type="submit">Slet</button>
-                    </form>-->
+                    <form action="/deleteSpecificDamage" method="post">
 
-                    <p><a th:href="@{'/deleteSpecificDamage/'  + ${p.problem_id+problems.size}}">Slet</a></p>
+                        <input type="text" id="problem_type_damage" name="problem_type" th:value="${p.problem_type}"
+                               class="form-check-input" hidden readonly>
+
+                        <input type="number" id="problem_price" name="problem_price" class="form-control" step=".01"
+                               hidden readonly th:value="${p.problem_price}">
+
+                        <input type="text" id="problem_description" name="problem_description" class="form-control"
+                               th:value="${p.problem_description}" hidden readonly>
+
+
+                        <button class="mt-2 mb-3 " type="submit">Slet</button>
+
+<!--                        <p><a th:href="@{'/deleteSpecificDamage/'  + ${p.problem_id+problems.size}}">Slet</a></p>-->
+                    </form>
                 </td>
             </tr>
 
@@ -52,17 +61,17 @@
         </table>
         <div class="d-flex w-100 justify-content-evenly">
 
-        <form action="/problem-form" method="get">
-            <button class="mt-2 mb-3 " type="submit">Tilføj mere</button>
-        </form>
+            <form action="/problem-form" method="get">
+                <button class="mt-2 mb-3 " type="submit">Tilføj mere</button>
+            </form>
 
-        <form action="/damage-home-page" method="get">
-            <button class="mt-2 mb-3 " type="submit">Annuller</button>
-        </form>
+            <form action="/damage-home-page" method="get">
+                <button class="mt-2 mb-3 " type="submit">Annuller</button>
+            </form>
 
-        <form action="/problem-report-submit" method="post">
-            <button class="mt-2 mb-3 " type="submit">Godkend</button>
-        </form>
+            <form action="/problem-report-submit" method="post">
+                <button class="mt-2 mb-3 " type="submit">Godkend</button>
+            </form>
         </div>
 
     </container>

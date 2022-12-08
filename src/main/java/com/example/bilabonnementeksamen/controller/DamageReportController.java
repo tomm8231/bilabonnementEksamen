@@ -78,11 +78,14 @@ public class DamageReportController {
     return "/problem/problem-input-overview";
   }
 
-  @GetMapping("/deleteSpecificDamage")
-  public String deleteSingleDamage(HttpSession session, Model model){
+  //Marcus, daniel, sebastian
+  @PostMapping("/deleteSpecificDamage")
+  public String deleteSingleDamage(HttpSession session, @ModelAttribute Problem deleteProblem){
     ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
-    model.addAttribute("problems", listOfProblems);
-    listOfProblems.remove(0);
+
+    listOfProblems = damageReportService.removeProblemFromList(listOfProblems, deleteProblem);
+
+    session.setAttribute("problems",listOfProblems);
 
     return "redirect:/problem-overview";
   }

@@ -19,7 +19,7 @@ public class DamageReportService {
     return damageReportRepo.fetchReservationInfoById(id);
   }
 
-// Sebastian og lidt Marcus
+  // Sebastian og lidt Marcus
   // TODO: Kan metoden også returnere en int og overholde GRASP?
   public void createProblemReport(ArrayList<Problem> listOfProblems, Reservation reservation) {
     double totalPrice = calculateTotalPriceReport(listOfProblems);
@@ -30,7 +30,7 @@ public class DamageReportService {
     damageReportRepo.createProblems(listOfProblems, report_id);
   }
 
-  private double calculateTotalPriceReport(ArrayList<Problem> listOfProblems){
+  private double calculateTotalPriceReport(ArrayList<Problem> listOfProblems) {
     double totalPrice = 0;
 
     for (Problem problem : listOfProblems) {
@@ -40,11 +40,30 @@ public class DamageReportService {
   }
 
 
-  public int fetchReportId(ArrayList<Problem> listOfProblems, Reservation reservation){
+  public int fetchReportId(ArrayList<Problem> listOfProblems, Reservation reservation) {
     double totalPrice = calculateTotalPriceReport(listOfProblems);
     int report_id = damageReportRepo.fetchReportId(reservation, totalPrice);
     return report_id;
   }
 
+  //sebastian, marcus, daniel
+  public ArrayList<Problem> removeProblemFromList(ArrayList<Problem> listOfProblems, Problem deleteProblem) {
 
+    ArrayList<Problem> problems = listOfProblems;
+
+    for (int i = 0; i < problems.size(); i++) {
+
+      Problem tempProblem = problems.get(i);
+
+      //sammenligner alle parametre, som findes på vores deleteproblem med den givne liste og fjerner problem
+      if (deleteProblem.getProblem_description().equals(tempProblem.getProblem_description())
+          && deleteProblem.getProblem_price() == tempProblem.getProblem_price()
+          && deleteProblem.getProblem_type().equals(tempProblem.getProblem_type())) {
+
+        problems.remove(tempProblem);
+      }
+
+    }
+    return problems;
+  }
 }
