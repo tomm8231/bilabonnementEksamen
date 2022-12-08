@@ -1,16 +1,12 @@
 package com.example.bilabonnementeksamen.repository;
 
 import com.example.bilabonnementeksamen.model.*;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.DateFormatter;
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 @Repository
 public class BusinessInsightRepo {
@@ -24,37 +20,7 @@ public class BusinessInsightRepo {
 
   // Sebastian og lidt Marcus og Daniel
 // Henter alle reservationer som strækker sig over hele indeværende måned
-  public int fetchFullCurrentMonthReservations() {
-/*
-    int firstDayOfCurrentMonth = 1;
-    int lastDayOfCurrentMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
-
-    int currentMonth = Calendar.getInstance().get(Calendar.MONTH); //TODO check for 0
-    int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-
-    Calendar startDayOfMonth = Calendar.getInstance();
-    startDayOfMonth.set(currentYear, currentMonth, firstDayOfCurrentMonth);
-
-    Calendar endDayOfMonth = Calendar.getInstance();
-    endDayOfMonth.set(currentMonth, currentMonth, lastDayOfCurrentMonth);
-
-
- */
-
-    // Bruge LocalDate
-    LocalDate today = LocalDate.now();
-    LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
-    LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
-
-   /* DateFormatter df = new DateFormat("yyyy/MM/dd");
-
-    LocalDate date = LocalDate.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM dd");
-    String text = date.format(formatter);
-    LocalDate parsedDate = LocalDate.parse(text, formatter);
-*/
-//  Problem: caste vores calender om til dato.
-    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM dd");
+  public int fetchFullCurrentMonthReservationsIncome(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
 
     int totalIncome = 0;
 
@@ -95,7 +61,7 @@ public class BusinessInsightRepo {
   }
 
 
-  public ArrayList<Reservation> fetchStartCurrentMonthReservations(Date startDayOfMonthDate, Date endDayOfMonthDate) {
+  public ArrayList<Reservation> fetchStartCurrentMonthReservations(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
 
     ArrayList<Reservation> startCurrentMonthreservations = new ArrayList<Reservation>();
 
@@ -124,10 +90,10 @@ public class BusinessInsightRepo {
              """;
 
       PreparedStatement pst = conn.prepareStatement(sql);
-      pst.setDate(1, startDayOfMonthDate);
-      pst.setDate(2, endDayOfMonthDate);
-      pst.setDate(3, startDayOfMonthDate);
-      pst.setDate(4, endDayOfMonthDate);
+      pst.setDate(1, Date.valueOf(startDayOfMonthDate));
+      pst.setDate(2, Date.valueOf(endDayOfMonthDate));
+      pst.setDate(3, Date.valueOf(startDayOfMonthDate));
+      pst.setDate(4, Date.valueOf(endDayOfMonthDate));
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
@@ -208,7 +174,7 @@ public class BusinessInsightRepo {
 
   }
 
-  public ArrayList<Reservation> fetchEndCurrentMonthReservations(Date startDayOfMonthDate, Date endDayOfMonthDate) {
+  public ArrayList<Reservation> fetchEndCurrentMonthReservations(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
     ArrayList<Reservation> endCurrentMonthreservations = new ArrayList<Reservation>();
 
     try {
@@ -236,10 +202,10 @@ public class BusinessInsightRepo {
              """;
 
       PreparedStatement pst = conn.prepareStatement(sql);
-      pst.setDate(1, startDayOfMonthDate);
-      pst.setDate(2, endDayOfMonthDate);
-      pst.setDate(3, startDayOfMonthDate);
-      pst.setDate(4, endDayOfMonthDate);
+      pst.setDate(1, Date.valueOf(startDayOfMonthDate));
+      pst.setDate(2, Date.valueOf(endDayOfMonthDate));
+      pst.setDate(3, Date.valueOf(startDayOfMonthDate));
+      pst.setDate(4, Date.valueOf(endDayOfMonthDate));
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
@@ -319,4 +285,45 @@ public class BusinessInsightRepo {
     return endCurrentMonthreservations;
 
   }
+
+  public int fetchFullCurrentMonthReservationsAmount(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
+
+    int totalReservations = 0;
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+
+      String sql = """
+		SELECT Count(car_price_month) AS 'AMOUNT'
+               FROM car_leasing.reservation
+               INNER JOIN car
+               USING (car_vehicle_number)
+  	           WHERE (pickup_date not between ? and ?) AND
+               (return_date not between ? and ?) AND
+               (? between pickup_date and return_date);          
+             """;
+      // Henter summen af prisen for reservationerne som går over hele indeværende måned
+
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setDate(1, Date.valueOf(startDayOfMonthDate));
+      pst.setDate(2, Date.valueOf(endDayOfMonthDate));
+      pst.setDate(3, Date.valueOf(startDayOfMonthDate));
+      pst.setDate(4, Date.valueOf(endDayOfMonthDate));
+      pst.setDate(5, Date.valueOf(startDayOfMonthDate));
+
+      ResultSet rs = pst.executeQuery();
+
+      while (rs.next()) {
+
+        totalReservations = rs.getInt(1);
+
+
+      }
+    } catch (SQLException e) {
+      System.err.println("Cannot connect to database");
+      e.printStackTrace();
+    }
+    return totalReservations;
+  }
+
 }

@@ -5,7 +5,11 @@ import com.example.bilabonnementeksamen.repository.BusinessInsightRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class BusinessInsightService {
@@ -16,39 +20,26 @@ public class BusinessInsightService {
 
   public double calculateIncome() {
     //Nuværende måneds start og slutdatoer, til brug i metoderne
-    int firstDayOfCurrentMonth = 1;
-    int lastDayOfCurrentMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
-    int currentMonth = Calendar.getInstance().get(Calendar.MONTH); //TODO check for 0
-    int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+    LocalDate today = LocalDate.now();
+    LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
+    LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
+    int currentMonthLength = endDayOfMonthDate.getDayOfMonth();
 
-    Calendar startDayOfMonth = Calendar.getInstance();
-    startDayOfMonth.set(currentYear, currentMonth, firstDayOfCurrentMonth);
 
-    Date startDayOfMonthDate = (Date) startDayOfMonth.getTime();
-    Date endDayOfMonthDate = (Date) startDayOfMonth.getTime();
     // Del 1: finde alle reservationer som går over en hel måned
-   // int fullMonthReservationsTotalIncome =
-
-    Calendar endDayOfMonth = Calendar.getInstance();
-    endDayOfMonth.set(currentMonth, currentMonth, lastDayOfCurrentMonth);
-    double sum = businessInsightRepo.fetchFullCurrentMonthReservations();
-
-
-    double sum = 0;
+    double fullMonthReservationsTotalIncome = businessInsightRepo.fetchFullCurrentMonthReservationsIncome(startDayOfMonthDate, endDayOfMonthDate);
 
 
     //Del 2: finde summen, for alle reservationer som starter i denne måned
-    ArrayList <Reservation> startMonthReservations = businessInsightRepo.fetchStartCurrentMonthReservations(startDayOfMonthDate, endDayOfMonthDate);
-    double startMonthReservationsTotalIncome = calculatePickupMonthReservationsIncome(startMonthReservations, lastDayOfCurrentMonth);
+    ArrayList<Reservation> startMonthReservations = businessInsightRepo.fetchStartCurrentMonthReservations(startDayOfMonthDate, endDayOfMonthDate);
+    double startMonthReservationsTotalIncome = calculatePickupMonthReservationsIncome(startMonthReservations, currentMonthLength);
 
     //Del 3: finde summen, for alle reservationer som starter i denne måned
-    ArrayList <Reservation> endMonthReservations = businessInsightRepo.fetchEndCurrentMonthReservations(startDayOfMonthDate, endDayOfMonthDate);
-    double endMonthReservationsTotalIncome = calculatePickupMonthReservationsIncome(endMonthReservations, lastDayOfCurrentMonth);
-
+    ArrayList<Reservation> endMonthReservations = businessInsightRepo.fetchEndCurrentMonthReservations(startDayOfMonthDate, endDayOfMonthDate);
+    double endMonthReservationsTotalIncome = calculatePickupMonthReservationsIncome(endMonthReservations, currentMonthLength);
 
 
     double sum = fullMonthReservationsTotalIncome + startMonthReservationsTotalIncome + endMonthReservationsTotalIncome;
-
     return sum;
   }
 
@@ -56,10 +47,10 @@ public class BusinessInsightService {
 
     double totalSum = 0;
 
-    for (Reservation reservation: startMonthReservations) {
+    for (Reservation reservation : startMonthReservations) {
 
       String startDateAsString = reservation.getPickup_date().toString();
-      int pickupDate = Integer.parseInt(startDateAsString.substring(startDateAsString.length()-2));
+      int pickupDate = Integer.parseInt(startDateAsString.substring(startDateAsString.length() - 2));
 
       double pricePrMonth = reservation.getCar_vehicle_number().getCar_price_month();
       double numberOfDaysToPayFor = lastDayOfCurrentMonth - pickupDate;
@@ -75,10 +66,10 @@ public class BusinessInsightService {
 
     double totalSum = 0;
 
-    for (Reservation reservation: startMonthReservations) {
+    for (Reservation reservation : startMonthReservations) {
 
       String startDateAsString = reservation.getReturn_date().toString();
-      int returnDate = Integer.parseInt(startDateAsString.substring(startDateAsString.length()-2));
+      int returnDate = Integer.parseInt(startDateAsString.substring(startDateAsString.length() - 2));
 
       double pricePrMonth = reservation.getCar_vehicle_number().getCar_price_month();
 
@@ -90,4 +81,24 @@ public class BusinessInsightService {
   }
 
 
+  public ArrayList<Reservation> fetchAllStartingContracts() {
+    LocalDate today = LocalDate.now();
+    LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
+    LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
+    return businessInsightRepo.fetchStartCurrentMonthReservations(startDayOfMonthDate,endDayOfMonthDate);
+  }
+
+  public ArrayList<Reservation> fetchAllEndingContracts() {
+    LocalDate today = LocalDate.now();
+    LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
+    LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
+    return businessInsightRepo.fetchEndCurrentMonthReservations(startDayOfMonthDate,endDayOfMonthDate);
+  }
+
+  public int fetchAllOngoingContracts() {
+    LocalDate today = LocalDate.now();
+    LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
+    LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
+    return businessInsightRepo.fetchFullCurrentMonthReservationsAmount(startDayOfMonthDate,endDayOfMonthDate);
+  }
 }

@@ -9,23 +9,39 @@
 
 </head>
 <body>
-<div class="d-flex">
+<div class="d-flex h-100">
     <nav th:replace="fragments/business-sidebar-fragment :: business-sidebar-fragment"></nav>
-    <container class="h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
 
-        <h3> Månedlig indkomst </h3>
+    <container class="ms-5 h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
+
+    <h3> Denne måneds indkomst </h3>
 
         <table class="show-cars-table table table-hover">
             <thead>
             <tr>
-                <th scope="col">Antal lejekontrakter</th>
-                <th scope="col">Samlet månedsindkomst</th>
+                <th scope="col">Type indkomst</th>
+                <th scope="col">Antal</th>
+                <th scope="col">Inkomst</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td th:text="${reservationList.size()}"> </td>
-                <td th:text="${totalSum}"> </td>
+                <td> Startende kontrakter </td>
+                <td th:text="${startingLeases.size()}"> </td>
+            </tr>
+            <tr>
+                <td> Slutende kontrakter </td>
+                <td th:text="${endingLeases.size()}"> </td>
+            </tr>
+            <tr>
+                <td> Fuld måneds kontrakter </td>
+                <td th:text="${ongoingLeases}"> </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><strong>I alt</strong></td>
+                <td th:text="${totalSum}+ ' kr'"> </td>
             </tr>
 
             </tbody>

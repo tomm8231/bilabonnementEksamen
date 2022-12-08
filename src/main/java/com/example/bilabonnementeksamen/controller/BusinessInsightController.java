@@ -47,11 +47,15 @@ public class BusinessInsightController {
 
     @GetMapping("/business-economy")
   public String showEconomy(Model model){
-    List<Reservation> reservations = registrationService.fetchAllReservations();
-    model.addAttribute(reservations);
+
+    model.addAttribute("startingLeases",businessInsightService.fetchAllStartingContracts());
+    model.addAttribute("endingLeases",businessInsightService.fetchAllEndingContracts());
+    model.addAttribute("ongoingLeases",businessInsightService.fetchAllOngoingContracts());
 
     double totalLeaseSum = businessInsightService.calculateIncome();
     model.addAttribute("totalSum", totalLeaseSum);
+
+
       return "/business/business-income";
   }
 
