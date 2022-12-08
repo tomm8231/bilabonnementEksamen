@@ -1,6 +1,7 @@
 package com.example.bilabonnementeksamen.repository;
 
 import com.example.bilabonnementeksamen.model.*;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +9,10 @@ import javax.swing.text.DateFormatter;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -21,23 +26,29 @@ public class BusinessInsightRepo {
   @Value("${JDBCPassword}")
   private String password;
 
-  // Sebastian og lidt Marcus
+  // Sebastian og lidt Marcus og Daniel
 // Henter alle reservationer som strækker sig over hele indeværende måned
   public int fetchFullCurrentMonthReservations() {
-
+/*
     int firstDayOfCurrentMonth = 1;
     int lastDayOfCurrentMonth = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH);
+
     int currentMonth = Calendar.getInstance().get(Calendar.MONTH); //TODO check for 0
     int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
     Calendar startDayOfMonth = Calendar.getInstance();
     startDayOfMonth.set(currentYear, currentMonth, firstDayOfCurrentMonth);
-    // Konvertere fra Calendar to Date
-    // SimpleDateFormat sf = startDayOfMont
+
+    Calendar endDayOfMonth = Calendar.getInstance();
+    endDayOfMonth.set(currentMonth, currentMonth, lastDayOfCurrentMonth);
 
 
-    Date startDayOfMonthDate = (Date) startDayOfMonth.getTime();
-    Date endDayOfMonthDate = (Date) startDayOfMonth.getTime();
+ */
+
+    // Bruge LocalDate
+    LocalDate today = LocalDate.now();
+    LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
+    LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
 
    /* DateFormatter df = new DateFormat("yyyy/MM/dd");
 
@@ -46,9 +57,8 @@ public class BusinessInsightRepo {
     String text = date.format(formatter);
     LocalDate parsedDate = LocalDate.parse(text, formatter);
 */
-
-    Calendar endDayOfMonth = Calendar.getInstance();
-    endDayOfMonth.set(currentMonth, currentMonth, lastDayOfCurrentMonth);
+//  Problem: caste vores calender om til dato.
+    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM dd");
 
     int totalIncome = 0;
 
@@ -67,11 +77,11 @@ public class BusinessInsightRepo {
       // Henter summen af prisen for reservationerne som går over hele indeværende måned
 
       PreparedStatement pst = conn.prepareStatement(sql);
-      pst.setDate(1, startDayOfMonthDate);
-      pst.setDate(2, endDayOfMonthDate);
-      pst.setDate(3, startDayOfMonthDate);
-      pst.setDate(4, endDayOfMonthDate);
-      pst.setDate(5, startDayOfMonthDate);
+      pst.setDate(1, Date.valueOf(startDayOfMonthDate));
+      pst.setDate(2, Date.valueOf(endDayOfMonthDate));
+      pst.setDate(3, Date.valueOf(startDayOfMonthDate));
+      pst.setDate(4, Date.valueOf(endDayOfMonthDate));
+      pst.setDate(5, Date.valueOf(startDayOfMonthDate));
 
       ResultSet rs = pst.executeQuery();
 

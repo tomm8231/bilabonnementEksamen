@@ -17,16 +17,17 @@ public class BusinessInsightService {
   public double calculateIncome() {
 
     // Del 1: finde alle reservationer som går over en hel måned
-    int fullMonthReservationsTotalIncome = businessInsightRepo.fetchFullCurrentMonthReservations();
+   // int fullMonthReservationsTotalIncome =
 
+    double sum = businessInsightRepo.fetchFullCurrentMonthReservations();
 
+    // + scenario 2
 
-    double sum = 0;
-
+    // + scenario 3
 
 /*
     for (Reservation reservation : reservations) {
-    //TODO: Hvad hvis bilerne er lejet ud kun 3 dage?
+    //TODO: Hvad hvis bilerne er lejet ud kun halve måneden?
       // Dato check = aktive reservationer
       // Checke datoer og beregne en månedspris ud i fra den måneden
 
