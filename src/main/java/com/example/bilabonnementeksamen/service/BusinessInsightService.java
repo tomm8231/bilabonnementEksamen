@@ -5,9 +5,7 @@ import com.example.bilabonnementeksamen.repository.BusinessInsightRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 @Service
 public class BusinessInsightService {
@@ -28,13 +26,15 @@ public class BusinessInsightService {
 
     Date startDayOfMonthDate = (Date) startDayOfMonth.getTime();
     Date endDayOfMonthDate = (Date) startDayOfMonth.getTime();
+    // Del 1: finde alle reservationer som går over en hel måned
+   // int fullMonthReservationsTotalIncome =
 
     Calendar endDayOfMonth = Calendar.getInstance();
     endDayOfMonth.set(currentMonth, currentMonth, lastDayOfCurrentMonth);
+    double sum = businessInsightRepo.fetchFullCurrentMonthReservations();
 
 
-    // Del 1: finde summen, for alle reservationer som går over en hel måned
-    int fullMonthReservationsTotalIncome = businessInsightRepo.fetchFullCurrentMonthReservations(startDayOfMonthDate, endDayOfMonthDate);
+    double sum = 0;
 
 
     //Del 2: finde summen, for alle reservationer som starter i denne måned

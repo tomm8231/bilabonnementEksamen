@@ -23,9 +23,10 @@ public class BusinessInsightController {
   public String showBusinessHome() {
     return "/business/business-home-page";
   }
-
+/*
   @GetMapping("/business-economy")
   public String showEconomy(Model model){
+    //TODO: skal ikke være alle reservationer, kun de i indeværende måned
     List<Reservation> reservations = registrationService.fetchAllReservations();
     model.addAttribute(reservations);
 
@@ -34,6 +35,8 @@ public class BusinessInsightController {
     return "/business/business-income";
   }
 
+ */
+
 
   @GetMapping("/show-reserved-cars")
   public String showReservedCars(Model model){
@@ -41,15 +44,16 @@ public class BusinessInsightController {
     return "/business/business-show-rented-out-cars";
   }
 
-  /*   @GetMapping("/lease-economy")
+
+    @GetMapping("/business-economy")
   public String showEconomy(Model model){
     List<Reservation> reservations = registrationService.fetchAllReservations();
     model.addAttribute(reservations);
 
-    double totalLeaseSum = busin.calculateIncome(reservations);
+    double totalLeaseSum = businessInsightService.calculateIncome();
     model.addAttribute("totalSum", totalLeaseSum);
-    return "/lease-income";
-  }*/
+      return "/business/business-income";
+  }
 
 
 }
