@@ -222,4 +222,8 @@ public class RegistrationService {
   public ArrayList<Employee> fetchAllEployees() {
     return registrationRepo.fetchAllEmplyees();
   }
+
+  public Reservation fetchReservationById(int reservationId) {
+    return registrationRepo.fetchReservationById(reservationId);
+  }
 }

@@ -5,10 +5,7 @@ import com.example.bilabonnementeksamen.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -324,6 +321,14 @@ public class RegistrationController {
     ArrayList<Employee> employees = registrationService.fetchAllEployees();
     model.addAttribute("emplyees", employees);
     return "/registration/lease-show-employees";
+  }
+
+  //sebastian
+  @GetMapping("/show-specifik-reservation/{reservationId}")
+  public String showSpecifikReservation(@PathVariable ("reservationId") int reservationId, Model model){
+    Reservation reservation = registrationService.fetchReservationById(reservationId);
+    model.addAttribute("reservation", reservation);
+    return "/registration/lease-show-specifik-reservation";
   }
 
 }
