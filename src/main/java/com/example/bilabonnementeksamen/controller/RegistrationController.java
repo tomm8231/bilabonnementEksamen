@@ -222,12 +222,12 @@ public class RegistrationController {
     return "redirect:/registration";
   }
 
-  // Sebastian
+/*  // Sebastian
   @GetMapping("/show-reserved-cars")
   public String showReservedCars(Model model){
     model.addAttribute("reservations",registrationService.fetchAllReservations());
     return "/registration/lease-show-rented-out-cars";
-  }
+  }*/
 
   @GetMapping("/pickup-place")
   public String showSelectPickupPlace(Model model) {
@@ -244,15 +244,7 @@ public class RegistrationController {
     return "redirect:/lease-find-employee";
   }
 
-  @GetMapping("/lease-economy")
-  public String showEconomy(Model model){
-    List<Reservation> reservations = registrationService.fetchAllReservations();
-    model.addAttribute(reservations);
 
-    double totalLeaseSum = registrationService.calculateIncome(reservations);
-    model.addAttribute("totalSum", totalLeaseSum);
-    return "/lease-income";
-  }
 
   //Giver det mening at mappings vedr. oprettelse af medarbejdere ligger i registrationController?
   @GetMapping("/create-employee")
