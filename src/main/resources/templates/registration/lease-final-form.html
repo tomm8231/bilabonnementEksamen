@@ -17,7 +17,8 @@
         <form action="/lease-final-form" th:action="@{/lease-final-form}" method="post">
 
             <!-- Customer   -->
-            <div class="mb-3 row">
+            <div class="mb-3 row ">
+                <h5 class="mt-4">Kunde</h5>
                 <label for="customer_id" class="col-sm-2 col-form-label">Kunde ID: </label>
                 <div class="col-sm-10">
                     <input type="text" id="customer_id" name="customer_id" class="form-control-plaintext" readonly
@@ -61,6 +62,7 @@
 
             <!--    Car    -->
             <div class="mb-3 row">
+                <h5 class="mt-4">Bil</h5>
                 <label for="car-vehicle-number" class="col-sm-2 col-form-label"> Vognnummer: </label>
                 <div class="col-sm-10">
                     <input type="text" id="car-vehicle-number" name="car-vehicle-number" class="form-control-plaintext"
@@ -105,7 +107,7 @@
                 <label for="fuel-type" class="col-sm-2 col-form-label"> Drivstof </label>
                 <div class="col-sm-10">
                     <input type="text" id="fuel-type" name="fuel-type" class="form-control-plaintext" readonly
-                           th:value="${car.car_model_id.car_fuel_type.distance_unit}">
+                           th:value="${car.car_model_id.getCar_distance_amount()}">
                 </div>
             </div>
 
@@ -170,6 +172,7 @@
 
             <!--  Lokalitet -->
             <div class="mb-3 row">
+                <h5 class="mt-4">Lokalitet</h5>
                 <label for="location-name" class="col-sm-2 col-form-label">Navn på lokalitet</label>
                 <div class="col-sm-10">
                     <input type="text" id="location-name" name="location-name" class="form-control-plaintext" readonly
