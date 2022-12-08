@@ -14,7 +14,7 @@
 
     <container class="ms-5 h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
 
-    <h3> Denne måneds indkomst </h3>
+    <h3> Indeværende måneds indkomst </h3>
 
         <table class="show-cars-table table table-hover">
             <thead>
@@ -27,15 +27,18 @@
             <tbody>
             <tr>
                 <td> Startende kontrakter </td>
-                <td th:text="${startingLeases.size()}"> </td>
+                <td th:text="${startingLeasesAmount}"> </td>
+                <td th:text="${startingLeasesIncome}+ ' kr'"> </td>
             </tr>
             <tr>
                 <td> Slutende kontrakter </td>
-                <td th:text="${endingLeases.size()}"> </td>
+                <td th:text="${endingLeasesAmount}"> </td>
+                <td th:text="${endingLeasesIncome}+ ' kr'"> </td>
             </tr>
             <tr>
                 <td> Fuld måneds kontrakter </td>
-                <td th:text="${ongoingLeases}"> </td>
+                <td th:text="${ongoingLeasesAmount}"> </td>
+                <td th:text="${ongoingLeasesIncome}+ ' kr'"> </td>
             </tr>
 
             <tr>

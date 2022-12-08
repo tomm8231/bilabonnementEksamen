@@ -222,4 +222,6 @@ public class RegistrationService {
   public Reservation fetchReservationById(int reservationId) {
     return registrationRepo.fetchReservationById(reservationId);
   }
+
+
 }

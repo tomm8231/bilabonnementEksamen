@@ -5,11 +5,9 @@ import com.example.bilabonnementeksamen.repository.BusinessInsightRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class BusinessInsightService {
@@ -18,8 +16,10 @@ public class BusinessInsightService {
   BusinessInsightRepo businessInsightRepo;
 
 
-  public double calculateIncome() {
+  public double calculateIncome(double fullMonthReservationsTotalIncome, double startMonthReservationsTotalIncome, double endMonthReservationsTotalIncome) {
+    //forsøgte at gøre metoden mere opdelt
     //Nuværende måneds start og slutdatoer, til brug i metoderne
+/*
     LocalDate today = LocalDate.now();
     LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
     LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
@@ -36,14 +36,14 @@ public class BusinessInsightService {
 
     //Del 3: finde summen, for alle reservationer som starter i denne måned
     ArrayList<Reservation> endMonthReservations = businessInsightRepo.fetchEndCurrentMonthReservations(startDayOfMonthDate, endDayOfMonthDate);
-    double endMonthReservationsTotalIncome = calculatePickupMonthReservationsIncome(endMonthReservations, currentMonthLength);
-
+    double endMonthReservationsTotalIncome = calculateReturnMonthReservationsIncome(endMonthReservations, currentMonthLength);
+*/
 
     double sum = fullMonthReservationsTotalIncome + startMonthReservationsTotalIncome + endMonthReservationsTotalIncome;
-    return sum;
+    return sum = Math.round(sum*100.0)/100.0;
   }
 
-  private double calculatePickupMonthReservationsIncome(ArrayList<Reservation> startMonthReservations, int lastDayOfCurrentMonth) {
+  public double calculatePickupMonthReservationsIncome(ArrayList<Reservation> startMonthReservations, int lastDayOfCurrentMonth) {
 
     double totalSum = 0;
 
@@ -59,10 +59,10 @@ public class BusinessInsightService {
 
     }
 
-    return totalSum;
+    return totalSum = Math.round(totalSum*100.0)/100.0;
   }
 
-  private double calculateReturnMonthReservationsIncome(ArrayList<Reservation> startMonthReservations, int lastDayOfCurrentMonth) {
+  public double calculateReturnMonthReservationsIncome(ArrayList<Reservation> startMonthReservations, int lastDayOfCurrentMonth) {
 
     double totalSum = 0;
 
@@ -77,28 +77,23 @@ public class BusinessInsightService {
 
     }
 
-    return totalSum;
+    return totalSum = Math.round(totalSum*100.0)/100.0;
   }
 
 
-  public ArrayList<Reservation> fetchAllStartingContracts() {
-    LocalDate today = LocalDate.now();
-    LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
-    LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
+  public ArrayList<Reservation> fetchAllStartingContracts(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
     return businessInsightRepo.fetchStartCurrentMonthReservations(startDayOfMonthDate,endDayOfMonthDate);
   }
 
-  public ArrayList<Reservation> fetchAllEndingContracts() {
-    LocalDate today = LocalDate.now();
-    LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
-    LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
+  public ArrayList<Reservation> fetchAllEndingContracts(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
     return businessInsightRepo.fetchEndCurrentMonthReservations(startDayOfMonthDate,endDayOfMonthDate);
   }
 
-  public int fetchAllOngoingContracts() {
-    LocalDate today = LocalDate.now();
-    LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
-    LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
-    return businessInsightRepo.fetchFullCurrentMonthReservationsAmount(startDayOfMonthDate,endDayOfMonthDate);
+  public int fetchAllOngoingContractsIncome(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
+    return businessInsightRepo.fetchFullCurrentMonthReservationsIncome(startDayOfMonthDate,endDayOfMonthDate);
+  }
+
+  public ArrayList<Reservation> fetchAllOngingContracts(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
+    return businessInsightRepo.fetchAllOngingContracts(startDayOfMonthDate, endDayOfMonthDate);
   }
 }

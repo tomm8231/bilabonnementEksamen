@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -16,6 +19,7 @@ public class BusinessInsightController {
   @Autowired
   BusinessInsightService businessInsightService;
 
+  //TODO: er denne nødvendig?
   @Autowired
   RegistrationService registrationService;
 
@@ -39,24 +43,44 @@ public class BusinessInsightController {
 
 
   @GetMapping("/show-reserved-cars")
-  public String showReservedCars(Model model){
-    model.addAttribute("reservations",registrationService.fetchAllReservations());
+  public String showReservedCars(Model model) {
+    model.addAttribute("reservations", registrationService.fetchAllReservations());
     return "/business/business-show-rented-out-cars";
   }
 
 
-    @GetMapping("/business-economy")
-  public String showEconomy(Model model){
+  @GetMapping("/business-economy")
+  public String showEconomy(Model model) {
 
-    model.addAttribute("startingLeases",businessInsightService.fetchAllStartingContracts());
-    model.addAttribute("endingLeases",businessInsightService.fetchAllEndingContracts());
-    model.addAttribute("ongoingLeases",businessInsightService.fetchAllOngoingContracts());
+    LocalDate today = LocalDate.now();
+    LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
+    LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
+    int currentMonthLength = endDayOfMonthDate.getDayOfMonth();
 
-    double totalLeaseSum = businessInsightService.calculateIncome();
+    //antal startende reservationer og indkomst deraf
+    ArrayList<Reservation> allStartingContracts = businessInsightService.fetchAllStartingContracts(startDayOfMonthDate, endDayOfMonthDate);
+    model.addAttribute("startingLeasesAmount", allStartingContracts.size());
+    double startingContractsIncome = businessInsightService.calculatePickupMonthReservationsIncome(allStartingContracts,currentMonthLength);
+    model.addAttribute("startingLeasesIncome", startingContractsIncome);
+
+    //antal sluttende reservationer og indkomst deraf
+    ArrayList<Reservation> allEndingContracts = businessInsightService.fetchAllEndingContracts(startDayOfMonthDate, endDayOfMonthDate);
+    model.addAttribute("endingLeasesAmount", allEndingContracts.size());
+    double endingContractsIncome = businessInsightService.calculateReturnMonthReservationsIncome(allEndingContracts,currentMonthLength);
+    model.addAttribute("endingLeasesIncome", endingContractsIncome);
+
+    //antal fuld måned reservationer og indkomst deraf
+    ArrayList<Reservation> allOngoingContracts = businessInsightService.fetchAllOngingContracts(startDayOfMonthDate, endDayOfMonthDate);
+    model.addAttribute("ongoingLeasesAmount", allOngoingContracts.size());
+    double fullMonthContractsIncome = businessInsightService.fetchAllOngoingContractsIncome(startDayOfMonthDate, endDayOfMonthDate);
+    model.addAttribute("ongoingLeasesIncome", fullMonthContractsIncome);
+
+    //samlet indtægt
+    double totalLeaseSum = businessInsightService.calculateIncome(fullMonthContractsIncome, startingContractsIncome, endingContractsIncome);
     model.addAttribute("totalSum", totalLeaseSum);
 
 
-      return "/business/business-income";
+    return "/business/business-income";
   }
 
 
