@@ -62,9 +62,8 @@ public class RegistrationService {
 
     } else {
       // Lægge til 5 dage til returdatoen, så værkstedet kan nå at checke og frigive bilen.
-      // TODO: OBS kunden skal ikke betale for disse ekstra 7 dage... Virker hellere ikke!
+      // TODO: OBS kunden skal ikke betale for disse ekstra 5 dage... Virker hellere ikke!
       LocalDate endDatePlus7days = Date.valueOf(endDate).toLocalDate().plusDays(5);
-      System.out.println(endDatePlus7days);
 
       return registrationRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDatePlus7days), leaseType.toUpperCase());
     }
@@ -100,18 +99,6 @@ public class RegistrationService {
     registrationRepo.unreserveCarById(car_vehicle_number);
   }
 
-
-  public Subscription_type fetchSubscriptionById(int id) {
-    return registrationRepo.fetchCarById(id).getSubscription_type_id();
-  }
-
-  public Fuel fetchFuelTypeById(int id) {
-    return registrationRepo.fetchCarById(id).getCar_model_id().getCar_fuel_type();
-  }
-
-  public CarModel fetchCarModelById(int id) {
-    return registrationRepo.fetchCarById(id).getCar_model_id();
-  }
 
   public void unreserveAllCarsFromSession() {
     registrationRepo.unreserveAllCarsFromSession();
@@ -153,17 +140,6 @@ public class RegistrationService {
         return_date, fixedPickupTime, fixedReturnTime, reservation_payment, reservation_comment, employee_id);
   }
 
-  public double calculateIncome(List<Reservation> reservations) {
-
-    double sum = 0;
-
-    for (Reservation reservation : reservations) {
-
-      sum += reservation.getCar_vehicle_number().getCar_price_month();
-    }
-
-    return sum;
-  }
 
   // Marcus
   public boolean checkIfLocationExist(Location location) {
@@ -213,7 +189,7 @@ public class RegistrationService {
   public double calculatePaymentTotal(LocalDate pickupDate, LocalDate returnDate, Car car) {
 
     // Finder antal dage mellem pickupDate og returnDate
-    long noOfDaysBetween = ChronoUnit.DAYS.between(pickupDate, returnDate);
+    long noOfDaysBetween = ChronoUnit.DAYS.between(pickupDate, returnDate) +1;
 
     // Pris per måned
     double pricePerMonth = car.getCar_price_month();
