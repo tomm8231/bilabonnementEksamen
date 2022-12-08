@@ -64,7 +64,7 @@ public class RegistrationController {
 
     //Der tilrettes så begge datoer kan brues fremad
     LocalDate startReservationDate = registrationService.modifyStartDate(startDate);
-    LocalDate returnReservationDate = registrationService.modifyEndDate(startDate,endDate);
+    LocalDate returnReservationDate = registrationService.modifyEndDateLimited(startDate,endDate);
 
     //Datoerne gemmes
     session.setAttribute("start-date", startReservationDate);
@@ -275,7 +275,7 @@ public class RegistrationController {
         redirectAttributes.addAttribute("message", "Initialer findes allerede");
       }
       case 2 -> {
-        registrationService.createEmployee(employee);
+       registrationService.createEmployee(employee);
         Employee newEmployee = registrationService.fetchEmployeeByInitials(employee.getEmployee_initials());
         redirectAttributes.addAttribute("message", "Medarbejder " + newEmployee.getEmployee_name() + " (" + newEmployee.getEmployee_initials() + ") er oprettet med ID #" + newEmployee.getEmployee_id());
       }
@@ -316,10 +316,10 @@ public class RegistrationController {
   }
 
   //Sebastian
-  @GetMapping("/show-all-empolyees")
+  @GetMapping("/show-all-employees")
   public String showAllEmplyees(Model model){
     ArrayList<Employee> employees = registrationService.fetchAllEployees();
-    model.addAttribute("emplyees", employees);
+    model.addAttribute("employees", employees);
     return "/registration/lease-show-employees";
   }
 
