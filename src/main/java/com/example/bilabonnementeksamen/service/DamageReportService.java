@@ -17,9 +17,9 @@ public class DamageReportService {
   }
 
   public int checkIdInUse(int id) {
-    Reservation reservation = damageReportRepo.checkIdInUse(id);
+    String check = damageReportRepo.checkIdInUse(id);
 
-    if (reservation.getReservation_comment() == null) {
+    if (check != null) {
       System.out.println("1");
       return 1;
     } else {

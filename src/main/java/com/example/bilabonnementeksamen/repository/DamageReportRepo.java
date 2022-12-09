@@ -127,9 +127,9 @@ public class DamageReportRepo {
     return reservation;
   }
 
-  public Reservation checkIdInUse(int id) {
+  public String checkIdInUse(int id) {
 
-    Reservation reservation = new Reservation();
+    String check = null;
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
       String sql = "SELECT * FROM reservation where reservation_id = ?";
@@ -139,7 +139,7 @@ public class DamageReportRepo {
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
-        reservation.setReservation_id(rs.getInt(1));
+        check = rs.getString(14);
         //Kan ikke løse den her!
        // reservation.getCar_vehicle_number().getCar_vehicle_number(rs.getInt(2));
       }
@@ -149,7 +149,7 @@ public class DamageReportRepo {
       e.printStackTrace();
     }
 
-    return reservation;
+    return check;
   }
 
 
