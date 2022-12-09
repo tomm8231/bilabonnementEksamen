@@ -5,14 +5,12 @@ import com.example.bilabonnementeksamen.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -66,7 +64,7 @@ public class RegistrationController {
 
     //Der tilrettes så begge datoer kan brues fremad
     LocalDate startReservationDate = registrationService.modifyStartDate(startDate);
-    LocalDate returnReservationDate = registrationService.modifyEndDate(startDate,endDate);
+    LocalDate returnReservationDate = registrationService.modifyEndDateLimited(startDate,endDate);
 
     //Datoerne gemmes
     session.setAttribute("start-date", startReservationDate);
@@ -105,7 +103,9 @@ public class RegistrationController {
   @PostMapping("/lease-create-customer")
   public String leaseAddCustomer(@ModelAttribute Customer customer, HttpSession session) {
     registrationService.createCustomer(customer);
-    session.setAttribute("lease-customer", customer);
+    Customer newCustomer = registrationService.fetchCustomerByMail(customer.getCustomer_mail());
+    session.setAttribute("lease-customer", newCustomer);
+
     return "redirect:/pickup-place";
   }
 
@@ -222,12 +222,12 @@ public class RegistrationController {
     return "redirect:/registration";
   }
 
-  // Sebastian
+/*  // Sebastian
   @GetMapping("/show-reserved-cars")
   public String showReservedCars(Model model){
     model.addAttribute("reservations",registrationService.fetchAllReservations());
     return "/registration/lease-show-rented-out-cars";
-  }
+  }*/
 
   @GetMapping("/pickup-place")
   public String showSelectPickupPlace(Model model) {
@@ -244,15 +244,7 @@ public class RegistrationController {
     return "redirect:/lease-find-employee";
   }
 
-  @GetMapping("/lease-economy")
-  public String showEconomy(Model model){
-    List<Reservation> reservations = registrationService.fetchAllReservations();
-    model.addAttribute(reservations);
 
-    double totalLeaseSum = registrationService.calculateIncome(reservations);
-    model.addAttribute("totalSum", totalLeaseSum);
-    return "/lease-income";
-  }
 
   //Giver det mening at mappings vedr. oprettelse af medarbejdere ligger i registrationController?
   @GetMapping("/create-employee")
@@ -281,7 +273,7 @@ public class RegistrationController {
         //session.setAttribute("message", "Initialer findes allerede");
       }
       case 2 -> {
-        registrationService.createEmployee(employee);
+       registrationService.createEmployee(employee);
         Employee newEmployee = registrationService.fetchEmployeeByInitials(employee.getEmployee_initials());
         redirectAttributes.addAttribute("message", "Medarbejder " + newEmployee.getEmployee_name() + " (" + newEmployee.getEmployee_initials() + ") er oprettet med ID #" + newEmployee.getEmployee_id());
        //session.setAttribute("message", "Medarbejder " + newEmployee.getEmployee_name() + " (" + newEmployee.getEmployee_initials() + ") er oprettet med ID #" + newEmployee.getEmployee_id());
@@ -314,4 +306,29 @@ public class RegistrationController {
 // redirect til en get eller post (ikke html!)
     return "redirect:/lease-new-location";
   }
+
+  //Sebastian
+  @GetMapping("/show-all-locations")
+  public String showAllLocations(Model model){
+    ArrayList<Location> locations = (ArrayList<Location>) registrationService.fetchAllLocations();
+    model.addAttribute("locations", locations);
+    return "/registration/lease-show-locations";
+  }
+
+  //Sebastian
+  @GetMapping("/show-all-employees")
+  public String showAllEmplyees(Model model){
+    ArrayList<Employee> employees = registrationService.fetchAllEployees();
+    model.addAttribute("employees", employees);
+    return "/registration/lease-show-employees";
+  }
+
+  //sebastian
+  @GetMapping("/show-specifik-reservation/{reservationId}")
+  public String showSpecifikReservation(@PathVariable ("reservationId") int reservationId, Model model){
+    Reservation reservation = registrationService.fetchReservationById(reservationId);
+    model.addAttribute("reservation", reservation);
+    return "/registration/lease-show-specifik-reservation";
+  }
+
 }

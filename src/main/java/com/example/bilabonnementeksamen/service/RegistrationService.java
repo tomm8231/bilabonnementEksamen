@@ -5,9 +5,13 @@ import com.example.bilabonnementeksamen.repository.RegistrationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -57,8 +61,11 @@ public class RegistrationService {
       return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking), Date.valueOf(limitedEndDate), leaseType.toUpperCase());
 
     } else {
+      // Lægge til 5 dage til returdatoen, så værkstedet kan nå at checke og frigive bilen.
+      // TODO: OBS kunden skal ikke betale for disse ekstra 5 dage... Virker hellere ikke!
+      LocalDate endDatePlus7days = Date.valueOf(endDate).toLocalDate().plusDays(5);
 
-      return registrationRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDate), leaseType.toUpperCase());
+      return registrationRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDatePlus7days), leaseType.toUpperCase());
     }
   }
 
@@ -74,7 +81,7 @@ public class RegistrationService {
     return startDateBooking;
   }
 
-  public LocalDate modifyEndDate(String startDate, String endDate) {
+  public LocalDate modifyEndDateLimited(String startDate, String endDate) {
 
     LocalDate startBooking = LocalDate.parse(startDate);
     LocalDate bookingEndDate;
@@ -92,18 +99,6 @@ public class RegistrationService {
     registrationRepo.unreserveCarById(car_vehicle_number);
   }
 
-
-  public Subscription_type fetchSubscriptionById(int id) {
-    return registrationRepo.fetchCarById(id).getSubscription_type_id();
-  }
-
-  public Fuel fetchFuelTypeById(int id) {
-    return registrationRepo.fetchCarById(id).getCar_model_id().getCar_fuel_type();
-  }
-
-  public CarModel fetchCarModelById(int id) {
-    return registrationRepo.fetchCarById(id).getCar_model_id();
-  }
 
   public void unreserveAllCarsFromSession() {
     registrationRepo.unreserveAllCarsFromSession();
@@ -145,17 +140,6 @@ public class RegistrationService {
         return_date, fixedPickupTime, fixedReturnTime, reservation_payment, reservation_comment, employee_id);
   }
 
-  public double calculateIncome(List<Reservation> reservations) {
-
-    double sum = 0;
-
-    for (Reservation reservation : reservations) {
-
-      sum += reservation.getCar_vehicle_number().getCar_price_month();
-    }
-
-    return sum;
-  }
 
   // Marcus
   public boolean checkIfLocationExist(Location location) {
@@ -178,6 +162,7 @@ public class RegistrationService {
     return locationAlreadyExist;
 }
 
+// Tommy
   public int checkForDuplicateInitialsEmployee(Employee employee) {
     int number = 0;
 
@@ -201,20 +186,44 @@ public class RegistrationService {
     return registrationRepo.fetchEmployeeByInitials(initials);
   }
 
+
+// Marcus
   public double calculatePaymentTotal(LocalDate pickupDate, LocalDate returnDate, Car car) {
 
-    // Finder antal måneder for reservation og * med price per month
+    // Finder antal dage mellem pickupDate og returnDate
+    long noOfDaysBetween = ChronoUnit.DAYS.between(pickupDate, returnDate) +1;
 
-    double paymentTotal= 0;
-
+    // Pris per måned
     double pricePerMonth = car.getCar_price_month();
 
-    int monthValuePickupTime = pickupDate.getMonthValue();
-    int monthValueReturnTime = returnDate.getMonthValue();
-    double noOfMonths = monthValueReturnTime - monthValuePickupTime;
+    // Pris per dag = pris per måned * antal måneder / antal dage i året
+    //TODO: implementeres når endDate flytter sig 5 dage:
+    //double pricePerDayWith5DaysCheck = (pricePerMonth * 12) / 365;
+    double pricePerDay = (pricePerMonth * 12) / 365;
 
-    paymentTotal = pricePerMonth * noOfMonths;
+    // Trække fra 5 dage som kunden ikke skal betale for, fordi den lægges til for at værkstedet skal nå at se til den
+   // TODO: implementeres når endDate flytter sig 5 dage: double pricePerDay = pricePerDayWith5DaysCheck - 5;
 
-    return paymentTotal;
+    double paymentTotal= noOfDaysBetween * pricePerDay;
+
+    // Bruge BigDecimal for at afrunde korrekt. Den runder op
+    BigDecimal bigDecimal = new BigDecimal(paymentTotal);
+    bigDecimal = bigDecimal.setScale(2,RoundingMode.UP);
+
+    // Konvertere fra BigDecimal til double
+    double paymentTotal2decimals =  bigDecimal.doubleValue();
+
+    return paymentTotal2decimals;
   }
+
+  //sebastian
+  public ArrayList<Employee> fetchAllEployees() {
+    return registrationRepo.fetchAllEmplyees();
+  }
+
+  public Reservation fetchReservationById(int reservationId) {
+    return registrationRepo.fetchReservationById(reservationId);
+  }
+
+
 }

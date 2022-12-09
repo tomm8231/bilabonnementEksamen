@@ -11,14 +11,15 @@
 </head>
 <body>
 <div class="d-flex">
-    <nav th:replace="fragments/registration-sidebar-fragment :: registration-sidebar-fragment"></nav>
-    <container class= "h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
+    <nav th:replace="fragments/business-sidebar-fragment :: business-sidebar-fragment"></nav>
+    <container class= "h-100 ps-5 d-flex flex-column gap-4 align-items-center justify-content-center">
 
         <h1> Alle udlånte biler </h1>
 
         <table class="show-cars-table table table-hover">
             <thead>
             <tr>
+                <th scope="col">Se kontrakt</th>
                 <th scope="col">ID</th>
                 <th scope="col">Vogn nr</th>
                 <th scope="col">Lejet fra</th> <!-- Udlejet fra inkl. tidspunkt-->
@@ -34,6 +35,11 @@
             </thead>
             <tbody>
             <tr th:each="r : ${reservations}">
+                <td>
+                    <form th:action="@{'/show-specifik-reservation/'+${r.reservation_id}}" method="get">
+                        <button type="submit"> Vis </button>
+                    </form>
+                </td>
                 <td th:text="${r.reservation_id}">Car</td>
                 <td th:text="${r.car_vehicle_number.car_vehicle_number}">Car</td>
                 <td th:text="${r.pickup_date + ' kl.' + r.pickup_time}">Car</td>

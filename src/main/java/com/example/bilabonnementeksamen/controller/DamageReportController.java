@@ -1,6 +1,8 @@
 package com.example.bilabonnementeksamen.controller;
 
+import com.example.bilabonnementeksamen.model.Employee;
 import com.example.bilabonnementeksamen.model.Problem;
+import com.example.bilabonnementeksamen.model.ProblemReport;
 import com.example.bilabonnementeksamen.model.Reservation;
 import com.example.bilabonnementeksamen.service.DamageReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,21 +67,21 @@ public class DamageReportController {
   public String registrateProblem() {
     return "/problem/problem-registration-input";
   }
-
+// Sebastian og Daniel
   @PostMapping("/registrate-problem")
   public String registrateMoreProblem(HttpSession session, @ModelAttribute Problem problem) {
     ArrayList<Problem> listOfProblems = new ArrayList<>();
 
     if (session.getAttribute("problems") != null) {
       listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
-      listOfProblems.add(problem);
-    } else {
-      listOfProblems.add(problem);
     }
+      listOfProblems.add(problem);
+
     session.setAttribute("problems", listOfProblems);
     return "redirect:/registrate-problem";
   }
 
+  // Viser alle problem som er tilføjet
   @GetMapping("/problem-overview")
   public String showProblemOverview(HttpSession session, Model model) {
     ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
@@ -87,15 +89,44 @@ public class DamageReportController {
     return "/problem/problem-input-overview";
   }
 
-  @GetMapping("/deleteSpecificDamage/{problem_id}")
-  public String deleteSingleDamage(HttpSession session, Model model){
+  //Marcus, daniel, sebastian
+  @PostMapping("/deleteSpecificDamage")
+  public String deleteSingleDamage(HttpSession session, @ModelAttribute Problem deleteProblem){
     ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
-    model.addAttribute("problems", listOfProblems);
-    listOfProblems.remove(0);
+
+    listOfProblems = damageReportService.removeProblemFromList(listOfProblems, deleteProblem);
+
+    session.setAttribute("problems",listOfProblems);
 
     return "redirect:/problem-overview";
   }
 
+  @PostMapping("/problem-report-submit")
+  public String createProblemReport(HttpSession session){
+    ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
+    Reservation reservation = (Reservation) session.getAttribute("reservation");
 
+    damageReportService.createProblemReport(listOfProblems, reservation);
+    return "redirect:/result";
+  }
+
+  // Bekræftelse til ansat på at man har oprettet en skaderapport
+  @GetMapping("/result")
+  public String showProblemReport(HttpSession session, Model model){
+    ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
+    // Finde reservationen
+    Reservation reservation = (Reservation) session.getAttribute("reservation");
+    // Finde report_id
+    int reportId = damageReportService.fetchReportId(listOfProblems, reservation);
+    model.addAttribute("report_id", reportId);
+    return "/problem/problem-form-result";
+  }
+
+
+  @PostMapping("/result")
+  public String sendProblemReport(){
+    //TODO: lave en metode for at oprette en pdf til kunden
+    return "redirect:/damage-home-page";
+  }
 
 }

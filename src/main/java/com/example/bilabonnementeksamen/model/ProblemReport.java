@@ -1,5 +1,7 @@
 package com.example.bilabonnementeksamen.model;
 
+import java.util.ArrayList;
+
 public class ProblemReport {
 
   private int report_id;
@@ -7,18 +9,18 @@ public class ProblemReport {
   private double total_price;
   private Employee employee;
   private Customer customer;
-  private Problem problem;
+  private ArrayList<Problem> listOfProblems;
 
   public ProblemReport() {}
 
   public ProblemReport(int report_id, Car car, double total_price,
-                       Employee employee, Customer customer, Problem problem) {
+                       Employee employee, Customer customer, ArrayList<Problem> listOfProblems) {
     this.report_id = report_id;
     this.car = car;
     this.total_price = total_price;
     this.employee = employee;
     this.customer = customer;
-    this.problem = problem;
+    this.listOfProblems = listOfProblems;
   }
 
 
@@ -58,15 +60,17 @@ public class ProblemReport {
     return customer;
   }
 
+  public void setListOfProblems(ArrayList<Problem> listOfProblems) {
+    this.listOfProblems = listOfProblems;
+  }
+
+  public ArrayList<Problem> getListOfProblems() {
+    return listOfProblems;
+  }
+
   public void setCustomer(Customer customer) {
     this.customer = customer;
   }
 
-  public Problem getProblem() {
-    return problem;
-  }
 
-  public void setProblem(Problem problem) {
-    this.problem = problem;
-  }
 }

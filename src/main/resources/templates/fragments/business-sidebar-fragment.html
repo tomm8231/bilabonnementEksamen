@@ -11,7 +11,7 @@
 <body>
 
 <div th:fragment="business-sidebar-fragment">
-    <div class="flex-shrink-0 p-3 bg-white h-100 border-end" style="width: 240px;">
+    <div class="flex-shrink-0 p-3 bg-white h-100 border-end" style="width: 240px">
         <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
             <img class="logo-bilabonnement" src="images/logo_bilabo.png" width="160px">
         </a>
@@ -21,46 +21,10 @@
                         data-bs-target="#home-collapse" aria-expanded="false">
                     Dashboard
                 </button>
-                <div class="collapse px-20" id="home-collapse" style="">
-                    <ul class="btn-toggle-nav fw-normal pb-1 small list-unstyled ps-4"> <!-- ps-4 = padding start -->
-                        <li><a href="#" class="link-dark rounded">Tilgængelige biler</a></li>
+                <div>
+                    <ul class="btn-toggle-nav fw-normal pb-1 small list-unstyled ps-4">
                         <li><a th:href="@{show-reserved-cars}" class="link-dark rounded">Udlejede biler</a></li>
                         <li><a th:href="@{business-economy}" class="link-dark rounded">Månedlig indkomst</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="mb-1">
-                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#dashboard-collapse" aria-expanded="false">
-               Rapportering
-                </button>
-                <div class="collapse" id="dashboard-collapse" style="">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
-                        <!-- ms-2 = margin start .me-2 = 0.5rem-->
-                        <li><a th:href="@{/}" class="link-dark rounded">Money money</a></li>
-                        <li><a th:href="@{/}" class="link-dark rounded">Link</a></li>
-                        <li><a th:href="@{/}" class="link-dark rounded">Link</a></li>
-                        <li><a th:href="@{/}" class="link-dark rounded"></a>Link</li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="border-top my-3"></li>
-            <li class="mb-1">
-                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#account-collapse" aria-expanded="false">
-                    Support
-                </button>
-                <div class="collapse" id="account-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
-                        <li><a href="#" class="link-dark rounded">IT-ansvarlig</a></li>
-                        <li><a href="#" class="link-dark rounded">Helpdesk</a></li>
-                        <li><a href="#" class="link-dark rounded">SAP</a></li>
-                        <li class="mt-4">
-                            <form action="/unreserve-all-cars-session" method="post" th:action="@{unreserve-all-cars-session}">
-                                <button type="submit" class="link-dark rounded">Afreservér alle biler (session)</button>
-                            </form>
-                        </li>
                     </ul>
                 </div>
             </li>
