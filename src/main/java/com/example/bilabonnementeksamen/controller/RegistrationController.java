@@ -257,15 +257,20 @@ public class RegistrationController {
 
   //Giver det mening at mappings vedr. oprettelse af medarbejdere ligger i registrationController?
   @GetMapping("/create-employee")
-  public String showCreateEmployee( @RequestParam (value = "message", required = false) String message, Model model) {
+  public String showCreateEmployee(@RequestParam (value = "message", required = false) String message, Model model/*, HttpSession session*/) {
+    //String message = (String) session.getAttribute("message");
     model.addAttribute("message", message);
     return "/registration/create-employee";
   }
 
-  @PostMapping("/create-employee")
-  public String createEmployee(@ModelAttribute Employee employee, RedirectAttributes redirectAttributes) {
+  @PostMapping("/cancel-problem-contract")
+  public String cancelProblemContract() {
+    return "redirect:/problem/problem-home-page";
+  }
 
-    //TODO: tjekke at medarbejders initialer ikke allerede er oprettet
+
+  @PostMapping("/create-employee")
+  public String createEmployee(@ModelAttribute Employee employee, RedirectAttributes redirectAttributes ) {
 
 
     int messageOption = registrationService.checkForDuplicateInitialsEmployee(employee);
@@ -274,11 +279,13 @@ public class RegistrationController {
 
       case 1 -> {
         redirectAttributes.addAttribute("message", "Initialer findes allerede");
+        //session.setAttribute("message", "Initialer findes allerede");
       }
       case 2 -> {
        registrationService.createEmployee(employee);
         Employee newEmployee = registrationService.fetchEmployeeByInitials(employee.getEmployee_initials());
         redirectAttributes.addAttribute("message", "Medarbejder " + newEmployee.getEmployee_name() + " (" + newEmployee.getEmployee_initials() + ") er oprettet med ID #" + newEmployee.getEmployee_id());
+       //session.setAttribute("message", "Medarbejder " + newEmployee.getEmployee_name() + " (" + newEmployee.getEmployee_initials() + ") er oprettet med ID #" + newEmployee.getEmployee_id());
       }
     }
 
@@ -303,6 +310,7 @@ public class RegistrationController {
       registrationService.createLocation(location);
       redirectAttributes.addAttribute("message", "Du har oprettet en ny lokalitet: "  +
           location.getLocation_name()+ ", " + location.getLocation_address() + ". Telefonnummer: " + location.getLocation_phone());
+
     }
 // redirect til en get eller post (ikke html!)
     return "redirect:/lease-new-location";

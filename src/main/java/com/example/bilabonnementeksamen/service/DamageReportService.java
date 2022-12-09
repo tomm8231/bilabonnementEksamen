@@ -19,6 +19,17 @@ public class DamageReportService {
     return damageReportRepo.fetchReservationInfoById(id);
   }
 
+  // Tommy
+  public int checkIdInUse(int id) {
+    String check = damageReportRepo.checkIdInUse(id);
+
+    if (check != null) {
+      return 1;
+    } else {
+      return 2;
+    }
+  }
+
   // Sebastian og lidt Marcus
   // TODO: Kan returnere enten objektet eller en int. Dele op til 2 metoder.
   public void createProblemReport(ArrayList<Problem> listOfProblems, Reservation reservation) {
