@@ -256,7 +256,7 @@
             <div class="mb-3 row">
                 <label for="pickup-time" class="col-sm-2 col-form-label"> Hente tid</label>
                 <div class="col-sm-10">
-                    <input type="time" id="pickup-time" name="pickup-time" th:value="${reservation.pickup_time}"
+                    <input type="time" id="pickup-time" name="pickup-time" th:value="${reservation.pickup_time}" class="form-control-plaintext"
                            readonly>
                 </div>
             </div>
@@ -264,7 +264,7 @@
             <div class="mb-3 row">
                 <label for="return-time" class="col-sm-2 col-form-label"> Retur tid</label>
                 <div class="col-sm-10">
-                    <input type="time" id="return-time" name="return-time" th:value="${reservation.return_time}"
+                    <input type="time" id="return-time" name="return-time" th:value="${reservation.return_time}" class="form-control-plaintext"
                            readonly>
                 </div>
             </div>
@@ -272,14 +272,13 @@
             <div class="mb-3 row">
                 <label for="reservation_payment" class="form-label"> Total betaling</label>
                 <div class="col-sm-10">
-                    <input type="text" id="reservation_payment" name="paymentTotal" class="form-control"
+                    <input type="text" id="reservation_payment" name="paymentTotal" class="form-control form-control-plaintext"
                            step="0.1" th:value="${reservation.reservation_payment}" readonly>
                 </div>
 
                 <div class="mb-3 row">
-                    <label for="reservation_comment" class="form-label"> Har du yderligere kommentarer til
-                        lejekontrakten?</label>
-                    <input type="text" id="reservation_comment" name="reservation_comment" class="form-control"
+                    <label for="reservation_comment" class="form-label"> Har du yderligere kommentarer til lejekontrakten?</label>
+                    <input type="text" id="reservation_comment" name="reservation_comment" class="form-control form-control-plaintext"
                            th:value="${reservation.reservation_comment}" readonly>
                 </div>
             </div>
