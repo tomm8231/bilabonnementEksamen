@@ -1,8 +1,8 @@
 package com.example.bilabonnementeksamen.controller;
 
 import com.example.bilabonnementeksamen.model.Employee;
-import com.example.bilabonnementeksamen.model.Problem;
 import com.example.bilabonnementeksamen.model.ProblemReport;
+import com.example.bilabonnementeksamen.model.Problem;
 import com.example.bilabonnementeksamen.model.Reservation;
 import com.example.bilabonnementeksamen.service.DamageReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +46,10 @@ public class DamageReportController {
         return "redirect:/problem-form";
       }
       case 2 -> {
-        return "redirect:/find-reservation-info";
+        return "redirect:/search-reservation";
       }
       default -> {
-        return "redirect:/find-reservation-info";
+        return "redirect:/search-reservation";
       }
     }
   }

@@ -139,8 +139,7 @@ public class DamageReportRepo {
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
-        check = rs.getString(14);
-        //Kan ikke løse den her!
+        check = rs.getString(4);
         // reservation.getCar_vehicle_number().getCar_vehicle_number(rs.getInt(2));
       }
 
