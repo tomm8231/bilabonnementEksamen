@@ -19,14 +19,13 @@ public class DamageReportService {
     return damageReportRepo.fetchReservationInfoById(id);
   }
 
+  // Tommy
   public int checkIdInUse(int id) {
     String check = damageReportRepo.checkIdInUse(id);
 
     if (check != null) {
-      System.out.println("1");
       return 1;
     } else {
-      System.out.println("2");
       return 2;
     }
   }

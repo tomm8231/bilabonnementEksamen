@@ -34,7 +34,7 @@ public class DamageReportController {
     return "problem/problem-registration-start";
   }
 
-
+  // Tommy
   @PostMapping("/find-reservation-info")
   public String fetchReservationInfo(@RequestParam("reservation-id") int id, HttpSession session) {
 
