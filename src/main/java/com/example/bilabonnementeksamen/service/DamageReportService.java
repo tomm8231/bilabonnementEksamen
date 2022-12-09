@@ -20,11 +20,12 @@ public class DamageReportService {
   }
 
   // Sebastian og lidt Marcus
-  // TODO: Kan metoden også returnere en int og overholde GRASP?
+  // TODO: Kan returnere enten objektet eller en int. Dele op til 2 metoder.
   public void createProblemReport(ArrayList<Problem> listOfProblems, Reservation reservation) {
     double totalPrice = calculateTotalPriceReport(listOfProblems);
     // Opretter en rapport
     damageReportRepo.createProblemReport(reservation, totalPrice);
+
     // Opretter problemer til rapporten (id bliver først oprettet når den er lavet i databasen)
     int report_id = damageReportRepo.fetchReportId(reservation, totalPrice);
     damageReportRepo.createProblems(listOfProblems, report_id);
