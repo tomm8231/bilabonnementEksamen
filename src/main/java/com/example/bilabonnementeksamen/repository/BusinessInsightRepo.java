@@ -22,6 +22,11 @@ public class BusinessInsightRepo {
 // Henter alle reservationer som strækker sig over hele indeværende måned
   public int fetchFullCurrentMonthReservationsIncome(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
 
+    // Bruge LocalDate
+   // LocalDate today = LocalDate.now();
+   // LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
+   // LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
+
     int totalIncome = 0;
 
     try {
@@ -284,7 +289,7 @@ public class BusinessInsightRepo {
     return endCurrentMonthreservations;
 
   }
-
+// TODO: bruge denne Sebastian
   public int fetchFullCurrentMonthReservationsAmount(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
 
     int totalReservations = 0;

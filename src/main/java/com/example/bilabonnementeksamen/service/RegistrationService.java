@@ -158,11 +158,11 @@ public class RegistrationService {
         locationAlreadyExist = true;
       }
 
-  }
+    }
     return locationAlreadyExist;
-}
+  }
 
-// Tommy
+  // Tommy
   public int checkForDuplicateInitialsEmployee(Employee employee) {
     int number = 0;
 
@@ -187,33 +187,15 @@ public class RegistrationService {
   }
 
 
-// Marcus
-  public double calculatePaymentTotal(LocalDate pickupDate, LocalDate returnDate, Car car) {
-
-    // Finder antal dage mellem pickupDate og returnDate
-    long noOfDaysBetween = ChronoUnit.DAYS.between(pickupDate, returnDate) +1;
+  // Fælles
+  public double calculatePaymentTotal(String months, Car car) {
 
     // Pris per måned
     double pricePerMonth = car.getCar_price_month();
 
-    // Pris per dag = pris per måned * antal måneder / antal dage i året
-    //TODO: implementeres når endDate flytter sig 5 dage:
-    //double pricePerDayWith5DaysCheck = (pricePerMonth * 12) / 365;
-    double pricePerDay = (pricePerMonth * 12) / 365;
+    double paymentTotal = (pricePerMonth * Integer.valueOf(months));
 
-    // Trække fra 5 dage som kunden ikke skal betale for, fordi den lægges til for at værkstedet skal nå at se til den
-   // TODO: implementeres når endDate flytter sig 5 dage: double pricePerDay = pricePerDayWith5DaysCheck - 5;
-
-    double paymentTotal= noOfDaysBetween * pricePerDay;
-
-    // Bruge BigDecimal for at afrunde korrekt. Den runder op
-    BigDecimal bigDecimal = new BigDecimal(paymentTotal);
-    bigDecimal = bigDecimal.setScale(2,RoundingMode.UP);
-
-    // Konvertere fra BigDecimal til double
-    double paymentTotal2decimals =  bigDecimal.doubleValue();
-
-    return paymentTotal2decimals;
+    return paymentTotal;
   }
 
   //sebastian
@@ -226,4 +208,11 @@ public class RegistrationService {
   }
 
 
+  public String addMonthsToStartReservationDate(String startDate, String months) {
+
+    LocalDate endDateUnlimited = LocalDate.parse(startDate);
+    endDateUnlimited = endDateUnlimited.plusMonths(Long.parseLong(months));
+
+    return endDateUnlimited.toString();
+  }
 }

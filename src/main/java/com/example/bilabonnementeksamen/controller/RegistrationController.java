@@ -46,12 +46,17 @@ public class RegistrationController {
 
   // Fælles
   @PostMapping("/lease-unlimited-contract")
-  public String findUnlimitedCarsByDate(@RequestParam("unlimited-start-date") String startDate, @RequestParam("unlimited-end-date") String endDate,
-                                        @RequestParam ("type-leasing") String typeLeasing, RedirectAttributes redirectAttributes) {
+  public String findUnlimitedCarsByDate(@RequestParam("unlimited-start-date") String startDate, @RequestParam("months") String months,
+                                        @RequestParam ("type-leasing") String typeLeasing, RedirectAttributes redirectAttributes, HttpSession session) {
+
+    String endDate = registrationService.addMonthsToStartReservationDate(startDate, months);
+    session.setAttribute("months", months);
+
 
     redirectAttributes.addAttribute("rd-start-date", startDate);
     redirectAttributes.addAttribute("rd-end-date", endDate);
     redirectAttributes.addAttribute("type-leasing", typeLeasing);
+
 
     return "redirect:/lease-available-cars";
   }
@@ -62,9 +67,12 @@ public class RegistrationController {
                                   @RequestParam(value = "rd-end-date", required = false) String endDate,
                                   @RequestParam ("type-leasing") String typeLeasing, HttpSession session) {
 
-    //Der tilrettes så begge datoer kan brues fremad
+
+
+    //Der tilrettes så begge datoer kan bruges fremad
     LocalDate startReservationDate = registrationService.modifyStartDate(startDate);
     LocalDate returnReservationDate = registrationService.modifyEndDateLimited(startDate,endDate);
+
 
     //Datoerne gemmes
     session.setAttribute("start-date", startReservationDate);
@@ -166,11 +174,10 @@ public class RegistrationController {
     LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
     model.addAttribute("endDate",bookingEndDate);
 
-    //TODO: ændre til double?
-    double paymentTotal = registrationService.calculatePaymentTotal(bookingStartDate, bookingEndDate, car);
+    String months = (String) session.getAttribute("months");
+
+    double paymentTotal = registrationService.calculatePaymentTotal(months, car);
     model.addAttribute("paymentTotal", paymentTotal);
-
-
 
     return "/registration/lease-final-form";
   }
@@ -191,6 +198,8 @@ public class RegistrationController {
     Employee employee = (Employee) session.getAttribute("lease-employee");
     LocalDate bookingStartDate = (LocalDate) session.getAttribute("start-date");
     LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
+    bookingEndDate = bookingEndDate.plusDays(3); // Check på værkstedet etc. Klargøres
+
 
     //reservationen oprettes
     registrationService.createReservation(car,customer,location,bookingStartDate,bookingEndDate, pickupTime, returnTime,
