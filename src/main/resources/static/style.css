@@ -17,3 +17,21 @@ body {
 .logo-bilabonnement {
     margin-left: 1.5em;
 }
+
+.fragment-style{
+    width: 240px;
+}
+
+@media all and (max-width: 700px){
+
+    .fragment-style{
+        width: 200px;
+    }}
+
+@media all and (max-width: 600px){
+
+.fragment-style{
+    width: 150px;
+    margin: 0px;
+    padding: 0px;
+}}
