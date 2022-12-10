@@ -87,7 +87,8 @@ public class RegistrationService {
     LocalDate bookingEndDate;
 
     if (endDate == null) {
-      bookingEndDate = startBooking.plusDays(157);
+      // Lægger til 150 + 3 dage fordi værkstedet skal have tid til at klargøre bilen. Kunden betaler for 150 dage
+      bookingEndDate = startBooking.plusDays(153);
       return bookingEndDate;
     }
     bookingEndDate = LocalDate.parse(endDate);
@@ -191,12 +192,18 @@ public class RegistrationService {
   public double calculatePaymentTotal(String months, Car car) {
 
     double paymentTotal = 0;
+    int limitedMonths = 5; // fordi limited altid er 5 måneder
 
     try {
       // Pris per måned
       double pricePerMonth = car.getCar_price_month();
 
-      paymentTotal = (pricePerMonth * Integer.valueOf(months));
+      if (car.getSubscription_type_id().getSubscription_type_name().equals("LIMITED")){
+        paymentTotal = (pricePerMonth * limitedMonths);
+
+      } else {
+        paymentTotal = (pricePerMonth * Integer.valueOf(months));
+      }
 
       return paymentTotal;
 
