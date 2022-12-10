@@ -13,7 +13,7 @@
 <div th:fragment="business-sidebar-fragment">
     <div class="flex-shrink-0 p-3 bg-white h-100 border-end fragment-style">
         <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-            <img class="logo-bilabonnement" src="images/logo_bilabo.png" width="160px">
+            <img class="logo-bilabonnement" src="/images/logo_bilabo.png" width="160px" alt="Logo Bilabonnement">
         </a>
         <ul class="list-unstyled ps-3">
             <li class="mb-1">
@@ -23,8 +23,8 @@
                 </button>
                 <div>
                     <ul class="btn-toggle-nav fw-normal pb-1 small list-unstyled ps-4">
-                        <li><a th:href="@{show-reserved-cars}" class="link-dark rounded">Udlejede biler</a></li>
-                        <li><a th:href="@{show-income-chosen-year/2022}" class="link-dark rounded">Økonomisk overblik</a></li>
+                        <li><a th:href="@{/show-reserved-cars}" class="link-dark rounded">Udlejede biler</a></li>
+                        <li><a th:href="@{/show-income-chosen-year/2022}" class="link-dark rounded">Økonomisk overblik</a></li>
                     </ul>
                 </div>
             </li>
