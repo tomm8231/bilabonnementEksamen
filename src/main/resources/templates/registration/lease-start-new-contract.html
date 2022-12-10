@@ -15,7 +15,7 @@
 
         <form action="/lease-limited-contract" method="post">
             <label for="limited-start-date" class="form-label"> Start dato </label>
-            <input type="date" id="limited-start-date" name="limited-start-date" class="form-control" required th:min="${today}">
+            <input type="date" id="limited-start-date" name="limited-start-date" class="form-control mb-3" required th:min="${today}">
             <input type="text" name="type-leasing" class="form-control" value="LIMITED" hidden required>
 
             <button type="submit">Søg</button>
@@ -25,21 +25,20 @@
         <form  action="/lease-unlimited-contract" method="post">
             <label for="unlimited-start-date" class="form-label"> Start dato </label>
             <input type="date" id="unlimited-start-date" name="unlimited-start-date" class="form-control" required>
-
-            <label for="months">Vælg antal måneder:</label>
-            <select id="months" name="months" required>
-                <option value="3">3 måneder</option>
-                <option value="6">6 måneder</option>
-                <option value="12">12 måneder</option>
-                <option value="24">24 måneder</option>
-                <option value="36">36 måneder</option>
+<div class="d-flex mt-3">
+            <label for="months">Vælg antal måneder: </label>
+    <div class="d-flex ms-3">
+    <select id="months" name="months" required>
+                <option value="3"> 3 måneder</option>
+                <option value="6"> 6 måneder</option>
+                <option value="12"> 12 måneder</option>
+                <option value="24"> 24 måneder</option>
+                <option value="36"> 36 måneder</option>
             </select>
+    </div>
+</div>
             <input type="text" name="type-leasing" class="form-control" value="UNLIMITED" hidden required>
-<!--            <label for="unlimited-end-date" class="form-label"> Slut dato </label>
-            <input type="date" id="unlimited-end-date" name="unlimited-end-date" class="form-control" required>
-            -->
-
-            <button type="submit">Søg</button>
+            <button type="submit" class="mt-2">Søg</button>
         </form>
     </container>
 </div>

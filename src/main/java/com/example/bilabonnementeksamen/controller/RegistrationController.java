@@ -329,7 +329,7 @@ public class RegistrationController {
     return "/registration/lease-show-employees";
   }
 
-  //sebastian
+  //Sebastian
   @GetMapping("/show-specifik-reservation/{reservationId}")
   public String showSpecifikReservation(@PathVariable ("reservationId") int reservationId, Model model){
     Reservation reservation = registrationService.fetchReservationById(reservationId);
