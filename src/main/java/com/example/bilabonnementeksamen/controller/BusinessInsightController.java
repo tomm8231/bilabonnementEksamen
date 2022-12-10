@@ -48,11 +48,15 @@ public class BusinessInsightController {
     return "/business/business-show-rented-out-cars";
   }
 
-
+// Sebastian
   @GetMapping("/business-economy")
   public String showEconomy(Model model) {
 
     LocalDate today = LocalDate.now();
+
+    //TODO: Sebastian enten før og efter, eller 1 år? Eller flere år?
+    LocalDate lastMonth = today.minusMonths(1);
+
     LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
     LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
     int currentMonthLength = endDayOfMonthDate.getDayOfMonth();

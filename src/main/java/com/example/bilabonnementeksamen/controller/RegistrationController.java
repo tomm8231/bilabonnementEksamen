@@ -183,7 +183,6 @@ public class RegistrationController {
   }
 
   // Marcus, Tommy og Sebastian
-  //TODO: fjernet   @RequestParam ("reservation_payment")int reservationPayment for en metode
   @PostMapping("/lease-form")
   public String makeLeaseContract(HttpSession session,
                                   @RequestParam ("pickup-time") String pickupTime,

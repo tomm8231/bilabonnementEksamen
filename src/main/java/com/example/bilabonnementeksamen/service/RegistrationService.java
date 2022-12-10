@@ -190,11 +190,20 @@ public class RegistrationService {
   // Fælles
   public double calculatePaymentTotal(String months, Car car) {
 
-    // Pris per måned
-    double pricePerMonth = car.getCar_price_month();
+    double paymentTotal = 0;
 
-    double paymentTotal = (pricePerMonth * Integer.valueOf(months));
+    try {
+      // Pris per måned
+      double pricePerMonth = car.getCar_price_month();
 
+      paymentTotal = (pricePerMonth * Integer.valueOf(months));
+
+      return paymentTotal;
+
+    } catch (IllegalArgumentException illegalArgumentException){
+      System.err.println(illegalArgumentException.getMessage());
+      System.out.println("Fejl input");
+    }
     return paymentTotal;
   }
 
