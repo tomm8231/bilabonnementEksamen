@@ -754,4 +754,30 @@ public class RegistrationRepo {
 
     return reservation;
   }
+
+ // Duplikeret kode fra DamageReport Controller
+  public String checkIdInUse(int id) {
+
+    String check = null;
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "SELECT * FROM reservation where reservation_id = ?";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setInt(1, id);
+
+      ResultSet rs = pst.executeQuery();
+
+      while (rs.next()) {
+        check = rs.getString(4);
+      }
+
+    } catch (SQLException e) {
+      System.err.println("Cannot connect to database");
+      e.printStackTrace();
+    }
+
+    return check;
+  }
+
 }

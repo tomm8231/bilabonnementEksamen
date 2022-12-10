@@ -11,7 +11,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class RegistrationController {
@@ -254,10 +253,9 @@ public class RegistrationController {
 
 
 
-  //Giver det mening at mappings vedr. oprettelse af medarbejdere ligger i registrationController?
   @GetMapping("/create-employee")
-  public String showCreateEmployee(@RequestParam (value = "message", required = false) String message, Model model/*, HttpSession session*/) {
-    //String message = (String) session.getAttribute("message");
+  public String showCreateEmployee(@RequestParam (value = "message", required = false) String message, Model model) {
+
     model.addAttribute("message", message);
     return "/registration/create-employee";
   }
@@ -336,7 +334,59 @@ public class RegistrationController {
   public String showSpecifikReservation(@PathVariable ("reservationId") int reservationId, Model model){
     Reservation reservation = registrationService.fetchReservationById(reservationId);
     model.addAttribute("reservation", reservation);
-    return "/registration/lease-show-specifik-reservation";
+    return "/registration/lease-show-specific-reservation";
   }
+
+
+  // Marcus
+  @GetMapping ("/search-reservation-by-id")
+  public String searchLeaseContract(@RequestParam (value = "message", required = false) String message, Model model){
+    model.addAttribute("message", message);
+
+    return "/registration/search-reservation";
+  }
+
+
+
+
+  // Marcus
+  @PostMapping("/search-reservation-by-id")
+  public String fetchReservationInfo(Model model, @RequestParam("reservation-id") int id, RedirectAttributes redirectAttributes) {
+
+    int checkId = registrationService.checkReservationIdInUse(id);
+
+    switch (checkId) {
+
+      case 1 -> {
+        Reservation reservation = registrationService.fetchReservationById(id);
+        model.addAttribute("reservation", reservation);
+        return "registration/lease-show-specific-reservation";
+      }
+
+      case 2 -> {
+        redirectAttributes.addAttribute("message", "Reservationen findes ikke");
+        return "redirect:/search-reservation-by-id";
+      }
+
+      default -> {
+        redirectAttributes.addAttribute("message", "Tast 1 eller højere");
+        return "redirect:/search-reservation-by-id";
+      }
+    }
+  }
+
+
+
+  // Marcus
+  @GetMapping ("/search-result-reservation")
+  public String showResultSearchReservationById(HttpSession session){
+
+    session.getAttribute("reservation-id");
+    session.getAttribute("reservation");
+
+    return "registration/lease-show-specific-reservation";
+
+  }
+
 
 }

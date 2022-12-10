@@ -224,4 +224,16 @@ public class RegistrationService {
 
     return endDateUnlimited.toString();
   }
+
+
+  public int checkReservationIdInUse(int id) {
+    String check = registrationRepo.checkIdInUse(id);
+
+    if (check != null) {
+      return 1;
+    } else {
+      return 2;
+    }
+  }
+
 }

@@ -67,6 +67,7 @@ public class DamageReportController {
   public String registrateProblem() {
     return "/problem/problem-registration-input";
   }
+
 // Sebastian og Daniel
   @PostMapping("/registrate-problem")
   public String registrateMoreProblem(HttpSession session, @ModelAttribute Problem problem) {
