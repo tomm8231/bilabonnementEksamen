@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
@@ -27,20 +30,6 @@ public class BusinessInsightController {
   public String showBusinessHome() {
     return "/business/business-home-page";
   }
-/*
-  @GetMapping("/business-economy")
-  public String showEconomy(Model model){
-    //TODO: skal ikke være alle reservationer, kun de i indeværende måned
-    List<Reservation> reservations = registrationService.fetchAllReservations();
-    model.addAttribute(reservations);
-
-    double totalLeaseSum = businessInsightService.calculateIncome();
-    model.addAttribute("totalSum", totalLeaseSum);
-    return "/business/business-income";
-  }
-
- */
-
 
   @GetMapping("/show-reserved-cars")
   public String showReservedCars(Model model) {
@@ -49,42 +38,58 @@ public class BusinessInsightController {
   }
 
 // Sebastian
-  @GetMapping("/business-economy")
-  public String showEconomy(Model model) {
+//viser regnskab ud fra år
+@GetMapping("/show-income-chosen-year/{chosenYear}")
+public String showIncomeChosenYear(@PathVariable("chosenYear") String chosenYear, Model model){
 
-    LocalDate today = LocalDate.now();
+  int year = Integer.parseInt(chosenYear);
 
-    //TODO: Sebastian enten før og efter, eller 1 år? Eller flere år?
-    LocalDate lastMonth = today.minusMonths(1);
+  //slutdatoer til brug i metoderne, baseret på året valgt
+  ArrayList<LocalDate> everyMonthEndDate = businessInsightService.fetchEveryMonthEndDate(year);
 
-    LocalDate startDayOfMonthDate = today.with(TemporalAdjusters.firstDayOfMonth());
-    LocalDate endDayOfMonthDate = today.with(TemporalAdjusters.lastDayOfMonth());
-    int currentMonthLength = endDayOfMonthDate.getDayOfMonth();
+  //Alt om startende kontrakter
+  ArrayList <Integer> startingContracts = businessInsightService.fetchAllStartingContractsYearAmount(everyMonthEndDate);
+  ArrayList <Double> startingContractsIncome = businessInsightService.fetchAllStartingContractsYearIncome(everyMonthEndDate);
+  model.addAttribute("startingContracts",startingContracts);
+  model.addAttribute("startingContractsIncome",startingContractsIncome);
 
-    //antal startende reservationer og indkomst deraf
-    ArrayList<Reservation> allStartingContracts = businessInsightService.fetchAllStartingContracts(startDayOfMonthDate, endDayOfMonthDate);
-    model.addAttribute("startingLeasesAmount", allStartingContracts.size());
-    double startingContractsIncome = businessInsightService.calculatePickupMonthReservationsIncome(allStartingContracts,currentMonthLength);
-    model.addAttribute("startingLeasesIncome", startingContractsIncome);
+  //Alt om endende kontrakter
+  ArrayList <Integer> endingContracts;
+  endingContracts = businessInsightService.fetchAllEndingContractsYearAmount(everyMonthEndDate);
+  ArrayList <Double> endingContractsIncome = businessInsightService.fetchAllEndingContractsYearIncome(everyMonthEndDate);
+  model.addAttribute("endingContracts",endingContracts);
+  model.addAttribute("endingContractsIncome",endingContractsIncome);
 
-    //antal sluttende reservationer og indkomst deraf
-    ArrayList<Reservation> allEndingContracts = businessInsightService.fetchAllEndingContracts(startDayOfMonthDate, endDayOfMonthDate);
-    model.addAttribute("endingLeasesAmount", allEndingContracts.size());
-    double endingContractsIncome = businessInsightService.calculateReturnMonthReservationsIncome(allEndingContracts,currentMonthLength);
-    model.addAttribute("endingLeasesIncome", endingContractsIncome);
+  //Alt om fuldemåneds kontrakter
+  ArrayList <Integer> ongoingContracts;
+  ongoingContracts = businessInsightService.fetchAllongoingContractsYearAmount(everyMonthEndDate);
+  ArrayList <Double> ongoingContractsIncome = businessInsightService.fetchAllOngoingContractsYearIncome(everyMonthEndDate);
+  model.addAttribute("ongoingContracts",ongoingContracts);
+  model.addAttribute("ongoingContractsIncome",ongoingContractsIncome);
 
-    //antal fuld måned reservationer og indkomst deraf
-    ArrayList<Reservation> allOngoingContracts = businessInsightService.fetchAllOngingContracts(startDayOfMonthDate, endDayOfMonthDate);
-    model.addAttribute("ongoingLeasesAmount", allOngoingContracts.size());
-    double fullMonthContractsIncome = businessInsightService.fetchAllOngoingContractsIncome(startDayOfMonthDate, endDayOfMonthDate);
-    model.addAttribute("ongoingLeasesIncome", fullMonthContractsIncome);
+  //total indkomst sammenlagt
+  ArrayList <Double> totalIncomeMonths =  businessInsightService.calculateIncomeMonths(startingContractsIncome,endingContractsIncome,ongoingContractsIncome);
+  model.addAttribute("totalContractsIncome",totalIncomeMonths);
 
-    //samlet indtægt
-    double totalLeaseSum = businessInsightService.calculateIncome(fullMonthContractsIncome, startingContractsIncome, endingContractsIncome);
-    model.addAttribute("totalSum", totalLeaseSum);
+  //Total indkomst
+  model.addAttribute("totalStartingContracts", businessInsightService.calculateAmountFromList(startingContracts)); // int
+  model.addAttribute("totalEndingContracts", businessInsightService.calculateAmountFromList(endingContracts)); // int
+  model.addAttribute("totalOngoingContracts", businessInsightService.calculateAmountFromList(ongoingContracts));
+  model.addAttribute("totalStartingContractsIncome", businessInsightService.calculateIncomeFromList(startingContractsIncome)); //double
+  model.addAttribute("totalEndingContractsIncome", businessInsightService.calculateIncomeFromList(endingContractsIncome)); //double
+  model.addAttribute("totalOngoingContractsIncome", businessInsightService.calculateIncomeFromList(ongoingContractsIncome)); //double
+  model.addAttribute("totalYearIncome", businessInsightService.calculateIncomeFromList(totalIncomeMonths)); //double
 
+  //tilføj året
+  model.addAttribute("year",year);
 
-    return "/business/business-income";
+  return "/business/showIncomeChoosenYear";
+}
+
+  //sebastian
+  @PostMapping("/show-income-choosen-year")
+  public String showIncomeChoosenYear(@RequestParam("year") String year) {
+    return "redirect:/show-income-chosen-year/"+year;
   }
 
 
