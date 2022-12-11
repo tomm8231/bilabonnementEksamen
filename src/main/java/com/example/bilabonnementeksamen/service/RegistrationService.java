@@ -1,16 +1,12 @@
 package com.example.bilabonnementeksamen.service;
 
 import com.example.bilabonnementeksamen.model.*;
-import com.example.bilabonnementeksamen.repository.RegistrationRepo;
+import com.example.bilabonnementeksamen.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Date;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,28 +15,40 @@ import java.util.List;
 public class RegistrationService {
 
   @Autowired
-  RegistrationRepo registrationRepo;
+  LocationRepo locationRepo;
+
+  @Autowired
+  ReservationRepo reservationRepo;
+
+  @Autowired
+  CustomerRepo customerRepo;
+
+  @Autowired
+  CarRepo carRepo;
+
+  @Autowired
+  EmployeeRepo employeeRepo;
 
 
   public Customer fetchCustomerByMail(String mail) {
-    return registrationRepo.fetchCustomerByMail(mail);
+    return customerRepo.fetchCustomerByMail(mail);
   }
 
   public void createCustomer(Customer customer) {
-    registrationRepo.createCustomer(customer);
+    customerRepo.createCustomer(customer);
   }
 
   public Car fetchCarById(int id) {
-    return registrationRepo.fetchCarById(id);
+    return carRepo.fetchCarById(id);
   }
 
   public boolean fetchCarReservedStatus(int id) {
     // 0 er false (er ikke reserveret) og 1 er true (er reserveret)
-    return registrationRepo.fetchCarReservedStatus(id) == 1;
+    return carRepo.fetchCarReservedStatus(id) == 1;
   }
 
   public void reserveCarById(int id) {
-    registrationRepo.reserveCarById(id);
+    carRepo.reserveCarById(id);
   }
 
   public List<Car> fetchCarsByDate(String startDate, String endDate, String leaseType) {
@@ -58,14 +66,14 @@ public class RegistrationService {
 
       LocalDate limitedEndDate = startDateBooking.plusDays(157);
 
-      return registrationRepo.fetchCarsByDate(Date.valueOf(startDateBooking), Date.valueOf(limitedEndDate), leaseType.toUpperCase());
+      return carRepo.fetchCarsByDate(Date.valueOf(startDateBooking), Date.valueOf(limitedEndDate), leaseType.toUpperCase());
 
     } else {
       // Lægge til 5 dage til returdatoen, så værkstedet kan nå at checke og frigive bilen.
       // TODO: OBS kunden skal ikke betale for disse ekstra 5 dage... Virker hellere ikke!
       LocalDate endDatePlus7days = Date.valueOf(endDate).toLocalDate().plusDays(5);
 
-      return registrationRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDatePlus7days), leaseType.toUpperCase());
+      return carRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDatePlus7days), leaseType.toUpperCase());
     }
   }
 
@@ -97,36 +105,36 @@ public class RegistrationService {
 
 
   public void unreserveCarById(int car_vehicle_number) {
-    registrationRepo.unreserveCarById(car_vehicle_number);
+    carRepo.unreserveCarById(car_vehicle_number);
   }
 
 
   public void unreserveAllCarsFromSession() {
-    registrationRepo.unreserveAllCarsFromSession();
+    carRepo.unreserveAllCarsFromSession();
   }
 
   public List<Reservation> fetchAllReservations() {
-    return registrationRepo.fetchAllReservations();
+    return reservationRepo.fetchAllReservations();
   }
 
   public void createEmployee(Employee employee) {
-    registrationRepo.createEmployee(employee);
+    employeeRepo.createEmployee(employee);
   }
 
   public void createLocation(Location location) {
-    registrationRepo.createLocation(location);
+    locationRepo.createLocation(location);
   }
 
   public List<Location> fetchAllLocations() {
-    return registrationRepo.fetchAllLocations();
+    return locationRepo.fetchAllLocations();
   }
 
   public Location fetchLocationByAddress(String locationAddress) {
-    return registrationRepo.fetchLocationByAddress(locationAddress);
+    return locationRepo.fetchLocationByAddress(locationAddress);
   }
 
   public Employee fetchEmployeeById(int id) {
-    return registrationRepo.fetchEmployeeById(id);
+    return employeeRepo.fetchEmployeeById(id);
   }
 
   public void createReservation(Car car_vehicle_number, Customer customer_id, Location location_address,
@@ -137,7 +145,7 @@ public class RegistrationService {
     String fixedPickupTime = pickup_time + ":00";
     String fixedReturnTime = return_time + ":00";
 
-    registrationRepo.createReservation(car_vehicle_number, customer_id, location_address, pickup_date,
+    reservationRepo.createReservation(car_vehicle_number, customer_id, location_address, pickup_date,
         return_date, fixedPickupTime, fixedReturnTime, reservation_payment, reservation_comment, employee_id);
   }
 
@@ -145,7 +153,7 @@ public class RegistrationService {
   // Marcus
   public boolean checkIfLocationExist(Location location) {
 
-    List<Location> locations = registrationRepo.fetchAllLocations();
+    List<Location> locations = locationRepo.fetchAllLocations();
     Location newLocation;
     boolean locationAlreadyExist = false;
 
@@ -169,7 +177,7 @@ public class RegistrationService {
 
     if (employee.getEmployee_name().contains(" ") && (!employee.getEmployee_initials().contains(" "))) {
 
-      String name = registrationRepo.checkForDuplicateInitialsEmployee(employee);
+      String name = employeeRepo.checkForDuplicateInitialsEmployee(employee);
       //Hvis initialer allerede findes
       if (name != null) {
         number = 1;
@@ -182,11 +190,9 @@ public class RegistrationService {
     return number;
   }
 
-
   public Employee fetchEmployeeByInitials(String initials) {
-    return registrationRepo.fetchEmployeeByInitials(initials);
+    return employeeRepo.fetchEmployeeByInitials(initials);
   }
-
 
   // Fælles
   public double calculatePaymentTotal(String months, Car car) {
@@ -216,11 +222,11 @@ public class RegistrationService {
 
   //sebastian
   public ArrayList<Employee> fetchAllEployees() {
-    return registrationRepo.fetchAllEmplyees();
+    return employeeRepo.fetchAllEmplyees();
   }
 
   public Reservation fetchReservationById(int reservationId) {
-    return registrationRepo.fetchReservationById(reservationId);
+    return reservationRepo.fetchReservationById(reservationId);
   }
 
 
@@ -233,8 +239,8 @@ public class RegistrationService {
   }
 
 
-  public int checkReservationIdInUse(int id) {
-    String check = registrationRepo.checkIdInUse(id);
+  public int checkReservationIdInUse(int reservationId) {
+    String check = reservationRepo.checkIfReservationExist(reservationId);
 
     if (check != null) {
       return 1;

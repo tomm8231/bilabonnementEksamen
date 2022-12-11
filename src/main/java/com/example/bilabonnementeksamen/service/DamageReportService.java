@@ -2,7 +2,8 @@ package com.example.bilabonnementeksamen.service;
 
 import com.example.bilabonnementeksamen.model.Problem;
 import com.example.bilabonnementeksamen.model.Reservation;
-import com.example.bilabonnementeksamen.repository.DamageReportRepo;
+import com.example.bilabonnementeksamen.repository.ProblemReportRepo;
+import com.example.bilabonnementeksamen.repository.ReservationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +13,19 @@ import java.util.ArrayList;
 public class DamageReportService {
 
   @Autowired
-  DamageReportRepo damageReportRepo;
+  ProblemReportRepo problemReportRepo;
+
+  @Autowired
+  ReservationRepo reservationRepo;
 
 
   public Reservation fetchReservationInfo(int id) {
-    return damageReportRepo.fetchReservationInfoById(id);
+    return reservationRepo.fetchReservationInfoById(id);
   }
 
   // Tommy
-  public int checkIdInUse(int id) {
-    String check = damageReportRepo.checkIdInUse(id);
+  public int checkIfReservationExist(int reservationId) {
+    String check = reservationRepo.checkIfReservationExist(reservationId);
 
     if (check != null) {
       return 1;
@@ -35,11 +39,11 @@ public class DamageReportService {
   public void createProblemReport(ArrayList<Problem> listOfProblems, Reservation reservation) {
     double totalPrice = calculateTotalPriceReport(listOfProblems);
     // Opretter en rapport
-    damageReportRepo.createProblemReport(reservation, totalPrice);
+    problemReportRepo.createProblemReport(reservation, totalPrice);
 
     // Opretter problemer til rapporten (id bliver først oprettet når den er lavet i databasen)
-    int report_id = damageReportRepo.fetchReportId(reservation, totalPrice);
-    damageReportRepo.createProblems(listOfProblems, report_id);
+    int report_id = problemReportRepo.fetchReportId(reservation, totalPrice);
+    problemReportRepo.createProblems(listOfProblems, report_id);
   }
 
   private double calculateTotalPriceReport(ArrayList<Problem> listOfProblems) {
@@ -54,7 +58,7 @@ public class DamageReportService {
 
   public int fetchReportId(ArrayList<Problem> listOfProblems, Reservation reservation) {
     double totalPrice = calculateTotalPriceReport(listOfProblems);
-    int report_id = damageReportRepo.fetchReportId(reservation, totalPrice);
+    int report_id = problemReportRepo.fetchReportId(reservation, totalPrice);
     return report_id;
   }
 
