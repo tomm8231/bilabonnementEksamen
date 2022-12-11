@@ -1,11 +1,15 @@
-
 /* ID, klasse, type */
 
 body {
     height: 100vh;
 }
+
 .container {
     height: 100vh;
+}
+
+.fragment-logo {
+    width: 160px;
 }
 
 
@@ -13,20 +17,32 @@ body {
     margin-left: 1.5em;
 }
 
-.fragment-style{
+.fragment-style {
     width: 240px;
 }
 
-@media all and (max-width: 700px){
+@media all and (max-width: 700px) {
 
-    .fragment-style{
+    .fragment-style {
         width: 200px;
-    }}
+    }
 
-@media all and (max-width: 600px){
+    .fragment-logo {
+        width: 140px;
+    }
 
-.fragment-style{
-    width: 150px;
-    margin: 0px;
-    padding: 0px;
-}}
+}
+
+@media all and (max-width: 600px) {
+
+    .fragment-style {
+        width: 150px;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .fragment-logo {
+        width: 90px;
+    }
+
+}
