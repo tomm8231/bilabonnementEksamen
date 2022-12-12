@@ -31,8 +31,12 @@ public class ProblemReportRepo {
       pst.setInt(4, reservation.getCustomer_id().getCustomer_id());
       pst.executeUpdate();
 
+//      sql = "SELECT SCOPE_IDENTITY() FROM problem_report;";
+//      ResultSet rs = pst.executeQuery(sql);
+//          System.out.println(rs.getInt(1));
+
     } catch (SQLException e) {
-      System.err.println("Cannot add employee");
+      System.err.println("Cannot make problem report");
       e.printStackTrace();
     }
   }

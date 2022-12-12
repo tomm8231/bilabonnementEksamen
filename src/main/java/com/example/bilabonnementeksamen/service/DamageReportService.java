@@ -46,6 +46,7 @@ public class DamageReportService {
     problemReportRepo.createProblems(listOfProblems, report_id);
   }
 
+
   private double calculateTotalPriceReport(ArrayList<Problem> listOfProblems) {
     double totalPrice = 0;
 
