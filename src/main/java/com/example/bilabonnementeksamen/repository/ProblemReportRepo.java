@@ -18,8 +18,8 @@ public class ProblemReportRepo {
   @Value("${JDBCPassword}")
   private String password;
 
-  public void createProblemReport(Reservation reservation, double totalPrice) {
-
+  public int createProblemReport(Reservation reservation, double totalPrice) {
+  int number = 0;
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
       String sql = "INSERT INTO problem_report (car_vehicle_number, total_price, employee_id, customer_id) VALUES (?,?,?,?)";
@@ -31,14 +31,26 @@ public class ProblemReportRepo {
       pst.setInt(4, reservation.getCustomer_id().getCustomer_id());
       pst.executeUpdate();
 
-//      sql = "SELECT SCOPE_IDENTITY() FROM problem_report;";
-//      ResultSet rs = pst.executeQuery(sql);
-//          System.out.println(rs.getInt(1));
-
     } catch (SQLException e) {
       System.err.println("Cannot make problem report");
       e.printStackTrace();
     }
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "SELECT MAX(report_id) FROM problem_report";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      ResultSet rs = pst.executeQuery(sql);
+
+      while (rs.next()) {
+        number = rs.getInt(1);
+      }
+    } catch (SQLException e) {
+      System.err.println("Cannot find report id");
+      e.printStackTrace();
+    }
+
+    return number;
   }
 
   public void createProblems(ArrayList<Problem> listOfProblems, int report_id){

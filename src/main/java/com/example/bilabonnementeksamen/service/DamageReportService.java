@@ -20,7 +20,7 @@ public class DamageReportService {
 
 
   public Reservation fetchReservationInfo(int id) {
-    return reservationRepo.fetchReservationInfoById(id);
+    return reservationRepo.fetchReservationById(id);
   }
 
   // Tommy
@@ -35,15 +35,15 @@ public class DamageReportService {
   }
 
   // Sebastian og lidt Marcus
-  // TODO: Kan returnere enten objektet eller en int. Dele op til 2 metoder.
-  public void createProblemReport(ArrayList<Problem> listOfProblems, Reservation reservation) {
+  public Integer createProblemReport(ArrayList<Problem> listOfProblems, Reservation reservation) {
     double totalPrice = calculateTotalPriceReport(listOfProblems);
-    // Opretter en rapport
-    problemReportRepo.createProblemReport(reservation, totalPrice);
+    // Opretter en rapport og returnere dens id
+    Integer reportId = problemReportRepo.createProblemReport(reservation, totalPrice);
+    return reportId;
+  }
 
-    // Opretter problemer til rapporten (id bliver først oprettet når den er lavet i databasen)
-    int report_id = problemReportRepo.fetchReportId(reservation, totalPrice);
-    problemReportRepo.createProblems(listOfProblems, report_id);
+  public void createProblemsInReport(ArrayList<Problem> listOfProblems, Integer reportId) {
+    problemReportRepo.createProblems(listOfProblems, reportId);
   }
 
 

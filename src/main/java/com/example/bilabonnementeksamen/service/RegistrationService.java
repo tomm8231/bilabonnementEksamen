@@ -103,18 +103,12 @@ public class RegistrationService {
     return bookingEndDate;
   }
 
-
   public void unreserveCarById(int car_vehicle_number) {
     carRepo.unreserveCarById(car_vehicle_number);
   }
 
-
   public void unreserveAllCarsFromSession() {
     carRepo.unreserveAllCarsFromSession();
-  }
-
-  public List<Reservation> fetchAllReservations() {
-    return reservationRepo.fetchAllReservations();
   }
 
   public void createEmployee(Employee employee) {
@@ -194,7 +188,7 @@ public class RegistrationService {
     return employeeRepo.fetchEmployeeByInitials(initials);
   }
 
-  // Fælles
+
   public double calculatePaymentTotal(String months, Car car) {
 
     double paymentTotal = 0;
