@@ -1,14 +1,17 @@
 package com.example.bilabonnementeksamen.controller;
 
 import com.example.bilabonnementeksamen.model.Problem;
+import com.example.bilabonnementeksamen.model.ProblemReport;
 import com.example.bilabonnementeksamen.model.Reservation;
 import com.example.bilabonnementeksamen.service.DamageReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @Controller
@@ -50,6 +53,7 @@ public class DamageReportController {
       }
     }
   }
+
 
 
   @GetMapping("/problem-form")
@@ -125,6 +129,49 @@ public class DamageReportController {
   public String sendProblemReport(){
     //TODO: lave en metode for at oprette en pdf til kunden
     return "redirect:/damage-home-page";
+  }
+
+  // Tommy
+  //Slå skade op
+
+  @GetMapping("/search-problem-report-by-id")
+  public String showSearchFormProblem(@RequestParam (value = "message", required = false) String message, Model model) {
+    model.addAttribute("message", message);
+    return "problem/search-problem-report";
+  }
+
+  // Tommy
+  @PostMapping("search-problem-report-by-id")
+  public String sendProblemReportId(@RequestParam("problem-report-id") int report_id, RedirectAttributes redirectAttributes, HttpSession session) {
+    int numberOption = damageReportService.checkIfProblemReportExist(report_id);
+
+    switch (numberOption) {
+      case 1 -> {
+        ProblemReport problemReport = damageReportService.fetchProblemReportById(report_id);
+        ArrayList<Problem> listOfProblems = damageReportService.fetchListOfProblemsById(report_id);
+        problemReport.setListOfProblems(listOfProblems);
+        session.setAttribute("problem-report", problemReport);
+        return "redirect:/show-problem-report";
+
+      } case 2 -> {
+        redirectAttributes.addAttribute("message", "Reservationen findes ikke");
+        return "redirect:/search-problem-report-by-id";
+      }
+
+      default -> {
+        redirectAttributes.addAttribute("message", "Indtast 1 eller højere");
+        return "redirect:/search-problem-report-by-id";
+      }
+    }
+
+  }
+
+  // Tommy
+  @GetMapping("/show-problem-report")
+  public String showProblemReportById(HttpSession session, Model model) {
+    ProblemReport problemReport = (ProblemReport) session.getAttribute("problem-report");
+    model.addAttribute("problemReport", problemReport);
+    return "problem/problem-show-report";
   }
 
 }
