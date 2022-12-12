@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class BusinessInsightService {
@@ -32,7 +33,8 @@ public class BusinessInsightService {
 
     }
 
-    return totalSum = Math.round(totalSum * 100.0) / 100.0; //til to decimaler
+    totalSum = Math.round(totalSum * 100.0) / 100.0; //til to decimaler
+    return totalSum;
   }
 
   public double calculateReturnMonthReservationsIncome(ArrayList<Reservation> startMonthReservations, int lastDayOfChosenMonth) {
@@ -50,7 +52,8 @@ public class BusinessInsightService {
 
     }
 
-    return totalSum = Math.round(totalSum * 100.0) / 100.0; //til to decimaler
+    totalSum = Math.round(totalSum * 100.0) / 100.0; //til to decimaler
+    return totalSum;
   }
 
   public ArrayList<Integer> fetchAllStartingContractsYearAmount(ArrayList<LocalDate> endDaysOfMonthDate) {
@@ -106,7 +109,9 @@ public class BusinessInsightService {
     for (Double sum: contracts){
       totalSum += sum;
     }
-    return totalSum = Math.round(totalSum * 100.0) / 100.0; //til to decimaler
+
+    totalSum = Math.round(totalSum * 100.0) / 100.0; //til to decimaler
+    return totalSum;
   }
 
   public ArrayList<LocalDate> fetchEveryMonthEndDate(int year){
@@ -163,8 +168,6 @@ public class BusinessInsightService {
     for (int i = 0; i < 12; i++) {
       //find første dag på måneden, ud fra listen af endDaysOfMonthDate
       LocalDate startDayOfMonthDate = endDaysOfMonthDate.get(i).with(TemporalAdjusters.firstDayOfMonth());
-      //find listen af reservation, ud fra startdatoen ovenfor og endDaysOfMonthDate
-      ArrayList<Reservation> chosenMonthOngoingContracts = reservationRepo.fetchEndCurrentMonthReservations(startDayOfMonthDate, endDaysOfMonthDate.get(i));
       //Hent månedens reservationer som en samlet sum, og tilføj dem til listen
       double incomeFromMonth = reservationRepo.fetchFullCurrentMonthReservationsIncome(startDayOfMonthDate,endDaysOfMonthDate.get(i));
       allOngoingContractsYearIncome.add(incomeFromMonth);
@@ -187,6 +190,10 @@ public class BusinessInsightService {
     }
 
     return  calculateIncomeMonths;
+  }
+
+  public List<Reservation> fetchAllReservations() {
+    return reservationRepo.fetchAllReservations();
   }
 
 }

@@ -229,13 +229,6 @@ public class RegistrationController {
     return "redirect:/registration";
   }
 
-/*  // Sebastian
-  @GetMapping("/show-reserved-cars")
-  public String showReservedCars(Model model){
-    model.addAttribute("reservations",registrationService.fetchAllReservations());
-    return "/registration/lease-show-rented-out-cars";
-  }*/
-
   @GetMapping("/pickup-place")
   public String showSelectPickupPlace(Model model) {
     model.addAttribute("locations", registrationService.fetchAllLocations());

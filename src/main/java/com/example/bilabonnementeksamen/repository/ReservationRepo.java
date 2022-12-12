@@ -624,7 +624,6 @@ public class ReservationRepo {
     }
   }
 
-
   //TODO er dette en kopi af den nedenunder?
   public Reservation fetchReservationById(int reservationId) {
     Reservation reservation = new Reservation();
@@ -838,6 +837,5 @@ public class ReservationRepo {
 
     return reservation;
   }
-
 
 }
