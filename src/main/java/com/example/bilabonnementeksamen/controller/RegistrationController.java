@@ -369,17 +369,4 @@ public class RegistrationController {
   }
 
 
-
-  // Marcus
-  @GetMapping ("/search-result-reservation")
-  public String showResultSearchReservationById(HttpSession session){
-
-    session.getAttribute("reservation-id");
-    session.getAttribute("reservation");
-
-    return "registration/lease-show-specific-reservation";
-
-  }
-
-
 }

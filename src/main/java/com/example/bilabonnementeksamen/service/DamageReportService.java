@@ -1,6 +1,7 @@
 package com.example.bilabonnementeksamen.service;
 
 import com.example.bilabonnementeksamen.model.Problem;
+import com.example.bilabonnementeksamen.model.ProblemReport;
 import com.example.bilabonnementeksamen.model.Reservation;
 import com.example.bilabonnementeksamen.repository.ProblemReportRepo;
 import com.example.bilabonnementeksamen.repository.ReservationRepo;
@@ -82,5 +83,23 @@ public class DamageReportService {
 
     }
     return problems;
+  }
+
+  // Tommy
+  public ProblemReport fetchProblemReportById(int id) {
+    return problemReportRepo.fetchProblemReportById(id);
+  }
+
+
+  public ArrayList<Problem> fetchListOfProblemsById(int report_id) {
+    return problemReportRepo.fetchListOfProblemsById(report_id);
+  }
+
+  public int checkIfProblemReportExist(int report_id) {
+    if (problemReportRepo.checkIfProblemReportExist(report_id)) {
+      return 1;
+    } else {
+      return 2;
+    }
   }
 }
