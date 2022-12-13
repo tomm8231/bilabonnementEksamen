@@ -47,13 +47,12 @@ public class BusinessInsightController {
     model.addAttribute("startingContractsIncome", startingContractsIncome);
 
     //Alt om endende kontrakter
-    ArrayList<Integer> endingContracts;
-    endingContracts = businessInsightService.fetchAllEndingContractsYearAmount(everyMonthEndDate);
+    ArrayList<Integer> endingContracts = businessInsightService.fetchAllEndingContractsYearAmount(everyMonthEndDate);
     ArrayList<Double> endingContractsIncome = businessInsightService.fetchAllEndingContractsYearIncome(everyMonthEndDate);
     model.addAttribute("endingContracts", endingContracts);
     model.addAttribute("endingContractsIncome", endingContractsIncome);
 
-    //Alt om fuldemåneds kontrakter
+    //Alt om fuld måneds kontrakter
     ArrayList<Integer> ongoingContracts;
     ongoingContracts = businessInsightService.fetchAllongoingContractsYearAmount(everyMonthEndDate);
     ArrayList<Double> ongoingContractsIncome = businessInsightService.fetchAllOngoingContractsYearIncome(everyMonthEndDate);
