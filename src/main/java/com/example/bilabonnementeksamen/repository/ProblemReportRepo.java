@@ -17,8 +17,8 @@ public class ProblemReportRepo {
   @Value("${JDBCPassword}")
   private String password;
 
-  public void createProblemReport(Reservation reservation, double totalPrice) {
-
+  public int createProblemReport(Reservation reservation, double totalPrice) {
+  int number = 0;
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
       String sql = "INSERT INTO problem_report (car_vehicle_number, total_price, employee_id, customer_id) VALUES (?,?,?,?)";
@@ -31,9 +31,25 @@ public class ProblemReportRepo {
       pst.executeUpdate();
 
     } catch (SQLException e) {
-      System.err.println("Cannot add employee");
+      System.err.println("Cannot make problem report");
       e.printStackTrace();
     }
+
+    try {
+      Connection conn = DriverManager.getConnection(databaseURL, user, password);
+      String sql = "SELECT MAX(report_id) FROM problem_report";
+      PreparedStatement pst = conn.prepareStatement(sql);
+      ResultSet rs = pst.executeQuery(sql);
+
+      while (rs.next()) {
+        number = rs.getInt(1);
+      }
+    } catch (SQLException e) {
+      System.err.println("Cannot find report id");
+      e.printStackTrace();
+    }
+
+    return number;
   }
 
   public void createProblems(ArrayList<Problem> listOfProblems, int report_id){

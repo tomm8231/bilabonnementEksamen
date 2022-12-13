@@ -32,7 +32,7 @@ public class RegistrationController {
     return "/registration/lease-start-new-contract";
   }
 
-  // Fælles - Find biler ud fra dato og lejetype og send videre
+  //Find biler ud fra dato og lejetype og send videre
   @PostMapping("/lease-limited-contract")
   public String findLimitedCarsByDate(@RequestParam("limited-start-date") String startDate,
                                       @RequestParam ("type-leasing") String typeLeasing,
@@ -43,7 +43,7 @@ public class RegistrationController {
     return "redirect:/lease-available-cars";
   }
 
-  // Fælles
+
   @PostMapping("/lease-unlimited-contract")
   public String findUnlimitedCarsByDate(@RequestParam("unlimited-start-date") String startDate, @RequestParam("months") String months,
                                         @RequestParam ("type-leasing") String typeLeasing, RedirectAttributes redirectAttributes, HttpSession session) {
@@ -60,7 +60,7 @@ public class RegistrationController {
     return "redirect:/lease-available-cars";
   }
 
-  // Fælles
+
   @GetMapping("/lease-available-cars")
   public String showAvailableCars(Model model, @RequestParam ("rd-start-date") String startDate,
                                   @RequestParam(value = "rd-end-date", required = false) String endDate,
@@ -228,13 +228,6 @@ public class RegistrationController {
     session.invalidate();
     return "redirect:/registration";
   }
-
-/*  // Sebastian
-  @GetMapping("/show-reserved-cars")
-  public String showReservedCars(Model model){
-    model.addAttribute("reservations",registrationService.fetchAllReservations());
-    return "/registration/lease-show-rented-out-cars";
-  }*/
 
   @GetMapping("/pickup-place")
   public String showSelectPickupPlace(Model model) {

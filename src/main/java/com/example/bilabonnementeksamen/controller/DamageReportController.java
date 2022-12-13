@@ -108,7 +108,10 @@ public class DamageReportController {
     ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
     Reservation reservation = (Reservation) session.getAttribute("reservation");
 
-    damageReportService.createProblemReport(listOfProblems, reservation);
+    //laver en rapport og returnere id
+    Integer reportID = damageReportService.createProblemReport(listOfProblems, reservation);
+    //tilføjer problmer
+    damageReportService.createProblemsInReport(listOfProblems, reportID);
     return "redirect:/result";
   }
 

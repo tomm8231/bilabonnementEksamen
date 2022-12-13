@@ -1,8 +1,5 @@
 package com.example.bilabonnementeksamen.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Problem {
 
   private int problem_id;
