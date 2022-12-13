@@ -198,8 +198,6 @@ public class ReservationRepo {
       PreparedStatement pst = conn.prepareStatement(sql);
       pst.setDate(1, Date.valueOf(startDayOfMonthDate));
       pst.setDate(2, Date.valueOf(endDayOfMonthDate));
-      pst.setDate(3, Date.valueOf(startDayOfMonthDate));
-      pst.setDate(4, Date.valueOf(endDayOfMonthDate));
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
