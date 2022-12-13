@@ -242,6 +242,8 @@ public class ProblemReportRepo {
     return problems;
   }
 
+
+  // Tommy
   public boolean checkIfProblemReportExist(int id) {
 
     boolean doesExist = true;
