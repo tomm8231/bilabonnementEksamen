@@ -17,13 +17,13 @@
                 <div id="new-location">
                     <form action="/lease-new-location" method="post">
                         <label for="location_name" class="form-label">Navn på firma</label>
-                        <input type="text" id="location_name" name="location_name" class="form-control" required>
+                        <input type="text" id="location_name" name="location_name" class="form-control" maxlength="49" required>
 
                         <label for="location_address" class="form-label">Adresse</label>
-                        <input type="text" id="location_address" name="location_address" class="form-control" required>
+                        <input type="text" id="location_address" name="location_address" class="form-control" maxlength="49" required>
 
                         <label for="location_phone" class="form-label"> Telefonnummer </label>
-                        <input type="text" id="location_phone" name="location_phone" class="form-control" required>
+                        <input type="text" id="location_phone" name="location_phone" class="form-control" maxlength="8" required>
 
                         <button class="mt-2 mb-3 " type="submit">Opret ny lokalitet</button>
                     </form>
