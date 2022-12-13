@@ -15,7 +15,7 @@
             <h1 class="border-top border-dark">Søg op lejekontrakt</h1>
             <form action="/search-reservation-by-id" method="post">
                 <label for="reservation-id" class="form-label"> Reservations ID</label>
-                <input type="number" id="reservation-id" name="reservation-id" class="form-control" required>
+                <input type="number" id="reservation-id" name="reservation-id" class="form-control" maxlength="9" required>
                 <button class="mt-2" type="submit">Søg</button>
             </form>
 
