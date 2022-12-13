@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class DamageReportService {
+public class ProblemReportService {
 
   @Autowired
   ProblemReportRepo problemReportRepo;
