@@ -16,13 +16,13 @@
                 <input type="number" id="customer_id" name="customer_id" th:value="0" class="form-control" required
                        hidden readonly>
                 <label for="customer_name" class="form-label"> Kundens navn </label>
-                <input type="text" id="customer_name" name="customer_name" class="form-control" required>
+                <input type="text" id="customer_name" name="customer_name" class="form-control" maxlength="30" required>
                 <label for="customer_mail" class="form-label"> Kundens E-mail </label>
-                <input type="email" id="customer_mail" name="customer_mail" class="form-control" required>
+                <input type="email" id="customer_mail" name="customer_mail" class="form-control" maxlength="30"  required>
                 <label for="customer_address" class="form-label"> Kundens Addresse </label>
-                <input type="text" id="customer_address" name="customer_address" class="form-control" required>
+                <input type="text" id="customer_address" name="customer_address" class="form-control" maxlength="100" required>
                 <label for="customer_phone_number" class="form-label"> Kundens telefonnummer </label>
-                <input type="text" id="customer_phone_number" name="customer_phone_number" class="form-control"
+                <input type="text" id="customer_phone_number" name="customer_phone_number" class="form-control" maxlength="8"
                        required>
                 <button class="mt-2 mb-3 " type="submit">Fortsæt</button>
             </form>
@@ -31,7 +31,7 @@
         <h1 class="border-top border-dark"> Eksisterende kunde</h1>
         <form action="/lease-find-returning-customer" method="post">
             <label for="returning-costumer-mail" class="form-label"> Kundens E-mail </label>
-            <input type="text" id="returning-costumer-mail" name="returning-costumer-mail" class="form-control"
+            <input type="text" id="returning-costumer-mail" name="returning-costumer-mail" maxlength="30" class="form-control"
                    required>
             <button class="mt-2" type="submit">søg kunde</button>
         </form>

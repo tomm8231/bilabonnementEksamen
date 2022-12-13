@@ -83,16 +83,13 @@ public class ReservationRepo {
              USING (subscription_type_id)
              INNER JOIN fuel
              USING (car_fuel_type)
-             WHERE (pickup_date between ? and ?) AND
-             (return_date not between ? and ?);
+             WHERE (pickup_date between ? and ?)
              ;           
              """;
 
       PreparedStatement pst = conn.prepareStatement(sql);
       pst.setDate(1, Date.valueOf(startDayOfMonthDate));
       pst.setDate(2, Date.valueOf(endDayOfMonthDate));
-      pst.setDate(3, Date.valueOf(startDayOfMonthDate));
-      pst.setDate(4, Date.valueOf(endDayOfMonthDate));
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
@@ -195,16 +192,12 @@ public class ReservationRepo {
              USING (subscription_type_id)
              INNER JOIN fuel
              USING (car_fuel_type)
-             WHERE (return_date between ? and ?) AND
-             (pickup_date not between ? and ?);
-             ;           
+             WHERE (return_date between ? and ?);           
              """;
 
       PreparedStatement pst = conn.prepareStatement(sql);
       pst.setDate(1, Date.valueOf(startDayOfMonthDate));
       pst.setDate(2, Date.valueOf(endDayOfMonthDate));
-      pst.setDate(3, Date.valueOf(startDayOfMonthDate));
-      pst.setDate(4, Date.valueOf(endDayOfMonthDate));
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {

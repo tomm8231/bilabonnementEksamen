@@ -56,6 +56,7 @@ class BusinessInsightServiceTest {
   void tearDown() {
   }
 
+
   @Test
   void calculatePickupMonthReservationsIncome() {
     //act
@@ -65,6 +66,19 @@ class BusinessInsightServiceTest {
     double expected = 2333.33;
     assertEquals(expected, result, 0.01);
   }
+
+
+  @Test
+  void calculatePickupMonthReservationsIncomeIfEmpty() {
+    //act
+    double result = businessInsightService.calculatePickupMonthReservationsIncome(reservationListIsEmpty, currentMonthLength);
+
+    //assert
+    double expected = 0;
+    assertEquals(expected, result, 0.01);
+  }
+
+
 
   @Test
   void calculateReturnMonthReservationsIncome() {
@@ -77,15 +91,6 @@ class BusinessInsightServiceTest {
 
   }
 
-  @Test
-  void calculatePickupMonthReservationsIncomeIfEmpty() {
-    //act
-    double result = businessInsightService.calculatePickupMonthReservationsIncome(reservationListIsEmpty, currentMonthLength);
-
-    //assert
-    double expected = 0;
-    assertEquals(expected, result, 0.01);
-  }
 
   @Test
   void calculateReturnMonthReservationsIncomeIfEmpty() {

@@ -20,10 +20,10 @@
                     <input type="number" id="employee_id" name="employee_id" th:value="0" class="form-control" required hidden readonly>
 
                     <label for="employee_initials" class="form-label">Medarbejderens initialer</label>
-                    <input type="text" id="employee_initials" name="employee_initials" class="form-control" required>
+                    <input type="text" id="employee_initials" name="employee_initials" class="form-control" maxlength="9" required>
 
                     <label for="employee_name" class="form-label">Medarbejderens navn</label>
-                    <input type="text" id="employee_name" name="employee_name" class="form-control" required>
+                    <input type="text" id="employee_name" name="employee_name" class="form-control" maxlength="29" required>
 
                     <button class="mt-2 mb-3 " type="submit">Opret</button>
                 </form>

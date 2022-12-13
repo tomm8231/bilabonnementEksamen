@@ -27,10 +27,10 @@
                     </div>
 
                     <label for="problem_description" class="form-label">Beskrivelse af skade/mangel</label>
-                    <input type="text" id="problem_description" name="problem_description" class="form-control" required>
+                    <input type="text" id="problem_description" name="problem_description" class="form-control" maxlength="254" required>
 
                     <label for="problem_price" class="form-label">Pris:</label>
-                    <input type="number" id="problem_price" name="problem_price" class="form-control" step=".01" required>
+                    <input type="number" id="problem_price" name="problem_price" class="form-control" step=".01" max="7" required>
 
                     <button class="mt-2 mb-3 " type="submit">Opret</button>
                 </form>

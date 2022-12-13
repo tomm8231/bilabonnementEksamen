@@ -18,11 +18,8 @@
         <h1 class="border-bottom border-dark">Søg på skadesrapport</h1>
         <form action="search-problem-report-by-id" method="post">
             <label for="problem-report-id" class="form-label">Skadesrapport ID:</label>
-            <input type="number" id="problem-report-id" name="problem-report-id" class="form-control" required>
+            <input type="number" id="problem-report-id" name="problem-report-id" class="form-control" maxlength="10" required>
             <button class="mt-2" type="submit">Søg</button>
-        </form>
-        <form action="/damage-home-page" method="get">
-            <button class="mt-2 mb-3 " type="submit">Tilbage</button>
         </form>
         <div th:if="${message}" th:text="${message}"></div>
 
