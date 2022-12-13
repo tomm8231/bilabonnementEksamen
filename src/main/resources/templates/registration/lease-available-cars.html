@@ -31,26 +31,25 @@
 
             </tr>
             </thead>
-            <tbody class="cars-available-result">
-                <tr th:each="c : ${car}">
-                    <td>
-                        <form action="/lease-available-cars" method="post" th:action="@{/lease-available-cars/}" >
-                            <input th:value="${c.getCar_vehicle_number()}" type="hidden" name="id" readonly required>
-                            <button type="submit">Reservér</button>
-                        </form>
-                    </td>
-                    <!--TODO: marcus hvorfor kommer det fejlmeldinger her? Check om det fungerer uden get metoder!
-                    --><td th:text="${c.car_vehicle_number()}">Car</td>
-                    <td th:text="${c.carBrand()}">Car</td>
-                    <td th:text="${c.getCarModel()}">Car</td>
-                    <td th:text="${c.getCar_model_id().car_hp}">Car</td>
-                    <td th:text="${c.getFuelType()}">Car</td>
-                    <td th:text="${c.getCarCo2Km()}">Car</td>
-                    <td th:text="${c.getCar_model_id().car_gearbox_type}">Car</td>
-                    <td th:text="${c.car_price_month}">Car</td>
-                    <td th:text="${c.getDistanceAmount() + ' ' + c.getDistanceUnit()}">Car</td>
-                    <td id="energy-label" th:text="${c.getCar_model_id().car_energy_label}">Car</td>
-                </tr>
+            <tbody>
+            <tr th:each="c : ${car}">
+                <td>
+                    <form action="/lease-available-cars" method="post" th:action="@{/lease-available-cars/}" >
+                        <input th:value="${c.car_vehicle_number}" type="hidden" name="id" readonly required>
+                        <button type="submit">Reservér</button>
+                    </form>
+                </td>
+                <td th:text="${c.car_vehicle_number}">Car</td>
+                <td th:text="${c.getCarBrand()}">Car</td>
+                <td th:text="${c.getCarModel()}">Car</td>
+                <td th:text="${c.getCarHp()}">Car</td>
+                <td th:text="${c.getFuelType()}">Car</td>
+                <td th:text="${c.getCarCo2Km()}">Car</td>
+                <td th:text="${c.getGearBoxType()}">Car</td>
+                <td th:text="${c.car_price_month}">Car</td>
+                <td th:text="${c.getDistanceAmount() + ' ' + c.getDistanceUnit()}">Car</td>
+                <td th:text="${c.getEnergyLabel()}">Car</td>
+            </tr>
             </tbody>
         </table>
     </container>
@@ -60,4 +59,3 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
-

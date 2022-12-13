@@ -53,7 +53,7 @@
                 <td th:text="${r.pickup_date + ' kl.' + r.pickup_time}">Car</td>
                 <td th:text="${r.return_date + ' kl.' + r.return_time}">Car</td>
                 <td th:text="${r.getCar_vehicle_number().car_price_month}">Car</td>
-                <td th:text="${r.getCar_vehicle_number().getSubscription_type_id().subscription_type_name}">Car</td>
+                <td th:text="${r.getCar_vehicle_number().getSubscriptionTypeName()}">Car</td>
 
                                                                     <!-- TODO: Nedenstående ville jeg gerne have alt om kunden, men kunne ikke lige få det formateret pænt               -->
                 <td>
@@ -67,9 +67,9 @@
                     <button type="button" data-bs-toggle="popover" data-bs-placement="bottom"
                             th:title="${r.reservation_comment}" data-html="true" th:text="${'Vis'}"></button>
                 </td>
-                <td th:text="${r.getCar_vehicle_number().getCar_model_id().getCar_fuel_type().fuel_type}">Car</td>
-                <td th:text="${r.getCar_vehicle_number().getCar_model_id().car_model}">Car</td>
-                <td th:text="${r.getCar_vehicle_number().getCar_model_id().car_brand}">Car</td>
+                <td th:text="${r.getCar_vehicle_number().getFuelType()}">Car</td>
+                <td th:text="${r.getCar_vehicle_number().getCarModel()}">Car</td>
+                <td th:text="${r.getCar_vehicle_number().getCarBrand()}">Car</td>
             </tr>
             </tbody>
         </table>

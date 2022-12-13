@@ -80,7 +80,7 @@
             <label for="car-brand" class="col-sm-2 col-form-label"> Mærke </label>
             <div class="col-sm-10">
                 <input type="text" id="car-brand" name="car-brand" class="form-control-plaintext" readonly
-                       th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_brand}">
+                       th:value="${reservation.getCar_vehicle_number().getCarBrand()}">
             </div>
         </div>
 
@@ -88,7 +88,7 @@
             <label for="car-model" class="col-sm-2 col-form-label"> Model </label>
             <div class="col-sm-10">
                 <input type="text" id="car-model" name="car-model" class="form-control-plaintext" readonly
-                       th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_model}">
+                       th:value="${reservation.getCar_vehicle_number().getCarModel()}">
             </div>
         </div>
 
@@ -96,7 +96,7 @@
             <label for="car-hp" class="col-sm-2 col-form-label"> HK </label>
             <div class="col-sm-10">
                 <input type="text" id="car-hp" name="car-hp" class="form-control-plaintext" readonly
-                       th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_hp}">
+                       th:value="${reservation.getCar_vehicle_number().getCarHp()}">
             </div>
         </div>
 
@@ -104,7 +104,7 @@
             <label for="fuel-type" class="col-sm-2 col-form-label"> Drivstof </label>
             <div class="col-sm-10">
                 <input type="text" id="fuel-type" name="fuel-type" class="form-control-plaintext" readonly
-                       th:value="${reservation.getCar_vehicle_number().getCar_model_id().getCar_fuel_type().fuel_type}">
+                       th:value="${reservation.getCar_vehicle_number().getFuelType()}">
             </div>
         </div>
 
@@ -112,7 +112,7 @@
             <label for="gearbox-type" class="col-sm-2 col-form-label"> Automat/manuel </label>
             <div class="col-sm-10">
                 <input type="text" id="gearbox-type" name="gearbox-type" class="form-control-plaintext" readonly
-                       th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_gearbox_type}">
+                       th:value="${reservation.getCar_vehicle_number().getGearBoxType()}">
             </div>
         </div>
 
@@ -120,7 +120,7 @@
             <label for="car-description" class="col-sm-2 col-form-label"> Beskrivelse af bil </label>
             <div class="col-sm-10">
                 <input type="text" id="car-description" name="car-description" class="form-control-plaintext" readonly
-                       th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_description}">
+                       th:value="${reservation.getCar_vehicle_number().getCarDescription()}">
             </div>
         </div>
 

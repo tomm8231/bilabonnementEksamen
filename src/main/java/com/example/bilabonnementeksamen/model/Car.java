@@ -31,6 +31,7 @@ public class Car {
     return car_model_id.getCar_fuel_type().getFuel_type();
   }
 
+
   public String getDistanceUnit(){
     return car_model_id.getCar_fuel_type().getDistance_unit();
   }
