@@ -35,13 +35,14 @@
                 <tr th:each="c : ${car}">
                     <td>
                         <form action="/lease-available-cars" method="post" th:action="@{/lease-available-cars/}" >
-                            <input th:value="${c.car_vehicle_number}" type="hidden" name="id" readonly required>
+                            <input th:value="${c.getCar_vehicle_number()}" type="hidden" name="id" readonly required>
                             <button type="submit">Reservér</button>
                         </form>
                     </td>
-                    <td th:text="${c.car_vehicle_number}">Car</td>
-                    <td th:text="${c.getCar_model_id().car_brand}">Car</td>
-                    <td th:text="${c.getCar_model_id().car_model}">Car</td>
+                    <!--TODO: marcus hvorfor kommer det fejlmeldinger her? Check om det fungerer uden get metoder!
+                    --><td th:text="${c.car_vehicle_number()}">Car</td>
+                    <td th:text="${c.carBrand()}">Car</td>
+                    <td th:text="${c.getCarModel()}">Car</td>
                     <td th:text="${c.getCar_model_id().car_hp}">Car</td>
                     <td th:text="${c.getFuelType()}">Car</td>
                     <td th:text="${c.getCar_model_id().car_co2_km}">Car</td>

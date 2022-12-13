@@ -73,6 +73,7 @@ public class Car {
     return car_model_id.getCar_energy_label();
   }
 
+
   public int getCar_vehicle_number() {
     return car_vehicle_number;
   }
