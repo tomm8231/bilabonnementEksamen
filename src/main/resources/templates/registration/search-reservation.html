@@ -12,16 +12,13 @@
 
     <div class="h-100 d-flex flex-column w-100 align-items-center justify-content-center">
         <div>
-            <h1 class="border-top border-dark">Søg op lejekontrakt</h1>
+            <h1 class="border-bottom border-dark">Søg op lejekontrakt</h1>
             <form action="/search-reservation-by-id" method="post">
                 <label for="reservation-id" class="form-label"> Reservations ID</label>
                 <input type="number" id="reservation-id" name="reservation-id" class="form-control" required>
                 <button class="mt-2" type="submit">Søg</button>
             </form>
 
-            <form action="/search-reservation-by-id" method="get">
-                <button class="mt-2 mb-3 " type="submit">Tilbage</button>
-            </form>
             <div th:if="${message}" th:text="${message}"></div>
         </div>
     </div>
