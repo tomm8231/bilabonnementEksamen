@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class DamageReportController {
 
   @Autowired
-  DamageReportService damageReportService;
+  private DamageReportService damageReportService;
 
 
   @GetMapping("/damage-home-page")

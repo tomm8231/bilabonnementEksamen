@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class BusinessInsightController {
 
   @Autowired
-  BusinessInsightService businessInsightService;
+  private BusinessInsightService businessInsightService;
 
   @GetMapping("/business-home-page")
   public String showBusinessHome() {

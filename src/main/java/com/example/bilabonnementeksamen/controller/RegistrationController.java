@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class RegistrationController {
 
   @Autowired
-  RegistrationService registrationService;
+  private RegistrationService registrationService;
 
 
 
@@ -316,7 +316,7 @@ public class RegistrationController {
 
   //Sebastian
   @GetMapping("/show-all-employees")
-  public String showAllEmplyees(Model model){
+  public String showAllEmployees(Model model){
     ArrayList<Employee> employees = registrationService.fetchAllEployees();
     model.addAttribute("employees", employees);
     return "/registration/lease-show-employees";

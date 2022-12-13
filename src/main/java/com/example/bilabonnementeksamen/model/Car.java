@@ -24,6 +24,55 @@ public class Car {
     this.car_is_reserved = car_is_reserved;
   }
 
+  // get på Fueltype + distanceUnit
+  // car er information expert på alt som hører ind under car
+
+  public String getFuelType(){
+    return car_model_id.getCar_fuel_type().getFuel_type();
+  }
+
+  public String getDistanceUnit(){
+    return car_model_id.getCar_fuel_type().getDistance_unit();
+  }
+
+  public double getDistanceAmount(){
+    return car_model_id.getCar_distance_amount();
+  }
+
+
+  public String getSubscriptionTypeName(){
+    return subscription_type_id.getSubscription_type_name();
+  }
+
+  public String getCarDescription(){
+    return car_model_id.getCar_description();
+  }
+
+  public String getCarBrand(){
+    return car_model_id.getCar_brand();
+  }
+
+  public String getCarModel(){
+    return car_model_id.getCar_model();
+  }
+
+  public int getCarHp(){
+    return car_model_id.getCar_hp();
+  }
+
+  public String getGearBoxType(){
+    return car_model_id.getCar_gearbox_type();
+  }
+
+
+  public double getCarCo2Km(){
+    return car_model_id.getCar_co2_km();
+  }
+
+  public String getEnergyLabel(){
+    return car_model_id.getCar_energy_label();
+  }
+
   public int getCar_vehicle_number() {
     return car_vehicle_number;
   }
