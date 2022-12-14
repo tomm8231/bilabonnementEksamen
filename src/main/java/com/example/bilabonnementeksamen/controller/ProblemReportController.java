@@ -143,6 +143,7 @@ public class ProblemReportController {
   }
 
   // Tommy
+
   @PostMapping("search-problem-report-by-id")
   public String sendProblemReportId(@RequestParam("problem-report-id") int report_id,
                                     RedirectAttributes redirectAttributes, HttpSession session) {
@@ -157,7 +158,7 @@ public class ProblemReportController {
         return "redirect:/show-problem-report";
 
       } case 2 -> {
-        redirectAttributes.addAttribute("message", "Reservationen findes ikke");
+        redirectAttributes.addAttribute("message", "Skadesrapporten findes ikke");
         return "redirect:/search-problem-report-by-id";
       }
 
