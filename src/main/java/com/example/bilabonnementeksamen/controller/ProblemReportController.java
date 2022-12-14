@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class ProblemReportController {
 
   @Autowired
-  ProblemReportService damageReportService;
+  ProblemReportService problemReportService;
 
 
   @GetMapping("/damage-home-page")
@@ -37,10 +37,10 @@ public class ProblemReportController {
   @PostMapping("/find-reservation-info")
   public String fetchReservationInfo(@RequestParam("reservation-id") int id, HttpSession session) {
 
-    int numberOption = damageReportService.checkIfReservationExist(id);
+    int numberOption = problemReportService.checkIfReservationExist(id);
     switch (numberOption) {
       case 1 -> {
-        Reservation reservation = damageReportService.fetchReservationInfo(id);
+        Reservation reservation = problemReportService.fetchReservationInfo(id);
         session.setAttribute("reservation", reservation);
         return "redirect:/problem-form";
       }
@@ -95,7 +95,7 @@ public class ProblemReportController {
   public String deleteSingleDamage(HttpSession session, @ModelAttribute Problem deleteProblem){
     ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
 
-    listOfProblems = damageReportService.removeProblemFromList(listOfProblems, deleteProblem);
+    listOfProblems = problemReportService.removeProblemFromList(listOfProblems, deleteProblem);
 
     session.setAttribute("problems",listOfProblems);
 
@@ -108,9 +108,9 @@ public class ProblemReportController {
     Reservation reservation = (Reservation) session.getAttribute("reservation");
 
     //laver en rapport og returnere id
-    Integer reportID = damageReportService.createProblemReport(listOfProblems, reservation);
+    Integer reportID = problemReportService.createProblemReport(listOfProblems, reservation);
     //tilføjer problmer
-    damageReportService.createProblemsInReport(listOfProblems, reportID);
+    problemReportService.createProblemsInReport(listOfProblems, reportID);
     return "redirect:/result";
   }
 
@@ -121,7 +121,7 @@ public class ProblemReportController {
     // Finde reservationen
     Reservation reservation = (Reservation) session.getAttribute("reservation");
     // Finde report_id
-    int reportId = damageReportService.fetchReportId(listOfProblems, reservation);
+    int reportId = problemReportService.fetchReportId(listOfProblems, reservation);
     model.addAttribute("report_id", reportId);
     return "/problem/problem-form-result";
   }
@@ -144,13 +144,14 @@ public class ProblemReportController {
 
   // Tommy
   @PostMapping("search-problem-report-by-id")
-  public String sendProblemReportId(@RequestParam("problem-report-id") int report_id, RedirectAttributes redirectAttributes, HttpSession session) {
-    int numberOption = damageReportService.checkIfProblemReportExist(report_id);
+  public String sendProblemReportId(@RequestParam("problem-report-id") int report_id,
+                                    RedirectAttributes redirectAttributes, HttpSession session) {
+    int numberOption = problemReportService.checkIfProblemReportExist(report_id);
 
     switch (numberOption) {
       case 1 -> {
-        ProblemReport problemReport = damageReportService.fetchProblemReportById(report_id);
-        ArrayList<Problem> listOfProblems = damageReportService.fetchListOfProblemsById(report_id);
+        ProblemReport problemReport = problemReportService.fetchProblemReportById(report_id);
+        ArrayList<Problem> listOfProblems = problemReportService.fetchListOfProblemsById(report_id);
         problemReport.setListOfProblems(listOfProblems);
         session.setAttribute("problem-report", problemReport);
         return "redirect:/show-problem-report";
