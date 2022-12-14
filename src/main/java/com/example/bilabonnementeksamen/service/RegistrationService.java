@@ -52,29 +52,7 @@ public class RegistrationService {
   }
 
   public List<Car> fetchCarsByDate(String startDate, String endDate, String leaseType) {
-
-    //start dato tjekkes
-    LocalDate startDateBooking = LocalDate.parse(startDate);
-
-    if (startDateBooking.isBefore(LocalDate.now())) {
-      startDateBooking = LocalDate.now();
-    }
-
-    //opdeler i limited eller unlimited
-
-    if (leaseType.equalsIgnoreCase("LIMITED")) {
-
-      LocalDate limitedEndDate = startDateBooking.plusDays(157);
-
-      return carRepo.fetchCarsByDate(Date.valueOf(startDateBooking), Date.valueOf(limitedEndDate), leaseType.toUpperCase());
-
-    } else {
-      // Lægge til 5 dage til returdatoen, så værkstedet kan nå at checke og frigive bilen.
-      // TODO: OBS kunden skal ikke betale for disse ekstra 5 dage... Virker hellere ikke!
-      LocalDate endDatePlus7days = Date.valueOf(endDate).toLocalDate().plusDays(5);
-
-      return carRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDatePlus7days), leaseType.toUpperCase());
-    }
+    return carRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDate), leaseType.toUpperCase());
   }
 
   public LocalDate modifyStartDate(String startDate) {
@@ -202,7 +180,7 @@ public class RegistrationService {
         paymentTotal = (pricePerMonth * limitedMonths);
 
       } else {
-        paymentTotal = (pricePerMonth * Integer.valueOf(months));
+        paymentTotal = (pricePerMonth * Integer.parseInt(months));
       }
 
       return paymentTotal;
