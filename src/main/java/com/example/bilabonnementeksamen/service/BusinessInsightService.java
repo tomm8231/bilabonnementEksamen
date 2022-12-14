@@ -14,7 +14,7 @@ import java.util.List;
 public class BusinessInsightService {
 
   @Autowired
-  ReservationRepo reservationRepo;
+  private ReservationRepo reservationRepo;
 
 
   public double calculatePickupMonthReservationsIncome(ArrayList<Reservation> startMonthReservations, int lastDayOfChosenMonth) {

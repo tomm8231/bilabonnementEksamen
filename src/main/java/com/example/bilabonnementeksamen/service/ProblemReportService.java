@@ -14,10 +14,10 @@ import java.util.ArrayList;
 public class ProblemReportService {
 
   @Autowired
-  ProblemReportRepo problemReportRepo;
+  private ProblemReportRepo problemReportRepo;
 
   @Autowired
-  ReservationRepo reservationRepo;
+  private ReservationRepo reservationRepo;
 
 
   public Reservation fetchReservationInfo(int id) {

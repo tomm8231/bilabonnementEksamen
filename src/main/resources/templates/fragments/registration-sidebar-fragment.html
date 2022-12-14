@@ -13,29 +13,16 @@
 <div th:fragment="registration-sidebar-fragment">
     <div class="flex-shrink-0 p-3 bg-white h-100 border-end" >
         <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-            <img class="logo-bilabonnement fragment-logo fragment-style" src="images/logo_bilabo.png" style="width:240px">
+            <img class="logo-bilabonnement fragment-logo fragment-style" src="/images/logo_bilabo.png" style="width:240px">
         </a>
         <ul class="list-unstyled ps-3">
-<!--            <li class="mb-1">
-                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                        data-bs-target="#home-collapse" aria-expanded="false">
-                    Dashboard
-                </button>
-
-                <div class="px-20"> &lt;!&ndash;id="home-collapse" style=""&ndash;&gt;
-                    <ul class="btn-toggle-nav fw-normal pb-1 small list-unstyled ps-4">
-                        <li><a th:href="@{show-reserved-cars}" class="link-dark rounded">Udlejede biler</a></li>
-
-                    </ul>
-                </div>
-            </li>-->
 
             <li class="mb-1">
                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
                         data-bs-target="#contracts-collapse" aria-expanded="false">
                     Kontrakter
                 </button>
-                <div> <!-- class="collapse" id="contracts-collapse" style="" -->
+                <div>
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
                         <li><a th:href="@{lease-contract}" class="link-dark rounded">Opret ny lejekontrakt</a></li>
                         <li><a th:href="@{search-reservation-by-id}" class="link-dark rounded">Søg op lejekontrakt</a></li>
@@ -48,7 +35,7 @@
                         data-bs-target="#employee-collapse" aria-expanded="false">
                     Administration
                 </button>
-                <div> <!--class="collapse" id="employee-collapse" style=""-->
+                <div>
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
                         <!-- ms-2 = margin start .me-2 = 0.5rem-->
                         <li><a th:href="@{create-employee}" class="link-dark rounded">Opret ny ansat</a></li>
@@ -71,7 +58,7 @@
                         <li class="mt-4">
                             <form action="/unreserve-all-cars-session" method="post"
                                   th:action="@{unreserve-all-cars-session}">
-                                <button type="submit" class="link-dark rounded">Afreservér alle biler (session)</button>
+                                <button type="submit" class="link-dark rounded">Nulstil alle biler i process</button>
                             </form>
                         </li>
                     </ul>

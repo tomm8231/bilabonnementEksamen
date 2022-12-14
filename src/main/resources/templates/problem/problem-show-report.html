@@ -66,38 +66,38 @@
     <label class="col-sm-2 col-form-label">Mærke:</label>
     <div class="col-sm-10">
         <input type="text" class="form-control-plaintext" readonly
-               th:value="${problemReport.car.getCar_model_id().car_brand}">
+               th:value="${problemReport.car.getCarBrand()}">
 
     </div>
 
     <label class="col-sm-2 col-form-label">Model:</label>
     <div class="col-sm-10">
         <input type="text" class="form-control-plaintext" readonly
-               th:value="${problemReport.car.getCar_model_id().car_model}">
+               th:value="${problemReport.car.getCarModel()}">
     </div>
 
     <label class="col-sm-2 col-form-label">Hestekræfter:</label>
     <div class="col-sm-10">
         <input type="text" class="form-control-plaintext" readonly
-               th:value="${problemReport.car.getCar_model_id().car_hp}">
+               th:value="${problemReport.car.getCarHp()}">
     </div>
 
     <label class="col-sm-2 col-form-label">Drivstof:</label>
     <div class="col-sm-10">
         <input type="text" class="form-control-plaintext" readonly
-               th:value="${problemReport.car.getCar_model_id().getCar_fuel_type().fuel_type}">
+               th:value="${problemReport.car.getFuelType()}">
     </div>
 
     <label class="col-sm-2 col-form-label">Geartype:</label>
     <div class="col-sm-10">
         <input type="text" class="form-control-plaintext" readonly
-               th:value="${problemReport.car.getCar_model_id().car_gearbox_type}">
+               th:value="${problemReport.car.getGearBoxType()}">
     </div>
 
     <label class="col-sm-2 col-form-label">Beskrivelse af bil:</label>
     <div class="col-sm-10">
         <input type="text" class="form-control-plaintext" readonly
-               th:value="${problemReport.car.getCar_model_id().car_description}">
+               th:value="${problemReport.car.getCarDescription()}">
     </div>
 
 
