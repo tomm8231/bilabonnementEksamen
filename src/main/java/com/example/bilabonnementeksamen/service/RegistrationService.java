@@ -15,19 +15,19 @@ import java.util.List;
 public class RegistrationService {
 
   @Autowired
-  LocationRepo locationRepo;
+  private LocationRepo locationRepo;
 
   @Autowired
-  ReservationRepo reservationRepo;
+  private ReservationRepo reservationRepo;
 
   @Autowired
-  CustomerRepo customerRepo;
+  private CustomerRepo customerRepo;
 
   @Autowired
-  CarRepo carRepo;
+  private CarRepo carRepo;
 
   @Autowired
-  EmployeeRepo employeeRepo;
+  private EmployeeRepo employeeRepo;
 
 
   public Customer fetchCustomerByMail(String mail) {

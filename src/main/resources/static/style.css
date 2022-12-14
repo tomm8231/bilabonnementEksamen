@@ -21,6 +21,17 @@ body {
     width: 240px;
 }
 
+
+#energy-label{
+    padding-left: 10px;
+
+}
+
+.show-cars-table{
+
+}
+
+
 @media all and (max-width: 700px) {
 
     .fragment-style {

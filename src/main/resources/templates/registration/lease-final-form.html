@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>kontrakt</title>
+    <title>Lejekontrakt</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
@@ -86,7 +86,7 @@
                     <label for="car-brand" class="col-sm-2 col-form-label"> Mærke </label>
                     <div class="col-sm-10">
                         <input type="text" id="car-brand" name="car-brand" class="form-control-plaintext" readonly
-                               th:value="${car.car_model_id.getCar_brand()}">
+                               th:value="${car.getCarBrand()}">
                     </div>
                 </div>
 
@@ -94,7 +94,7 @@
                     <label for="car-model" class="col-sm-2 col-form-label"> Model </label>
                     <div class="col-sm-10">
                         <input type="text" id="car-model" name="car-model" class="form-control-plaintext" readonly
-                               th:value="${car.car_model_id.getCar_model()}">
+                               th:value="${car.getCarModel()}">
                     </div>
                 </div>
 
@@ -102,7 +102,7 @@
                     <label for="car-hp" class="col-sm-2 col-form-label"> HK </label>
                     <div class="col-sm-10">
                         <input type="text" id="car-hp" name="car-hp" class="form-control-plaintext" readonly
-                               th:value="${car.car_model_id.getCar_hp()}">
+                               th:value="${car.getCarHp()}">
                     </div>
                 </div>
 
@@ -110,7 +110,7 @@
                     <label for="fuel-type" class="col-sm-2 col-form-label"> Drivstof </label>
                     <div class="col-sm-10">
                         <input type="text" id="fuel-type" name="fuel-type" class="form-control-plaintext" readonly
-                               th:value="${car.car_model_id.getCar_distance_amount()}">
+                               th:value="${car.getFuelType()}">
                     </div>
                 </div>
 
@@ -118,7 +118,7 @@
                     <label for="gearbox-type" class="col-sm-2 col-form-label"> Automat/manuel </label>
                     <div class="col-sm-10">
                         <input type="text" id="gearbox-type" name="gearbox-type" class="form-control-plaintext" readonly
-                               th:value="${car.car_model_id.getCar_gearbox_type()}">
+                               th:value="${car.getGearBoxType()}">
                     </div>
                 </div>
 
@@ -126,7 +126,7 @@
                     <label for="co2-per-km" class="col-sm-2 col-form-label"> Co2 per km </label>
                     <div class="col-sm-10">
                         <input type="text" id="co2-per-km" name="co2-per-km" class="form-control-plaintext" readonly
-                               th:value="${car.car_model_id.getCar_co2_km()}">
+                               th:value="${car.getCarCo2Km()}">
                     </div>
                 </div>
 
@@ -134,7 +134,7 @@
                     <label for="energy-label" class="col-sm-2 col-form-label"> Energimærkning </label>
                     <div class="col-sm-10">
                         <input type="text" id="energy-label" name="energy-label" class="form-control-plaintext" readonly
-                               th:value="${car.car_model_id.getCar_energy_label()}">
+                               th:value="${car.getEnergyLabel()}">
                     </div>
                 </div>
 
@@ -143,7 +143,7 @@
                     <div class="col-sm-10">
                         <input type="text" id="distance-amount" name="distance-amount" class="form-control-plaintext"
                                readonly
-                               th:value="${car.car_model_id.getCar_distance_amount() + ' ' + car.car_model_id.getCar_fuel_type().getDistance_unit()}">
+                               th:value="${car.getDistanceAmount() + ' ' + car.getDistanceUnit()}">
                     </div>
                 </div>
 
@@ -152,7 +152,7 @@
                     <div class="col-sm-10">
                         <input type="text" id="subscription-type" name="subscription-type"
                                class="form-control-plaintext"
-                               readonly th:value="${car.subscription_type_id.getSubscription_type_name()}">
+                               readonly th:value="${car.getSubscriptionTypeName()}">
                     </div>
                 </div>
 
@@ -161,7 +161,7 @@
                     <div class="col-sm-10">
                         <input type="text" id="car-description" name="car-description" class="form-control-plaintext"
                                readonly
-                               th:value="${car.car_model_id.getCar_description()}">
+                               th:value="${car.getCarDescription()}">
                     </div>
                 </div>
 

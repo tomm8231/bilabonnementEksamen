@@ -86,7 +86,7 @@
                 <label for="car-brand" class="col-sm-2 col-form-label"> Mærke </label>
                 <div class="col-sm-10">
                     <input type="text" id="car-brand" name="car-brand" class="form-control-plaintext" readonly
-                           th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_brand}">
+                           th:value="${reservation.getCar_vehicle_number().getCarBrand()}">
                 </div>
             </div>
 
@@ -94,7 +94,7 @@
                 <label for="car-model" class="col-sm-2 col-form-label"> Model </label>
                 <div class="col-sm-10">
                     <input type="text" id="car-model" name="car-model" class="form-control-plaintext" readonly
-                           th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_model}">
+                           th:value="${reservation.getCar_vehicle_number().getCarModel()}">
                 </div>
             </div>
 
@@ -102,7 +102,7 @@
                 <label for="car-hp" class="col-sm-2 col-form-label"> HK </label>
                 <div class="col-sm-10">
                     <input type="text" id="car-hp" name="car-hp" class="form-control-plaintext" readonly
-                           th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_hp}">
+                           th:value="${reservation.getCar_vehicle_number().getCarHp()}">
                 </div>
             </div>
 
@@ -110,7 +110,7 @@
                 <label for="fuel-type" class="col-sm-2 col-form-label"> Drivstof </label>
                 <div class="col-sm-10">
                     <input type="text" id="fuel-type" name="fuel-type" class="form-control-plaintext" readonly
-                           th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_distance_amount}">
+                           th:value="${reservation.getCar_vehicle_number().getDistanceAmount()}">
                 </div>
             </div>
 
@@ -118,7 +118,7 @@
                 <label for="gearbox-type" class="col-sm-2 col-form-label"> Automat/manuel </label>
                 <div class="col-sm-10">
                     <input type="text" id="gearbox-type" name="gearbox-type" class="form-control-plaintext" readonly
-                           th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_gearbox_type}">
+                           th:value="${reservation.getCar_vehicle_number().getGearBoxType()}">
                 </div>
             </div>
 
@@ -126,7 +126,7 @@
                 <label for="co2-per-km" class="col-sm-2 col-form-label"> Co2 per km </label>
                 <div class="col-sm-10">
                     <input type="text" id="co2-per-km" name="co2-per-km" class="form-control-plaintext" readonly
-                           th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_co2_km}">
+                           th:value="${reservation.getCar_vehicle_number().getCarCo2Km()}">
                 </div>
             </div>
 
@@ -134,7 +134,7 @@
                 <label for="energy-label" class="col-sm-2 col-form-label"> Energimærkning </label>
                 <div class="col-sm-10">
                     <input type="text" id="energy-label" name="energy-label" class="form-control-plaintext" readonly
-                           th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_energy_label}">
+                           th:value="${reservation.getCar_vehicle_number().getEnergyLabel()}">
                 </div>
             </div>
 
@@ -143,8 +143,7 @@
                 <div class="col-sm-10">
                     <input type="text" id="distance-amount" name="distance-amount" class="form-control-plaintext"
                            readonly
-                           th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_distance_amount + ' '
-                           + reservation.getCar_vehicle_number().getCar_model_id().getCar_fuel_type().distance_unit}">
+                           th:value="${reservation.getCar_vehicle_number().getDistanceUnit()}">
                 </div>
             </div>
 
@@ -154,7 +153,7 @@
                     <input type="text" id="subscription-type" name="subscription-type"
                            class="form-control-plaintext"
                            readonly
-                           th:value="${reservation.getCar_vehicle_number().getSubscription_type_id().subscription_type_name}">
+                           th:value="${reservation.getCar_vehicle_number().getSubscriptionTypeName()}">
                 </div>
             </div>
 
@@ -163,7 +162,7 @@
                 <div class="col-sm-10">
                     <input type="text" id="car-description" name="car-description" class="form-control-plaintext"
                            readonly
-                           th:value="${reservation.getCar_vehicle_number().getCar_model_id().car_description}">
+                           th:value="${reservation.getCar_vehicle_number().getCarDescription()}">
                 </div>
             </div>
 
