@@ -5,11 +5,12 @@
     <title>Forside</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body style="height: 100vh">
 <div class="d-flex h-100">
     <nav th:replace="fragments/registration-sidebar-fragment :: registration-sidebar-fragment"></nav>
-    <container class="h-100 d-flex flex-column gap-4 w-100 align-items-center justify-content-center">
+    <container class="h-100 d-flex flex-column gap-4 w-100 align-items-center justify-content-center fragment-style fragment-logo">
         <div><strong>Limited</strong></div>
 
         <form action="/lease-limited-contract" method="post">
