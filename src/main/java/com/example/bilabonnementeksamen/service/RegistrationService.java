@@ -51,7 +51,7 @@ public class RegistrationService {
     carRepo.reserveCarById(id);
   }
 
-  public List<Car> fetchCarsByDate(String startDate, String endDate, String leaseType) {
+  public List<Car> fetchCarsByDate(LocalDate startDate, LocalDate endDate, String leaseType) {
     return carRepo.fetchCarsByDate(Date.valueOf(startDate), Date.valueOf(endDate), leaseType.toUpperCase());
   }
 
