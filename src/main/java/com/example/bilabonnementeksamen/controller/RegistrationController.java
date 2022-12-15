@@ -80,7 +80,7 @@ public class RegistrationController {
     //alt der renderes i view
     model.addAttribute("bookingStart", startReservationDate);
     model.addAttribute("bookingRetur", returnReservationDate);
-    model.addAttribute("car", registrationService.fetchCarsByDate(startDate, endDate, typeLeasing));
+    model.addAttribute("car", registrationService.fetchCarsByDate(startReservationDate, returnReservationDate, typeLeasing));
     return "/registration/lease-available-cars";
   }
 
@@ -248,7 +248,6 @@ public class RegistrationController {
 
   @GetMapping("/create-employee")
   public String showCreateEmployee(@RequestParam (value = "message", required = false) String message, Model model) {
-
     model.addAttribute("message", message);
     return "/registration/create-employee";
   }
