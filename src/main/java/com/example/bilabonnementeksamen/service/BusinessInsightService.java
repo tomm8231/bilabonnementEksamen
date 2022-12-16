@@ -139,7 +139,9 @@ public class BusinessInsightService {
       //find første dag på måneden, ud fra listen af endDaysOfMonthDate
       LocalDate startDayOfMonthDate = endDaysOfMonthDate.get(i).with(TemporalAdjusters.firstDayOfMonth());
       //find listen af reservation, ud fra startdatoen ovenfor og endDaysOfMonthDate
-      ArrayList<Reservation> chosenMonthStartingContracts = reservationRepo.fetchStartCurrentMonthReservations(startDayOfMonthDate, endDaysOfMonthDate.get(i));
+      ArrayList<Reservation> chosenMonthStartingContracts = reservationRepo.fetchStartCurrentMonthReservations(startDayOfMonthDate,
+          endDaysOfMonthDate.get(i));
+
       //Omregn månedens reservations til en samlet sum, og tilføj dem til listen
       int lastDayValue = endDaysOfMonthDate.get(i).getDayOfMonth();
       allStartingContractsYearIncome.add(calculatePickupMonthReservationsIncome(chosenMonthStartingContracts,lastDayValue));
