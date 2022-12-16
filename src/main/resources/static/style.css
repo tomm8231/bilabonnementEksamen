@@ -32,11 +32,6 @@ padding-left: 25px;
 
 
 
-.show-cars-table{
-
-}
-
-
 @media all and (max-width: 700px) {
 
     .fragment-style {
@@ -53,8 +48,8 @@ padding-left: 25px;
 
     .fragment-style {
         width: 150px;
-        margin: 0px;
-        padding: 0px;
+        margin: 0;
+        padding: 0;
     }
 
     .fragment-logo {

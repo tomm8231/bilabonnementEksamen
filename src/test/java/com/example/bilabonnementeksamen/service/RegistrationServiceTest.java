@@ -1,7 +1,6 @@
 package com.example.bilabonnementeksamen.service;
 
 import com.example.bilabonnementeksamen.model.Car;
-import com.example.bilabonnementeksamen.model.CarModel;
 import com.example.bilabonnementeksamen.model.Employee;
 import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,19 +28,6 @@ class RegistrationServiceTest {
     registrationService = new RegistrationService();
   }
 
-  @Test
-  void calculatePaymentTotal() {
-    //arrange
-    car.setSubscription_type_id("LIMITED");
-
-    // act
-    double result = registrationService.calculatePaymentTotal(months, car);
-
-    // assert
-    double expected = 15000;
-    assertEquals(expected, result);
-
-  }
 
   // Daniel og Marcus
   @Test
@@ -51,7 +37,6 @@ class RegistrationServiceTest {
     // act og assert i samme, giver ikke så meget forretningsværdi, teknisk demo med lambda
     assertThrows(NullPointerException.class, () -> registrationService.calculatePaymentTotal(months, null),
         "Exception on wrong exchange input");
-
   }
 
 
