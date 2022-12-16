@@ -24,8 +24,13 @@ body {
 
 #energy-label{
     padding-left: 10px;
-
 }
+
+#indented-label{
+padding-left: 25px;
+}
+
+
 
 .show-cars-table{
 

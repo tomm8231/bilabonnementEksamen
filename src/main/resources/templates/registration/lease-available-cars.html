@@ -10,7 +10,7 @@
 <body>
 <div class="d-flex">
     <nav th:replace="fragments/registration-sidebar-fragment :: registration-sidebar-fragment"></nav>
-    <container class= "h-100 d-flex flex-column gap-4 align-items-center justify-content-center">
+    <container class= "h-100 d-flex flex-column gap-4 align-items-center justify-content-center mr-5">
 
         <h3> Lejeperiode: <strong th:text="${bookingStart}"></strong> til <strong th:text="${bookingRetur}"></strong> </h3>
 
@@ -48,7 +48,7 @@
                 <td th:text="${c.getGearBoxType()}">Car</td>
                 <td th:text="${c.car_price_month}">Car</td>
                 <td th:text="${c.getDistanceAmount() + ' ' + c.getDistanceUnit()}">Car</td>
-                <td th:text="${c.getEnergyLabel()}">Car</td>
+                <td id="indented-label" th:text="${c.getEnergyLabel()}">Car</td>
             </tr>
             </tbody>
         </table>
