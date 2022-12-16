@@ -28,9 +28,6 @@ public class ProblemReport {
     return report_id;
   }
 
-  public void setReport_id(int report_id) {
-    this.report_id = report_id;
-  }
 
   public Car getCar() {
     return car;
@@ -42,10 +39,6 @@ public class ProblemReport {
 
   public double getTotal_price() {
     return total_price;
-  }
-
-  public void setTotal_price(double total_price) {
-    this.total_price = total_price;
   }
 
   public Employee getEmployee() {

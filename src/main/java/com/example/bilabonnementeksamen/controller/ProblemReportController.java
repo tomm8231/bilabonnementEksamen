@@ -90,11 +90,11 @@ public class ProblemReportController {
     return "/problem/problem-input-overview";
   }
 
-  //Marcus, daniel, sebastian
+  //Marcus, Daniel, Sebastian
   @PostMapping("/deleteSpecificDamage")
   public String deleteSingleDamage(HttpSession session, @ModelAttribute Problem deleteProblem){
-    ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
 
+    ArrayList<Problem> listOfProblems = (ArrayList<Problem>) session.getAttribute("problems");
     listOfProblems = problemReportService.removeProblemFromList(listOfProblems, deleteProblem);
 
     session.setAttribute("problems",listOfProblems);
@@ -129,13 +129,10 @@ public class ProblemReportController {
 
   @PostMapping("/result")
   public String sendProblemReport(){
-    //TODO: lave en metode for at oprette en pdf til kunden
     return "redirect:/damage-home-page";
   }
 
   // Tommy
-  //Slå skade op
-
   @GetMapping("/search-problem-report-by-id")
   public String showSearchFormProblem(@RequestParam (value = "message", required = false) String message, Model model) {
     model.addAttribute("message", message);
@@ -143,7 +140,6 @@ public class ProblemReportController {
   }
 
   // Tommy
-
   @PostMapping("search-problem-report-by-id")
   public String sendProblemReportId(@RequestParam("problem-report-id") int report_id,
                                     RedirectAttributes redirectAttributes, HttpSession session) {
@@ -177,5 +173,4 @@ public class ProblemReportController {
     model.addAttribute("problemReport", problemReport);
     return "problem/problem-show-report";
   }
-
 }
