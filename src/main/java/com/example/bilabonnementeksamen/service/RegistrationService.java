@@ -73,8 +73,8 @@ public class RegistrationService {
     LocalDate bookingEndDate;
 
     if (endDate == null) {
-      // Lægger til 150 + 3 dage fordi værkstedet skal have tid til at klargøre bilen. Kunden betaler for 150 dage
-      bookingEndDate = startBooking.plusDays(153);
+      // Lægger til 150 dage
+      bookingEndDate = startBooking.plusDays(150);
       return bookingEndDate;
     }
     bookingEndDate = LocalDate.parse(endDate);
@@ -153,12 +153,11 @@ public class RegistrationService {
       //Hvis initialer allerede findes
       if (name != null) {
         number = 1;
-      } else { //Hvis initialer ikke allerede findes
-        //registrationRepo.createEmployee(employee);
+      } else {
+        //Hvis initialer ikke allerede findes
         number = 2;
       }
     }
-
     return number;
   }
 

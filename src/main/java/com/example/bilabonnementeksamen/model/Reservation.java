@@ -44,9 +44,6 @@ public class Reservation {
     return reservation_id;
   }
 
-  public void setReservation_id(int reservation_id) {
-    this.reservation_id = reservation_id;
-  }
 
   public Car getCar_vehicle_number() {
     return car_vehicle_number;
@@ -92,33 +89,20 @@ public class Reservation {
     return pickup_time;
   }
 
-  public void setPickup_time(Time pickup_time) {
-    this.pickup_time = pickup_time;
-  }
-
   public Time getReturn_time() {
     return return_time;
   }
 
-  public void setReturn_time(Time return_time) {
-    this.return_time = return_time;
-  }
 
   public double getReservation_payment() {
     return reservation_payment;
   }
 
-  public void setReservation_payment(double reservation_payment) {
-    this.reservation_payment = reservation_payment;
-  }
 
   public String getReservation_comment() {
     return reservation_comment;
   }
 
-  public void setReservation_comment(String reservation_comment) {
-    this.reservation_comment = reservation_comment;
-  }
 
   public Employee getEmployee_id() {
     return employee_id;

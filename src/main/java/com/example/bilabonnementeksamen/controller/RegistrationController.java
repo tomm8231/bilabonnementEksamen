@@ -32,7 +32,7 @@ public class RegistrationController {
     return "/registration/lease-start-new-contract";
   }
 
-  //Find biler ud fra dato og lejetype og send videre
+  // Limited biler ud fra dato og lejetype og send videre
   @PostMapping("/lease-limited-contract")
   public String findLimitedCarsByDate(@RequestParam("limited-start-date") String startDate,
                                       @RequestParam ("type-leasing") String typeLeasing,
@@ -43,7 +43,7 @@ public class RegistrationController {
     return "redirect:/lease-available-cars";
   }
 
-
+  // Unlimited biler ud fra dato og lejetype og send videre
   @PostMapping("/lease-unlimited-contract")
   public String findUnlimitedCarsByDate(@RequestParam("unlimited-start-date") String startDate, @RequestParam("months") String months,
                                         @RequestParam ("type-leasing") String typeLeasing, RedirectAttributes redirectAttributes, HttpSession session) {
@@ -51,11 +51,9 @@ public class RegistrationController {
     String endDate = registrationService.addMonthsToStartReservationDate(startDate, months);
     session.setAttribute("months", months);
 
-
     redirectAttributes.addAttribute("rd-start-date", startDate);
     redirectAttributes.addAttribute("rd-end-date", endDate);
     redirectAttributes.addAttribute("type-leasing", typeLeasing);
-
 
     return "redirect:/lease-available-cars";
   }
@@ -66,8 +64,6 @@ public class RegistrationController {
                                   @RequestParam(value = "rd-end-date", required = false) String endDate,
                                   @RequestParam ("type-leasing") String typeLeasing, HttpSession session) {
 
-
-
     //Der tilrettes så begge datoer kan bruges fremad
     LocalDate startReservationDate = registrationService.modifyStartDate(startDate);
     LocalDate returnReservationDate = registrationService.modifyEndDateLimited(startDate,endDate);
@@ -76,7 +72,7 @@ public class RegistrationController {
     session.setAttribute("start-date", startReservationDate);
     session.setAttribute("end-date", returnReservationDate);
 
-    //alt der renderes i view
+    //Alt der renderes i view
     model.addAttribute("bookingStart", startReservationDate);
     model.addAttribute("bookingRetur", returnReservationDate);
     model.addAttribute("car", registrationService.fetchCarsByDate(startReservationDate, returnReservationDate, typeLeasing));
@@ -84,7 +80,7 @@ public class RegistrationController {
   }
 
 
-  //sebastian
+  // Sebastian
   @PostMapping("/lease-available-cars")
   public String chooseCar(@RequestParam("id") int id, HttpSession session) {
 
@@ -120,6 +116,7 @@ public class RegistrationController {
     return "/registration/lease-find-employee";
   }
 
+
   @PostMapping("/lease-find-employee")
   public String leaseAddEmployee(@RequestParam ("employee-id") int id, HttpSession session) {
 
@@ -129,9 +126,7 @@ public class RegistrationController {
     if (employee.getEmployee_name() == null) {
       return "redirect:/lease-find-employee";
     }
-
     session.setAttribute("lease-employee", employee);
-
     return "redirect:/lease-final-form/";
   }
 
@@ -197,7 +192,6 @@ public class RegistrationController {
     LocalDate bookingEndDate = (LocalDate) session.getAttribute("end-date");
     bookingEndDate = bookingEndDate.plusDays(3); // Check på værkstedet etc. Klargøres
 
-
     //reservationen oprettes
     registrationService.createReservation(car,customer,location,bookingStartDate,bookingEndDate, pickupTime, returnTime,
         paymentTotal, reservationComment,employee);
@@ -237,13 +231,10 @@ public class RegistrationController {
   // Tommy
   @PostMapping("/pickup-place")
   public String selectPickupPlace(@RequestParam ("location_address") String locationAddress, HttpSession session) {
-    // flyttes til meny: registrationService.createLocation(location);
     Location location = registrationService.fetchLocationByAddress(locationAddress);
     session.setAttribute("lease-location", location);
     return "redirect:/lease-find-employee";
   }
-
-
 
   @GetMapping("/create-employee")
   public String showCreateEmployee(@RequestParam (value = "message", required = false) String message, Model model) {
@@ -260,24 +251,19 @@ public class RegistrationController {
   @PostMapping("/create-employee")
   public String createEmployee(@ModelAttribute Employee employee, RedirectAttributes redirectAttributes ) {
 
-
     int messageOption = registrationService.checkForDuplicateInitialsEmployee(employee);
 
     switch (messageOption) {
 
       case 1 -> {
         redirectAttributes.addAttribute("message", "Initialer findes allerede");
-        //session.setAttribute("message", "Initialer findes allerede");
       }
       case 2 -> {
        registrationService.createEmployee(employee);
         Employee newEmployee = registrationService.fetchEmployeeByInitials(employee.getEmployee_initials());
         redirectAttributes.addAttribute("message", "Medarbejder " + newEmployee.getEmployee_name() + " (" + newEmployee.getEmployee_initials() + ") er oprettet med ID #" + newEmployee.getEmployee_id());
-       //session.setAttribute("message", "Medarbejder " + newEmployee.getEmployee_name() + " (" + newEmployee.getEmployee_initials() + ") er oprettet med ID #" + newEmployee.getEmployee_id());
       }
     }
-
-
     return "redirect:/create-employee";
   }
 
@@ -300,7 +286,6 @@ public class RegistrationController {
           location.getLocation_name()+ ", " + location.getLocation_address() + ". Telefonnummer: " + location.getLocation_phone());
 
     }
-// redirect til en get eller post (ikke html!)
     return "redirect:/lease-new-location";
   }
 
@@ -328,7 +313,6 @@ public class RegistrationController {
     return "/registration/lease-show-specific-reservation";
   }
 
-
   // Marcus
   @GetMapping ("/search-reservation-by-id")
   public String searchLeaseContract(@RequestParam (value = "message", required = false) String message, Model model){
@@ -336,9 +320,6 @@ public class RegistrationController {
 
     return "/registration/search-reservation";
   }
-
-
-
 
   // Marcus
   @PostMapping("/search-reservation-by-id")
@@ -365,6 +346,4 @@ public class RegistrationController {
       }
     }
   }
-
-
 }

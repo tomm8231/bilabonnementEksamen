@@ -83,6 +83,4 @@ public class BusinessInsightController {
   public String showIncomeChoosenYear(@RequestParam("year") String year) {
     return "redirect:/show-income-chosen-year/" + year;
   }
-
-
 }

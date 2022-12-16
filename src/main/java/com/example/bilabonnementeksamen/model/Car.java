@@ -24,8 +24,6 @@ public class Car {
     this.car_is_reserved = car_is_reserved;
   }
 
-  // get på Fueltype + distanceUnit
-  // car er information expert på alt som hører ind under car
 
   public String getFuelType(){
     return car_model_id.getCar_fuel_type().getFuel_type();
@@ -87,18 +85,6 @@ public class Car {
     return car_chassis_number;
   }
 
-  public void setCar_chassis_number(int car_chassis_number) {
-    this.car_chassis_number = car_chassis_number;
-  }
-
-  public CarModel getCar_model_id() {
-    return car_model_id;
-  }
-
-  public void setCar_model_id(CarModel car_model_id) {
-    this.car_model_id = car_model_id;
-  }
-
   public double getCar_price_month() {
     return car_price_month;
   }
@@ -111,15 +97,4 @@ public class Car {
     return subscription_type_id;
   }
 
-  public void setSubscription_type_id(Subscription_type subscription_type_id) {
-    this.subscription_type_id = subscription_type_id;
-  }
-
-  public int getCar_is_reserved() {
-    return car_is_reserved;
-  }
-
-  public void setCar_is_reserved(int car_is_reserved) {
-    this.car_is_reserved = car_is_reserved;
-  }
 }
