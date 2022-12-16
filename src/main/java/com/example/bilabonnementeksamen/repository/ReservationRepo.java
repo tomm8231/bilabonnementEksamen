@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -419,7 +420,7 @@ public class ReservationRepo {
   public List<Reservation> fetchAllReservations() {
 
     ArrayList<Reservation> reservations = new ArrayList<Reservation>();
-
+    LocalDate today = LocalDate.now();
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
       String sql = """
@@ -439,10 +440,12 @@ public class ReservationRepo {
              USING (subscription_type_id)
              INNER JOIN fuel
              USING (car_fuel_type)
+             WHERE (return_date  > ?)
              ORDER BY reservation_id;           
              """;
 
       PreparedStatement pst = conn.prepareStatement(sql);
+      pst.setDate(1, Date.valueOf(today));
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {

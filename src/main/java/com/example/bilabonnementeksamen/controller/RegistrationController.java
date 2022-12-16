@@ -72,7 +72,6 @@ public class RegistrationController {
     LocalDate startReservationDate = registrationService.modifyStartDate(startDate);
     LocalDate returnReservationDate = registrationService.modifyEndDateLimited(startDate,endDate);
 
-
     //Datoerne gemmes
     session.setAttribute("start-date", startReservationDate);
     session.setAttribute("end-date", returnReservationDate);
