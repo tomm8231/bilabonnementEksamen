@@ -1,6 +1,7 @@
 package com.example.bilabonnementeksamen.service;
 
 import com.example.bilabonnementeksamen.model.Car;
+import com.example.bilabonnementeksamen.model.CarModel;
 import com.example.bilabonnementeksamen.model.Employee;
 import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,12 +26,13 @@ class RegistrationServiceTest {
     months = "5";
     car = new Car();
     car.setCar_price_month(3000);
-    car.getSubscription_type_id().setSubscription_type_name("LIMITED");
     registrationService = new RegistrationService();
   }
 
   @Test
   void calculatePaymentTotal() {
+    //arrange
+    car.setSubscription_type_id("LIMITED");
 
     // act
     double result = registrationService.calculatePaymentTotal(months, car);

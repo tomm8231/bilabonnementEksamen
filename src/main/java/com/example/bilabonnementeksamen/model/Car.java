@@ -40,7 +40,7 @@ public class Car {
 
 
   public String getSubscriptionTypeName(){
-    return subscription_type_id.getSubscription_type_name();
+    return car_model_id.getCar_fuel_type().getFuel_type();
   }
 
   public String getCarDescription(){
@@ -97,4 +97,11 @@ public class Car {
     return subscription_type_id;
   }
 
+  public void setSubscription_type_id(String fuelType) {
+    car_model_id.getCar_fuel_type().setFuel_type(fuelType);
+  }
+
+  public void setCar_model_id(CarModel car_model_id) {
+    this.car_model_id = car_model_id;
+  }
 }
