@@ -57,7 +57,6 @@ public class RegistrationService {
 
   public LocalDate modifyStartDate(String startDate) {
 
-    //start dato tjekkes
     LocalDate startDateBooking = LocalDate.parse(startDate);
 
     if (startDateBooking.isBefore(LocalDate.now())) {
@@ -138,10 +137,10 @@ public class RegistrationService {
       if (location.getLocation_address().equals(newLocation.getLocation_address())) {
         locationAlreadyExist = true;
       }
-
     }
     return locationAlreadyExist;
   }
+
 
   // Tommy
   public int checkForDuplicateInitialsEmployee(Employee employee) {
@@ -161,6 +160,7 @@ public class RegistrationService {
     return number;
   }
 
+
   public Employee fetchEmployeeByInitials(String initials) {
     return employeeRepo.fetchEmployeeByInitials(initials);
   }
@@ -171,7 +171,6 @@ public class RegistrationService {
     double paymentTotal = 0;
     int limitedMonths = 5; // fordi limited altid er 5 måneder
 
-    try {
       // Pris per måned
       double pricePerMonth = car.getCar_price_month();
 
@@ -181,15 +180,9 @@ public class RegistrationService {
       } else {
         paymentTotal = (pricePerMonth * Integer.parseInt(months));
       }
-
-      return paymentTotal;
-
-    } catch (IllegalArgumentException illegalArgumentException){
-      System.err.println(illegalArgumentException.getMessage());
-      System.out.println("Fejl input");
-    }
     return paymentTotal;
-  }
+    }
+
 
   //sebastian
   public ArrayList<Employee> fetchAllEployees() {

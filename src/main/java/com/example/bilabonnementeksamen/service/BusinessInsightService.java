@@ -16,7 +16,7 @@ public class BusinessInsightService {
   @Autowired
   private ReservationRepo reservationRepo;
 
-
+  // Sebastian
   public double calculatePickupMonthReservationsIncome(ArrayList<Reservation> startMonthReservations, int lastDayOfChosenMonth) {
 
     double totalSum = 0;
@@ -37,6 +37,7 @@ public class BusinessInsightService {
     return totalSum;
   }
 
+  // Sebastian
   public double calculateReturnMonthReservationsIncome(ArrayList<Reservation> startMonthReservations, int lastDayOfChosenMonth) {
 
     double totalSum = 0;
@@ -51,11 +52,11 @@ public class BusinessInsightService {
       totalSum += (pricePrMonth / lastDayOfChosenMonth) * returnDate;
 
     }
-
     totalSum = Math.round(totalSum * 100.0) / 100.0; //til to decimaler
     return totalSum;
   }
 
+  // Sebastian
   public ArrayList<Integer> fetchAllStartingContractsYearAmount(ArrayList<LocalDate> endDaysOfMonthDate) {
 
     ArrayList<Integer> allStartingContractsYear = new ArrayList<>();
@@ -69,6 +70,7 @@ public class BusinessInsightService {
     return allStartingContractsYear;
   }
 
+  // Sebastian
   public ArrayList<Integer> fetchAllEndingContractsYearAmount(ArrayList<LocalDate> endDaysOfMonthDate) {
 
     ArrayList<Integer> allEndingContractsYear = new ArrayList<>();
@@ -82,13 +84,14 @@ public class BusinessInsightService {
     return allEndingContractsYear;
   }
 
+  // Sebastian
   public ArrayList<Integer> fetchAllongoingContractsYearAmount(ArrayList<LocalDate> endDaysOfMonthDate) {
 
     ArrayList<Integer> allongoingContractsYear = new ArrayList<>();
 
     for (int i = 0; i < 12; i++) {
       LocalDate startDayOfMonthDate = endDaysOfMonthDate.get(i).with(TemporalAdjusters.firstDayOfMonth());
-      ArrayList<Reservation> chosenMonthongoingContracts = reservationRepo.fetchAllOngingContracts(startDayOfMonthDate, endDaysOfMonthDate.get(i));
+      ArrayList<Reservation> chosenMonthongoingContracts = reservationRepo.fetchAllOnGoingContracts(startDayOfMonthDate, endDaysOfMonthDate.get(i));
       allongoingContractsYear.add(chosenMonthongoingContracts.size());
     }
     return allongoingContractsYear;
@@ -103,6 +106,7 @@ public class BusinessInsightService {
     return sum;
   }
 
+
   public double calculateIncomeFromList(ArrayList<Double> contracts) {
     double totalSum = 0;
 
@@ -113,6 +117,7 @@ public class BusinessInsightService {
     totalSum = Math.round(totalSum * 100.0) / 100.0; //til to decimaler
     return totalSum;
   }
+
 
   public ArrayList<LocalDate> fetchEveryMonthEndDate(int year){
     ArrayList<LocalDate> endDaysOfMonthDate = new ArrayList<>();
@@ -125,8 +130,8 @@ public class BusinessInsightService {
     return  endDaysOfMonthDate;
   }
 
+  // Sebastian
   public ArrayList<Double> fetchAllStartingContractsYearIncome(ArrayList<LocalDate> endDaysOfMonthDate) {
-
 
     ArrayList<Double> allStartingContractsYearIncome = new ArrayList<>();
 
@@ -139,10 +144,10 @@ public class BusinessInsightService {
       int lastDayValue = endDaysOfMonthDate.get(i).getDayOfMonth();
       allStartingContractsYearIncome.add(calculatePickupMonthReservationsIncome(chosenMonthStartingContracts,lastDayValue));
     }
-
     return allStartingContractsYearIncome;
   }
 
+  // Sebastian
   public ArrayList<Double> fetchAllEndingContractsYearIncome(ArrayList<LocalDate> endDaysOfMonthDate) {
 
     ArrayList<Double> allEndingContractsYearIncome = new ArrayList<>();
@@ -157,10 +162,10 @@ public class BusinessInsightService {
       double incomeFromMonth = calculateReturnMonthReservationsIncome(chosenMonthEndingContracts,lastDayValue);
       allEndingContractsYearIncome.add(incomeFromMonth);
     }
-
     return allEndingContractsYearIncome;
   }
 
+  // Sebastian
   public ArrayList<Double> fetchAllOngoingContractsYearIncome(ArrayList<LocalDate> endDaysOfMonthDate) {
 
     ArrayList<Double> allOngoingContractsYearIncome = new ArrayList<>();
@@ -176,6 +181,7 @@ public class BusinessInsightService {
     return allOngoingContractsYearIncome;
   }
 
+  // Sebastian
   public ArrayList<Double> calculateIncomeMonths(ArrayList<Double> startingContractsIncome, ArrayList<Double> endingContractsIncome, ArrayList<Double> ongoingContractsIncome) {
 
     ArrayList<Double> calculateIncomeMonths = new ArrayList<>();
@@ -188,9 +194,9 @@ public class BusinessInsightService {
       monthTotalIncome = Math.round(monthTotalIncome * 100.0) / 100.0; //til to decimaler
       calculateIncomeMonths.add(monthTotalIncome);
     }
-
     return  calculateIncomeMonths;
   }
+
 
   public List<Reservation> fetchAllReservations() {
     return reservationRepo.fetchAllReservations();

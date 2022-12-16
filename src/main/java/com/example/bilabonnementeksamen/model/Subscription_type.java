@@ -13,13 +13,6 @@ public class Subscription_type {
     this.subscription_type_name = subscription_type_name;
   }
 
-  public int getSubscription_type_id() {
-    return subscription_type_id;
-  }
-
-  public void setSubscription_type_id(int subscription_type_id) {
-    this.subscription_type_id = subscription_type_id;
-  }
 
   public String getSubscription_type_name() {
     return subscription_type_name;

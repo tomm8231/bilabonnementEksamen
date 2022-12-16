@@ -28,8 +28,6 @@ public class LocationRepo {
       pst.setString(3, location.getLocation_name());
       pst.executeUpdate();
 
-
-
     } catch (SQLException e) {
       System.err.println("Cannot add location");
       e.printStackTrace();
@@ -52,9 +50,7 @@ public class LocationRepo {
         location.setLocation_address(rs.getString(1));
         location.setLocation_phone(rs.getInt(2));
         location.setLocation_name(rs.getString(3));
-
         locations.add(location);
-
       }
     } catch (SQLException e) {
       System.err.println("Cannot fetch locations");
@@ -76,7 +72,6 @@ public class LocationRepo {
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
-
         location.setLocation_address(rs.getString(1));
         location.setLocation_phone(rs.getInt(2));
         location.setLocation_name(rs.getString(3));
@@ -87,5 +82,4 @@ public class LocationRepo {
     }
     return location;
     }
-
 }

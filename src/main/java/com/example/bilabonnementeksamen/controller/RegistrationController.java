@@ -183,7 +183,7 @@ public class RegistrationController {
                                   @RequestParam ("paymentTotal") double paymentTotal,
                                   @RequestParam ("reservation_comment")String reservationComment ){
 
-    //gemte sessionsobjekter til oprettelse af reservation
+    //Gemte sessionsobjekter til oprettelse af reservation
     Customer customer = (Customer) session.getAttribute("lease-customer");
     Car car = (Car) session.getAttribute("car");
     Location location = (Location) session.getAttribute("lease-location");

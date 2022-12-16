@@ -38,10 +38,11 @@ public class ProblemReportService {
   // Sebastian og lidt Marcus
   public Integer createProblemReport(ArrayList<Problem> listOfProblems, Reservation reservation) {
     double totalPrice = calculateTotalPriceReport(listOfProblems);
-    // Opretter en rapport og returnere dens id
+    // Opretter en rapport og returnerer dens id
     Integer reportId = problemReportRepo.createProblemReport(reservation, totalPrice);
     return reportId;
   }
+
 
   public void createProblemsInReport(ArrayList<Problem> listOfProblems, Integer reportId) {
     problemReportRepo.createProblems(listOfProblems, reportId);
@@ -80,13 +81,11 @@ public class ProblemReportService {
 
         problems.remove(tempProblem);
       }
-
     }
     return problems;
   }
 
   // Tommy
-
   public ProblemReport fetchProblemReportById(int id) {
     return problemReportRepo.fetchProblemReportById(id);
   }

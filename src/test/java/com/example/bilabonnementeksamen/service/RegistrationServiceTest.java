@@ -22,9 +22,10 @@ class RegistrationServiceTest {
   @BeforeEach
   void setUp() {
     // arrange
-    months = "3";
+    months = "5";
     car = new Car();
     car.setCar_price_month(3000);
+    car.getSubscription_type_id().setSubscription_type_name("LIMITED");
     registrationService = new RegistrationService();
   }
 
@@ -35,7 +36,7 @@ class RegistrationServiceTest {
     double result = registrationService.calculatePaymentTotal(months, car);
 
     // assert
-    double expected = 9000;
+    double expected = 15000;
     assertEquals(expected, result);
 
   }

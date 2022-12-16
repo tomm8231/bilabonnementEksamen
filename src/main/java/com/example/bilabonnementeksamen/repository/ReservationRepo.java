@@ -19,7 +19,7 @@ public class ReservationRepo {
   @Value("${JDBCPassword}")
   private String password;
 
-  // Sebastian og lidt Marcus og Daniel
+  // Sebastian (Marcus og Daniel)
 // Henter alle reservationer som strækker sig over hele indeværende måned
   public int fetchFullCurrentMonthReservationsIncome(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
 
@@ -60,6 +60,7 @@ public class ReservationRepo {
     return totalIncome;
   }
 
+  // Sebastian
   public ArrayList<Reservation> fetchStartCurrentMonthReservations(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
 
     ArrayList<Reservation> startCurrentMonthreservations = new ArrayList<Reservation>();
@@ -142,17 +143,17 @@ public class ReservationRepo {
             car_co2_km, car_energy_label, car_distance_amount,
             car_description);
 
-        //reservation kræver customer
+        //Reservation kræver customer
         Customer customer = new Customer(customer_id,customer_name,customer_mail,customer_address,customer_phone_number);
 
-        //reservation kræver car
+        //Reservation kræver car
         Car car = new Car(car_vehicle_number, car_chassis_number, carModel, car_price_month,
             subscription_type, car_is_reserved);
 
-        //reservation kræver employee
+        //Reservation kræver employee
         Employee employee = new Employee(employee_id,employee_initials,employee_name);
 
-        //reservation kræver location
+        //Reservation kræver location
         Location location = new Location(location_address,location_phone_number,location_name);
 
         Reservation reservation = new Reservation(reservation_id, car, customer,location,pickup_date,return_date,
@@ -167,11 +168,11 @@ public class ReservationRepo {
     }
 
     return startCurrentMonthreservations;
-
   }
 
+  // Sebastian
   public ArrayList<Reservation> fetchEndCurrentMonthReservations(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
-    ArrayList<Reservation> endCurrentMonthreservations = new ArrayList<Reservation>();
+    ArrayList<Reservation> endCurrentMonthReservations = new ArrayList<Reservation>();
 
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
@@ -250,37 +251,35 @@ public class ReservationRepo {
             car_co2_km, car_energy_label, car_distance_amount,
             car_description);
 
-        //reservation kræver customer
+        //Reservation kræver customer
         Customer customer = new Customer(customer_id,customer_name,customer_mail,customer_address,customer_phone_number);
 
-        //reservation kræver car
+        //Reservation kræver car
         Car car = new Car(car_vehicle_number, car_chassis_number, carModel, car_price_month,
             subscription_type, car_is_reserved);
 
-        //reservation kræver employee
+        //Reservation kræver employee
         Employee employee = new Employee(employee_id,employee_initials,employee_name);
 
-        //reservation kræver location
+        //Reservation kræver location
         Location location = new Location(location_address,location_phone_number,location_name);
 
         Reservation reservation = new Reservation(reservation_id, car, customer,location,pickup_date,return_date,
             pickup_time,return_time,reservation_payment,reservation_comment,employee );
 
-        endCurrentMonthreservations.add(reservation);
+        endCurrentMonthReservations.add(reservation);
 
       }
     } catch (SQLException e) {
       System.err.println("Cannot connect to database");
       e.printStackTrace();
     }
-
-    return endCurrentMonthreservations;
-
+    return endCurrentMonthReservations;
   }
 
 
-  public ArrayList<Reservation> fetchAllOngingContracts(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
-    ArrayList<Reservation> ongoingCurrentMonthreservations = new ArrayList<Reservation>();
+  public ArrayList<Reservation> fetchAllOnGoingContracts(LocalDate startDayOfMonthDate, LocalDate endDayOfMonthDate) {
+    ArrayList<Reservation> onGoingCurrentMonthReservations = new ArrayList<>();
 
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
@@ -381,7 +380,7 @@ public class ReservationRepo {
         Reservation reservation = new Reservation(reservation_id, car, customer,location,pickup_date,return_date,
             pickup_time,return_time,reservation_payment,reservation_comment,employee );
 
-        ongoingCurrentMonthreservations.add(reservation);
+        onGoingCurrentMonthReservations.add(reservation);
 
       }
     } catch (SQLException e) {
@@ -389,7 +388,7 @@ public class ReservationRepo {
       e.printStackTrace();
     }
 
-    return ongoingCurrentMonthreservations;
+    return onGoingCurrentMonthReservations;
   }
 
   // Tommy

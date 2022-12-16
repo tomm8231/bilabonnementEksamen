@@ -71,7 +71,7 @@ public class EmployeeRepo {
     return newEmployee.getEmployee_initials();
   }
 
-  // marcus og Tommy
+  // Marcus og Tommy
   public void createEmployee(Employee employee) {
 
     try {
@@ -82,7 +82,6 @@ public class EmployeeRepo {
       pst.setString(2, employee.getEmployee_initials());
       pst.setString(3, employee.getEmployee_name());
       pst.executeUpdate();
-
 
     } catch (SQLException e) {
       System.err.println("Cannot add employee");
@@ -103,7 +102,6 @@ public class EmployeeRepo {
       ResultSet rs = pst.executeQuery();
 
       while (rs.next()) {
-
         employee.setEmployee_id(rs.getInt(1));
         employee.setEmployee_initials(rs.getString(2));
         employee.setEmployee_name(rs.getString(3));
@@ -113,7 +111,6 @@ public class EmployeeRepo {
       System.err.println("Cannot connect to database");
       e.printStackTrace();
     }
-
     return employee;
   }
 
@@ -134,7 +131,6 @@ public class EmployeeRepo {
         String employee_name = rs.getString(3);
 
         Employee employee = new Employee(employee_id, employee_initials, employee_name);
-
         employees.add(employee);
       }
 
@@ -144,7 +140,4 @@ public class EmployeeRepo {
     }
     return employees;
   }
-
-
-
 }

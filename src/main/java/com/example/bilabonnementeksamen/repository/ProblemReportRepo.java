@@ -48,16 +48,14 @@ public class ProblemReportRepo {
       System.err.println("Cannot find report id");
       e.printStackTrace();
     }
-
     return number;
   }
 
-  public void createProblems(ArrayList<Problem> listOfProblems, int report_id){
 
+  public void createProblems(ArrayList<Problem> listOfProblems, int report_id){
 
     for (int i = 0; i < listOfProblems.size(); i++) {
       Problem problem = listOfProblems.get(i);
-
 
       try {
         Connection conn = DriverManager.getConnection(databaseURL, user, password);
@@ -74,14 +72,13 @@ public class ProblemReportRepo {
         System.err.println("Cannot add problem");
         e.printStackTrace();
       }
-
     }
   }
+
 
   public int fetchReportId(Reservation reservation, double totalPrice) {
 
     int reportId = 0;
-
 
     try {
       Connection conn = DriverManager.getConnection(databaseURL, user, password);
@@ -94,7 +91,6 @@ public class ProblemReportRepo {
              AND customer_id = ?
           """;
       PreparedStatement pst = conn.prepareStatement(sql);
-
 
       pst.setInt(1, reservation.getCar_vehicle_number().getCar_vehicle_number());
       pst.setDouble(2, totalPrice);
@@ -111,9 +107,9 @@ public class ProblemReportRepo {
       System.err.println("Cannot find report_id");
       e.printStackTrace();
     }
-
     return reportId;
   }
+
 
   public ProblemReport fetchProblemReportById(int id) {
     ProblemReport problemReport = new ProblemReport();
@@ -171,7 +167,6 @@ public class ProblemReportRepo {
         String customer_address = rs.getString(26);
         String customer_phone_number = rs.getString(27);
 
-
         ArrayList<Problem> listOfProblems = new ArrayList<>();
 
         // Opretter et fuel objekt
@@ -202,7 +197,6 @@ public class ProblemReportRepo {
       System.err.println("Cannot connect to database");
       e.printStackTrace();
     }
-
     return problemReport;
   }
 
@@ -217,7 +211,6 @@ public class ProblemReportRepo {
              WHERE report_id = ?;
           """;
       PreparedStatement pst = conn.prepareStatement(sql);
-
 
       pst.setInt(1, id);
 
@@ -238,7 +231,6 @@ public class ProblemReportRepo {
       System.err.println("Cannot find report_id");
       e.printStackTrace();
     }
-
     return problems;
   }
 
@@ -265,7 +257,6 @@ public class ProblemReportRepo {
       e.printStackTrace();
     }
     return doesExist;
-
   }
 }
 

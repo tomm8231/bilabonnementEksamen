@@ -259,7 +259,6 @@ public class CarRepo {
           WHERE car_is_reserved = 1;
           """;
 
-
       PreparedStatement pst = conn.prepareStatement(sql);
       pst.executeUpdate();
 
@@ -268,6 +267,5 @@ public class CarRepo {
       e.printStackTrace();
     }
   }
-
 
 }
