@@ -25,21 +25,9 @@ class RegistrationServiceTest {
     months = "5";
     car = new Car();
     car.setCar_price_month(3000);
-    car.getSubscription_type_id().setSubscription_type_name("LIMITED");
     registrationService = new RegistrationService();
   }
 
-  @Test
-  void calculatePaymentTotal() {
-
-    // act
-    double result = registrationService.calculatePaymentTotal(months, car);
-
-    // assert
-    double expected = 15000;
-    assertEquals(expected, result);
-
-  }
 
   // Daniel og Marcus
   @Test
@@ -49,7 +37,6 @@ class RegistrationServiceTest {
     // act og assert i samme, giver ikke så meget forretningsværdi, teknisk demo med lambda
     assertThrows(NullPointerException.class, () -> registrationService.calculatePaymentTotal(months, null),
         "Exception on wrong exchange input");
-
   }
 
 
