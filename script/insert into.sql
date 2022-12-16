@@ -119,7 +119,7 @@ values
     (8,8,'Slotsherrensvej 114c 2650 Rødovre', '2022-08-28', '2022-12-29', '10:00:00', '12:00:00', 16000, 'Ingen kommentarer', 3),
     (9,9,'Slotsherrensvej 114c 2650 Rødovre', '2022-07-15', '2023-01-03', '10:00:00', '12:00:00', 13000, 'Ingen kommentarer', 1),
     (10,10,'Slotsherrensvej 114c 2650 Rødovre', '2022-11-17', '2023-02-15', '10:00:00', '12:00:00', 12000, 'Ingen kommentarer', 2),
-    (11,11,'Slotsherrensvej 114c 2650 Rødovre', '2023-11-18', '2023-01-18', '10:00:00', '12:00:00', 11000, 'Ingen kommentarer', 3),
+    (11,11,'Slotsherrensvej 114c 2650 Rødovre', '2023-01-18', '2023-11-18', '10:00:00', '12:00:00', 11000, 'Ingen kommentarer', 3),
     (12,12,'Virumgårdsvej 4, 8, 2830 Virum', '2023-01-02', '2023-04-01', '09:00:00', '12:00:00', 14000, 'Ingen kommentarer', 5),
     (13,13,'Virumgårdsvej 4, 8, 2830 Virum', '2023-02-04', '2023-06-04', '09:00:00', '12:00:00', 10000, 'Ingen kommentarer', 5),
     (14,14,'Virumgårdsvej 4, 8, 2830 Virum', '2023-03-09', '2023-07-07', '09:00:00', '12:00:00', 10000, 'Ingen kommentarer', 5),

@@ -440,7 +440,7 @@ public class ReservationRepo {
              INNER JOIN fuel
              USING (car_fuel_type)
              WHERE (return_date  > ?)
-             ORDER BY reservation_id;           
+             ORDER BY return_date;           
              """;
 
       PreparedStatement pst = conn.prepareStatement(sql);
